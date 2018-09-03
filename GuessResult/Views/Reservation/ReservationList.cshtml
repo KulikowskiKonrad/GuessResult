@@ -1,0 +1,239 @@
+﻿@model ReservationListViewModel
+@Scripts.Render("~/bundles/js/ReservationList")
+<div ng-app="RR" ng-controller="ReservationListCtrl">
+
+    <h2>Lista rezerwacji</h2>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></div>
+                    <select class="form-control" data-ng-options="o.Name for o in rooms track by o.Id" ng-model="filteredRoom">
+                        <option value="">Wybierz pomieszczenie</option>
+                    </select>
+                </div>
+            </div>
+            <button ng-click="edit()" class="btn btn-default">Dodaj rezerwacje</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-striped" style="margin-top:20px;">
+                <tr>
+                    <th>
+                        Nazwa pomieszczenia
+                    </th>
+                    <th>Data rezerwacji</th>
+                    <th>
+                        Użytkownik
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th style="width: 20px;"></th>
+                    <th style="width: 20px;"></th>
+                    <th style="width: 100px;"></th>
+                </tr>
+
+                <tr ng-repeat="reservation in reservations">
+
+                    <td>
+                        {{reservation.RoomName}}
+                    </td>
+                    <td>
+                        {{reservation.Date  | date:'yyyy-MM-dd'}}
+                    </td>
+                    <td>
+                        {{reservation.UserEmail}}
+                    </td>
+                    <td>
+                        {{reservation.StatusText}}
+                    </td>
+
+                    <td>
+                        <button type="button" ng-click="edit(reservation.Id)" title="Edytuj" class="btn btn-default btn-sm btn-usun  pull-right" style="margin-right:5px">
+                            <span class="glyphicon glyphicon-cog "></span>
+                        </button>
+                    </td>
+
+                    <td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <button type="button" ng-click="delete(reservation.Id)" title="Usuń" class="btn btn-default btn-sm btn-usun  pull-right" style="margin-right:5px">
+                                <span class="glyphicon glyphicon-trash "></span>
+                            </button>
+                        }
+                    </td>
+                    <td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div ng-if="reservation.Status==1">
+                                @using (Html.BeginForm("ChangeStatus", "Reservation", FormMethod.Post))
+                                {
+                                    <button type="button" ng-click="changeStatus(@((byte)ReservationStatus.Rejected), reservation.Id)"
+                                            title="Odrzuć" class="btn btn-default btn-sm btn-odrzuc pull-right">
+                                        <span class="glyphicon glyphicon-remove "></span>
+                                    </button>
+                                }
+                                @using (Html.BeginForm("ChangeStatus", "Reservation", FormMethod.Post))
+                                {
+                                    <button type="button" title="Akceptuj" ng-click="changeStatus(@((byte)ReservationStatus.Accepted), reservation.Id)"
+                                            class="btn btn-default btn-sm btn-akceptuj pull-right">
+                                        <span class="glyphicon glyphicon-ok "></span>
+                                    </button>
+                                }
+                            </div>
+                        }
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+
+
+
+        <div id="modalReservationDetails" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Detale rezerwacji</h4>
+                    </div>
+                    <div class="modal-body">
+                        @using (Html.BeginForm("SaveReservationDetails", "Reservation", FormMethod.Post, new { name = "formSaveReservationDetails" }))
+                        {
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Pomieszczenie</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></div>
+                                            <select class="form-control" data-ng-options="o.Name for o in rooms track by o.Id" ng-model="selectedRoom" required>
+                                                <option value="">Wybierz pomieszczenie</option>
+                                                @*<option ng-repeat="room in data.rooms"  value="{{room.Id}}>{{option.Name}}</option>*@
+                                            </select>
+                                        </div>
+                                        <div class="text-danger" ng-show="formSaveReservationDetails.editedReservation.RRRoomId.$touched
+                                             && formSaveReservationDetails.editedReservation.RRRoomId.$invalid">
+                                            Niepoprawna wartość
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Data</label>
+                                        <div class="input-group  input-group date">
+                                            <div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div>
+                                            @Html.TextBox("Date", "{0:yyyy-MM-dd}", new
+                                       {
+                                           @class = "form-control",
+                                           placeholder = "Data",
+                                           ng_model = "editedReservation.Date",
+                                           required = "required",
+                                           date = "yyyy-MM-dd"
+                                       })
+                                        </div>
+                                        <div class="text-danger" ng-show="formSaveReservationDetails.editedReservation.Date.$touched
+                                             && formSaveReservationDetails.editedReservation.Date.$invalid">
+                                            Niepoprawna wartość
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-usun" ng-click="saveDetails()">Zapisz</button>
+                        <button type="button" class="btn btn-default btn-usun" ng-click="cancelEdit()">Anuluj</button>
+                        @*                    @Html.ActionLink("Anuluj", "RoomList", "Room", null, new { @class = "btn btn-default" })*@
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        @*<script>
+                $(document).ready(function () {
+                    $('.btn-usun').click(function () {
+                        var btn = $(this);
+                        swal({
+                            title: 'Na pewno chcesz to usunąć?',
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Tak,chcę to usunąć!',
+                            cancelButtonText: 'Anuluj'
+                        }).then(function () {
+                            $(btn).closest('form').submit();
+                        })
+                    });
+                });
+            </script>
+            @Html.ActionLink("Dodaj rezerwację", "ReservationDetails", null, new { @class = "btn btn-default" })*@
+
+
+        @*@foreach (GuessResult.DB.Models.RRReservation rezerwacja in Model)
+                {
+                <tr>
+                    <td>
+                        @rezerwacja.Room.Name
+                    </td>
+                    <td>
+                        @rezerwacja.Date.ToShortDateString()
+                    </td>
+                    <td>
+                        @rezerwacja.User.Email
+                    </td>
+                    <td id="status">
+                        @rezerwacja.Status
+                    </td>
+                    <td>
+                        @if (rezerwacja.Status != GuessResult.Enum.ReservationStatus.Rejected)
+                        {
+                            <a href="@Url.Action("ReservationDetails", "Reservation", new { id = rezerwacja.Id })" cl class="btn btn-default btn-sm pull-right" title="Edytuj"><span class="glyphicon glyphicon-cog"></span></a>
+                        }
+                    </td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            @if (rezerwacja.Status == GuessResult.Enum.ReservationStatus.InProgress)
+                            {
+
+                                using (Html.BeginForm("ChangeStatus", "Reservation", FormMethod.Post))
+                                {
+                                    @Html.Hidden("id", rezerwacja.Id)
+                                    @Html.Hidden("status", GuessResult.Enum.ReservationStatus.Rejected)
+                                    <button type="submit" title="Odrzuć" class="btn btn-default btn-sm btn-odrzuc pull-right">
+                                        <span class="glyphicon glyphicon-remove "></span>
+                                    </button>
+                                }
+                                using (Html.BeginForm("ChangeStatus", "Reservation", FormMethod.Post))
+                                {
+                                    @Html.Hidden("id", rezerwacja.Id)
+                                    @Html.Hidden("status", GuessResult.Enum.ReservationStatus.Accepted)
+                                    <button type="submit" title="Akceptuj" class="btn btn-default btn-sm btn-akceptuj pull-right">
+                                        <span class="glyphicon glyphicon-ok "></span>
+                                    </button>
+                                }
+                            }
+                        </td>
+                    }
+                    <td>
+                        @using (Html.BeginForm("DeleteReservation", "Reservation", FormMethod.Post))
+                        {
+
+                            @Html.Hidden("id", rezerwacja.Id)
+                            <button type="button" title="Usuń" class="btn btn-default btn-sm btn-usun pull-right">
+                                <span class="glyphicon glyphicon-trash "></span>
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }*@
+        @*</table>*@
+    </div>
+</div>

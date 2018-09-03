@@ -1,0 +1,23 @@
+﻿@*@model ReservationListViewModel*@
+@Scripts.Render("~/bundles/js/UserIndex")
+@*@Scripts.Render("~/bundles/js/ReservationList")*@
+
+<h2>Rezerwacje pomieszczeń </h2>
+
+<div ng-app="calendarDemoApp" ng-controller="UserIndexCtrl">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></div>
+                    <select class="form-control" data-ng-options="o.Name for o in rooms track by o.Id" ng-model="filteredRoom">
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
+</div>
+

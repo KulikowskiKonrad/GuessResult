@@ -1,0 +1,66 @@
+﻿@model GuessResult.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Rejestracja";
+}
+@Scripts.Render("~/bundles/js/Register")
+
+
+<div ng-app="RR" ng-controller="RegisterCtrl">
+    <h2>@ViewBag.Title.</h2>
+
+    @using (Html.BeginForm("Register", "User", FormMethod.Post, new { name = "formRegisterUser" }))
+    {
+        <h4>Stwórz nowe konto</h4>
+        <hr />
+        <div class="row">
+            <div class="col-sm-4">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email)
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", ng_model = "Email", type = "email", required = "required" })
+                    <div class="text-danger" ng-show="formRegisterUser.Email.$touched && formRegisterUser.Email.$invalid">
+                        Niepoprawna wartość
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", ng_model = "Password", pattern = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{5,}", required = "required" })
+                    <div class="text-danger" ng-show="formRegisterUser.Password.$touched && formRegisterUser.Password.$invalid">
+                        Niepoprawna wartość
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.ConfirmPassword)
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", ng_model = "ConfirmPassword", ng_pattern = "Password", required = "required" })
+                    <div class="text-danger" ng-show="formRegisterUser.ConfirmPassword.$touched && formRegisterUser.ConfirmPassword.$invalid">
+                        Niepoprawna wartość
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="button" class="btn btn-default" ng-click="registerUser()">Zarejestruj</button>
+            </div>
+        </div>
+    }
+</div>
+
