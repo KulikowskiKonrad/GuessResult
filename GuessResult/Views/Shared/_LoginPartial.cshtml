@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
+@using Microsoft.Owin.Security
+
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "User", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right", novalidate = "novalidate " }))
@@ -17,6 +19,15 @@ else
 {
     <ul class="nav navbar-nav navbar-right">
         @*<li>@Html.ActionLink("Zarejestruj", "Register", "User", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>*@
-        <li>@Html.ActionLink("Zaloguj", "Login", "User", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>
+            @{
+                var loginProvider = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes().Single();
+                <a href="javascript:document.getElementById('ExternalLoginForm').submit();">Zaloguj</a>
+                using (Html.BeginForm("ExternalLogin", "User", FormMethod.Post, new { id = "ExternalLoginForm" }))
+                {
+                    @Html.Hidden("provider", @loginProvider.AuthenticationType)
+                }
+            }
+        </li>
     </ul>
-}
+                }

@@ -1,0 +1,141 @@
+﻿@*@model ReservationListViewModel*@
+@Scripts.Render("~/bundles/js/EventList")
+@*@Scripts.Render("~/bundles/js/ReservationList")*@
+
+<h2>Lista wydarzeń </h2>
+<div ng-app="GR" ng-controller="EventListCtrl">
+    <div class="row">
+        <div class="col-md-12">
+            @*<div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></div>
+                        <select class="form-control" data-ng-options="o.Name for o in events track by o.Id" ng-model="filteredEvent">
+                            <option value="">Wybierz wydarzenie</option>
+                        </select>
+                    </div>
+                </div>*@
+            <button ng-click="edit()" class="btn btn-default">Dodaj wydarzenie</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-striped" style="margin-top:20px;">
+                <tr>
+                    @*<th>
+                            Nazwa wydarzenia
+                        </th>*@
+                    <th>Data</th>
+                    <th>
+                        Drużyna gospodarzy
+                    </th>
+                    <th>
+                        Drużyna przeciwna
+                    </th>
+                    <th>
+                        Wynik
+                    </th>
+                    <th style="width: 20px;"></th>
+                    <th style="width: 20px;"></th>
+                    <th style="width: 100px;"></th>
+                </tr>
+
+                <tr ng-repeat="singleEvent in events">
+
+                    <td>
+                        {{singleEvent.StartDate | date:'yyyy-MM-dd'}}
+                    </td>
+                    <td>
+                        {{singleEvent.HomeTeamName}}
+                    </td>
+                    <td>
+                        {{singleEvent.AwayTeamName}}
+                    </td>
+                    <td>
+                        {{singleEvent.AwayTeamScore + ':' + singleEvent.HomeTeamScore }}
+                    </td>
+
+                    <td>
+                        @*<button type="button" ng-click="edit(singleEvent.Id)" title="Edytuj" class="btn btn-default btn-sm btn-usun  pull-right" style="margin-right:5px">
+                                <span class="glyphicon glyphicon-cog "></span>
+                            </button>*@
+                    </td>
+
+                    <td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            @*<button type="button" ng-click="delete(singleEvent.Id)" title="Usuń" class="btn btn-default btn-sm btn-usun  pull-right" style="margin-right:5px">
+                                    <span class="glyphicon glyphicon-trash "></span>
+                                </button>*@
+                        }
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+    <div id="modalEventDetails" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Detale zdarzenia</h4>
+                </div>
+                <div class="modal-body">
+                    @using (Html.BeginForm("SaveEventDetails", "Event", FormMethod.Post, new { name = "formSaveEventDetails" }))
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Pomieszczenie</label>
+                                    @*<div class="input-group">
+                                        <div class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></div>
+                                        <select class="form-control" data-ng-options="o.Name for o in values track by o.Id" ng-model="filteredEvent" required>
+                                            <option value="">Wybierz pomieszczenie</option>
+                                            @*<option ng-repeat="room in data.rooms"  value="{{room.Id}}>{{option.Name}}</option>*@
+                                    @*</select>
+                                        </div>*@
+                                    <div class="text-danger" ng-show="formSaveEventDetails.editedReservation.RRRoomId.$touched
+                                             && formSaveReservationDetails.editedReservation.RRRoomId.$invalid">
+                                        Niepoprawna wartość
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Data</label>
+                                    <div class="input-group  input-group date">
+                                        <div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div>
+                                        @Html.TextBox("Date", "{0:yyyy-MM-dd}", new
+                                   {
+                                       @class = "form-control",
+                                       placeholder = "Data",
+                                       ng_model = "editedEvent.StartDate",
+                                       required = "required",
+                                       date = "yyyy-MM-dd"
+                                   })
+                                    </div>
+                                    <div class="text-danger" ng-show="formSaveEventDetails.editedEvent.Date.$touched
+                                             && formSaveEventDetails.editedEvent.Date.$invalid">
+                                        Niepoprawna wartość
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-usun" ng-click="saveDetails()">Zapisz</button>
+                    <button type="button" class="btn btn-default btn-usun" ng-click="cancelEdit()">Anuluj</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>

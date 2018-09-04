@@ -68,7 +68,7 @@ public class ApplicationSignInManager
             user = new GRUser()
             {
                 Email = login,
-                UserName = userName,
+                UserName = !string.IsNullOrEmpty(userName) ? userName : login,
                 //Password = "test",
                 Role = UserRole.Standard,
                 //Salt = "test"

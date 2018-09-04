@@ -24,6 +24,9 @@ namespace GuessResult
             bundles.Add(new ScriptBundle("~/bundles/js/UserIndex").Include(
           "~/Scripts/Views/User/Index.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/js/EventList").Include(
+                    "~/Scripts/Views/Event/EventList.js"));
+
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
