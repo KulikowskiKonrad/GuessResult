@@ -22,7 +22,9 @@ namespace GuessResult.Models
         [Required]
         public string AwayTeamName { get; set; }
 
-        [StringLength(100)]
-        public string Name { get; set; }
+        public byte? AwayTeamScore { get; set; }
+
+        public byte? HomeTeamScore { get; set; }
+
     }
 }

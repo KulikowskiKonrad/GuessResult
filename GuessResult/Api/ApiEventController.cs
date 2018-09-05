@@ -27,6 +27,8 @@ namespace GuessResult.Api
                         AwayTeamName = x.AwayTeamName,
                         HomeTeamName = x.HomeTeamName,
                         Id = x.Id,
+                        AwayTeamScore= x.AwayTeamScore,
+                        HomeTeamScore=x.HomeTeamScore,
                         StartDate = x.StartDate
                     })
                 .OrderByDescending(x => x.StartDate)
@@ -88,22 +90,19 @@ namespace GuessResult.Api
                     singleEvent.StartDate = model.StartDate;
                     singleEvent.HomeTeamName = model.HomeTeamName;
                     singleEvent.AwayTeamName = model.AwayTeamName;
+                    singleEvent.HomeTeamScore = model.HomeTeamScore;
+                    singleEvent.AwayTeamScore = model.AwayTeamScore;
 
-                    //GREvent existingEvent = eventRepository.GetByName(model.Name);
-                    //if (existingEvent != null)
-                    //{
-                    //    return BadRequest("Nazwa zajęta");
-                    //}
-                    //long? saveResult = eventRepository.Save(singleEvent);
+                    long? saveResult = eventRepository.Save(singleEvent);
 
-                    //if (saveResult == null)
-                    //{
-                    //    return InternalServerError();
-                    //}
-                    //else
-                    //{
-                    return Ok();
-                    //}
+                    if (saveResult == null)
+                    {
+                        return InternalServerError();
+                    }
+                    else
+                    {
+                        return Ok();
+                    }
                 }
                 else
                 {

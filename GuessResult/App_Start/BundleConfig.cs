@@ -16,8 +16,7 @@ namespace GuessResult
                         "~/Scripts/sweetalert2.js",
                         "~/Scripts/angular.min.js",
                         "~/Scripts/bootstrap-datetimepicker.js",
-                        "~/Scripts/ui-bootstrap-tpls-2.5.0.min.js",
-                        "~/Scripts/locale-all.js"
+                        "~/Scripts/ui-bootstrap-tpls-2.5.0.min.js"
                         ));
 
 
@@ -26,6 +25,9 @@ namespace GuessResult
 
             bundles.Add(new ScriptBundle("~/bundles/js/EventList").Include(
                     "~/Scripts/Views/Event/EventList.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/PredictingResult").Include(
+                                "~/Scripts/Views/Event/PredictionResult.js"));
 
 
 

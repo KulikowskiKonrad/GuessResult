@@ -25,5 +25,19 @@ namespace GuessResult.Controllers
             }
 
         }
+        public ActionResult PredictionResult()
+        {
+            try
+            {
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return View("Error");
+            }
+
+        }
     }
 }

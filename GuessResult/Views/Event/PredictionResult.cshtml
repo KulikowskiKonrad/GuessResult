@@ -1,0 +1,42 @@
+﻿@*@Scripts.Render("~/bundles/js/PredictionResult")*@
+
+<h3>Obstawianie wyników</h3>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Data</label>
+            <div class="input-group  input-group date">
+                <div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div>
+                @Html.TextBox("Date", "{0:yyyy-MM-dd}", new
+           {
+               @class = "form-control",
+               placeholder = "Data",
+               ng_model = "editedEvent.StartDate",
+               required = "required",
+               date = "yyyy-MM-dd"
+           })
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-6">
+    <label>Drużyna gospodarzy</label>
+    @Html.TextBox("HomeTeamName",null, new { @class = "form-control",placeholder = "Nazwa",
+        ng_model = "editedEvent.StartDate",required = "required"})
+
+    <label>Punkty</label>
+    @Html.TextBox("HomeTeamScore",null, new { @class = "form-control",placeholder = "Ilość punktów",
+        ng_model = "editedEvent.StartDate",required = "required"})
+</div>
+
+<div class="col-sm-6">
+    <label>Drużyna przeciwnika</label>
+    @Html.TextBox("HomeTeamName",null, new { @class = "form-control",placeholder = "Nazwa",
+        ng_model = "editedEvent.StartDate",required = "required",date = "yyyy-MM-dd"})
+
+    <label>Punkty</label>
+    @Html.TextBox("HomeTeamScore",null, new { @class = "form-control",placeholder = "Ilość punktów",
+        ng_model = "editedEvent.StartDate",required = "required",date = "yyyy-MM-dd"})
+</div>

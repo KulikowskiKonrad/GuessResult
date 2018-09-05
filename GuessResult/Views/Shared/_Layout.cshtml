@@ -39,13 +39,10 @@
             <div class="navbar-collapse collapse">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <ul class="nav navbar-nav">
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li>@Html.ActionLink("Pomieszczenia", "RoomList", "Room")</li>
-                        }
-                        <li>@Html.ActionLink("Rezerwacje", "ReservationList", "Reservation")</li>
-                    </ul>
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Wydarzenia", "EventList", "Event")</li>
+                    <li>@Html.ActionLink("Przewidywanie wyników", "PredictionResult", "Event")</li>
+                </ul>
                 }
                 @Html.Partial("_LoginPartial")
             </div>

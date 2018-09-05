@@ -89,7 +89,7 @@ namespace GuessResult.Repositories
                 GRUser result = null;
                 using (DB.GuessResultContext db = new DB.GuessResultContext())
                 {
-                    //result = db.Users.Where(x => x.Id == userId).SingleOrDefault();
+                    result = db.Users.Where(x => x.Id == userId).SingleOrDefault();
                 }
                 return result;
             }

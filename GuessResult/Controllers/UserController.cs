@@ -95,7 +95,7 @@ namespace GuessResult.Controllers
                         Session.Abandon();
                         HttpContext.GetOwinContext().Authentication.SignOut();
                     }
-                    return RedirectToAction("Login");
+                    return RedirectToAction("Index","Home");
                 }
                 else
                 {
@@ -122,7 +122,7 @@ namespace GuessResult.Controllers
             var loginInfo = await HttpContext.GetOwinContext().Authentication.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Index","Home");
             }
 
 
@@ -137,7 +137,7 @@ namespace GuessResult.Controllers
                 case SignInStatus.RequiresVerification:
                 case SignInStatus.Failure:
                 default:
-                    return RedirectToAction("Login");
+                    return RedirectToAction("Index", "Home");
             }
         }
 
