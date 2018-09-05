@@ -191,7 +191,10 @@
     <Compile Include="Migrations\201809041917443_AddScoreColumnsInGREvent.Designer.cs">
       <DependentUpon>201809041917443_AddScoreColumnsInGREvent.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\EventListViewModel.cs" />
+    <Compile Include="Migrations\201809051903093_addTablesUserEvents.cs" />
+    <Compile Include="Migrations\201809051903093_addTablesUserEvents.Designer.cs">
+      <DependentUpon>201809051903093_addTablesUserEvents.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EditEventViewModel.cs" />
     <Compile Include="Models\EventListItem.cs" />
     <Compile Include="Models\Old\ApiUserController.cs" />
@@ -300,6 +303,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809041917443_AddScoreColumnsInGREvent.resx">
       <DependentUpon>201809041917443_AddScoreColumnsInGREvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809051903093_addTablesUserEvents.resx">
+      <DependentUpon>201809051903093_addTablesUserEvents.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

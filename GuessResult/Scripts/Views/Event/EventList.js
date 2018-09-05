@@ -15,8 +15,8 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
 
     $scope.loadEventList = function () {
         $http.get("/api/ApiEvent/GetAll")
-            .then(function (res, status, xhr) {
-                $scope.events = res.data;
+            .then(function (resultGetData) {
+                $scope.events = resultGetData.data;
             });
     }
     $scope.loadEventList();
@@ -88,7 +88,7 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
                 .then(function (response) {
                     $scope.editedEvent = null;
                     $('#modalEventDetails').modal('hide');
-                    $scope.loadList();
+                    $scope.loadEventList();
                 })
                 .catch(function (data, status) {
                     swal({
@@ -106,11 +106,26 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
             require: 'ngModel',
             link: function (scope, elm, attrs, ctrl) {
 
-                var dateFormat = attrs['date'] || 'yyyy-MM-dd';
+                debugger;
+                var dateFormat = attrs['format'];// 'yyyy-MM-dd';
 
                 ctrl.$formatters.unshift(function (modelValue) {
                     return dateFilter(modelValue, dateFormat);
                 });
             }
         };
-    });
+    })
+    //.directive('date-time', function (dateFilter) {
+    //    return {
+    //        require: 'ngModel',
+    //        link: function (scope, elm, attrs, ctrl) {
+
+    //            var dateFormat = 'yyyy-MM-dd HH:mm';
+
+    //            ctrl.$formatters.unshift(function (modelValue) {
+    //                return dateFilter(modelValue, dateFormat);
+    //            });
+    //        }
+    //    };
+    //})
+    ;

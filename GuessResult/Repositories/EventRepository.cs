@@ -16,7 +16,7 @@ namespace GuessResult.Repositories
             {
                 using (DB.GuessResultContext db = new DB.GuessResultContext())
                 {
-                    List<GREvent> listEvents = db.Event.Where(x=>x.IsDeleted==false).ToList();
+                    List<GREvent> listEvents = db.Events.Where(x => x.IsDeleted == false).ToList();
                     return listEvents;
                 }
             }
@@ -35,7 +35,7 @@ namespace GuessResult.Repositories
                 GREvent result = null;
                 using (DB.GuessResultContext db = new DB.GuessResultContext())
                 {
-                    result = db.Event.Where(x => x.Id == eventId).SingleOrDefault();
+                    result = db.Events.Where(x => x.Id == eventId).SingleOrDefault();
                 }
                 return result;
             }

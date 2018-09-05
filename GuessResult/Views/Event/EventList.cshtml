@@ -30,7 +30,7 @@
 
                 <tr ng-repeat="singleEvent in events">
                     <td>
-                        {{singleEvent.StartDate | date:'yyyy-MM-dd'}}
+                        {{singleEvent.StartDate | date:'yyyy-MM-dd HH:mm'}}
                     </td>
                     <td>
                         {{singleEvent.HomeTeamName}}
@@ -39,7 +39,7 @@
                         {{singleEvent.AwayTeamName}}
                     </td>
                     <td>
-                        {{singleEvent.AwayTeamScore + ':' + singleEvent.HomeTeamScore }}
+                        {{singleEvent.HomeTeamScore +  ':'  +singleEvent.AwayTeamScore}}
                     </td>
 
                     <td>
@@ -55,6 +55,11 @@
                                 <span class="glyphicon glyphicon-trash "></span>
                             </button>
                         }
+                    </td>
+                </tr>
+                <tr ng-show="events.length == 0 ">
+                    <td>
+                        Brak danych
                     </td>
                 </tr>
             </table>
@@ -86,15 +91,16 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Data</label>
-                                    <div class="input-group  input-group date">
+                                    <div class="input-group  input-group date-time">
                                         <div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div>
-                                        @Html.TextBox("Date", "{0:yyyy-MM-dd}", new
+                                        @Html.TextBox("Date", "", new
                                    {
                                        @class = "form-control",
                                        placeholder = "Data",
                                        ng_model = "editedEvent.StartDate",
                                        required = "required",
-                                       date = "yyyy-MM-dd"
+                                       date = "date",
+                                       data_format = "yyyy-MM-dd HH:mm"
                                    })
                                     </div>
                                     <div class="text-danger" ng-show="formSaveEventDetails.editedEvent.Date.$touched
@@ -130,7 +136,7 @@
                                 <label>Nazwa drużyny przeciwnej</label>
                                 <div class="input-group  input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-option-vertical"></span></div>
-                                    @Html.TextBox("AwayTeamName",null, new
+                                    @Html.TextBox("AwayTeamName", null, new
                                {
                                    @class = "form-control",
                                    placeholder = "Podaj nazwe",
@@ -151,7 +157,7 @@
                                     <label>Punkty drużyny gospodarzy</label>
                                     <div class="input-group  input-group">
                                         <div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div>
-                                        @Html.TextBox("HomeTeamScore",null, new
+                                        @Html.TextBox("HomeTeamScore", null, new
                                    {
                                        @class = "form-control",
                                        placeholder = "Podaj ilosc",
@@ -170,7 +176,7 @@
                                 <label>Punkty drużyny przeciwnej</label>
                                 <div class="input-group  input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div>
-                                    @Html.TextBox("AwayTeamScore",null, new
+                                    @Html.TextBox("AwayTeamScore", null, new
                                {
                                    @class = "form-control",
                                    placeholder = "Podaj ilosc",
