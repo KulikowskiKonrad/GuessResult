@@ -7,31 +7,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 
 namespace GuessResult.Api
 {
     public class ApiUserEventController : ApiController
     {
+        protected long UserId
+        {
+            get
+            {
+                return long.Parse(((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+            }
+        }
 
         private UserEventRepository _userEventRepository = new UserEventRepository();
 
         [Authorize]
         [HttpGet]
-        public IHttpActionResult GetAll()
+        public IHttpActionResult GetByEventId(long eventId)
         {
             try
             {
-                List<UserEventListItem> result = _userEventRepository.GetAll()
-                    .Select(x => new UserEventListItem()
-                    {
-                        Id = x.Id,
-                        AwayTeamScore = x.AwayTeamScore,
-                        HomeTeamScore = x.HomeTeamScore,
-                      EventId=x.EventId,
-                      UserId=x.UserId
-                    })
-                .ToList();
+                UserEventListItem result = new UserEventListItem();
+                var eventFromDb = new EventRepository().GetById(eventId);
+                result.EventId = eventId;
+                result.AwayTeamName = eventFromDb.AwayTeamName;
+                result.HomeTeamName = eventFromDb.HomeTeamName;
+                result.StartDate = eventFromDb.StartDate;
+                var userEventFromDb = _userEventRepository.GetByEventIdAndUserId(eventId, UserId);
+                if (userEventFromDb != null)
+                {
+                    result.AwayTeamScore = userEventFromDb.AwayTeamScore;
+                    result.HomeTeamScore = userEventFromDb.HomeTeamScore;
+                }
 
                 return Ok(result);
             }
@@ -42,77 +52,77 @@ namespace GuessResult.Api
             }
         }
 
-        [Authorize]
-        [HttpDelete]
-        public IHttpActionResult Delete([FromUri]long id)
-        {
-            try
-            {
-                GRUserEvent userEventToDelete = _userEventRepository.GetById(id);
-                userEventToDelete.IsDeleted = true;
-                long? saveResult = _userEventRepository.Save(userEventToDelete);
-                if (saveResult.HasValue)
-                {
-                    return Ok();
-                }
-                else
-                {
-                    return InternalServerError();
-                }
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Log.Error(ex);
-                return InternalServerError();
-            }
-        }
+        //[Authorize]
+        //[HttpDelete]
+        //public IHttpActionResult Delete([FromUri]long id)
+        //{
+        //    try
+        //    {
+        //        GRUserEvent userEventToDelete = _userEventRepository.GetById(id);
+        //        userEventToDelete.IsDeleted = true;
+        //        long? saveResult = _userEventRepository.Save(userEventToDelete);
+        //        if (saveResult.HasValue)
+        //        {
+        //            return Ok();
+        //        }
+        //        else
+        //        {
+        //            return InternalServerError();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LogHelper.Log.Error(ex);
+        //        return InternalServerError();
+        //    }
+        //}
 
 
-        [Authorize]
-        [HttpPost]
-        public IHttpActionResult SaveUserEventDetails(EditUserEventViewModel model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    UserEventRepository userEventRepository = new UserEventRepository();
-                    GRUserEvent userEvent = null;
-                    if (model.Id.HasValue)
-                    {
-                        userEvent = userEventRepository.GetById(model.Id.Value);
-                    }
-                    else
-                    {
-                        userEvent = new GRUserEvent();
-                    }
+        //[Authorize]
+        //[HttpPost]
+        //public IHttpActionResult SaveUserEventDetails(EditUserEventViewModel model)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            UserEventRepository userEventRepository = new UserEventRepository();
+        //            GRUserEvent userEvent = null;
+        //            if (model.Id.HasValue)
+        //            {
+        //                userEvent = userEventRepository.GetById(model.Id.Value);
+        //            }
+        //            else
+        //            {
+        //                userEvent = new GRUserEvent();
+        //            }
 
-                    userEvent.HomeTeamScore = model.HomeTeamScore.Value;
-                    userEvent.AwayTeamScore = model.AwayTeamScore.Value;
-                    userEvent.EventId = model.EventId;
-                    userEvent.UserId = model.UserId;
+        //            userEvent.HomeTeamScore = model.HomeTeamScore.Value;
+        //            userEvent.AwayTeamScore = model.AwayTeamScore.Value;
+        //            userEvent.EventId = model.EventId;
+        //            userEvent.UserId = model.UserId;
 
-                    long? saveResult = userEventRepository.Save(userEvent);
+        //            long? saveResult = userEventRepository.Save(userEvent);
 
-                    if (saveResult == null)
-                    {
-                        return InternalServerError();
-                    }
-                    else
-                    {
-                        return Ok();
-                    }
-                }
-                else
-                {
-                    return InternalServerError();
-                }
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Log.Error(ex);
-                return InternalServerError();
-            }
-        }
+        //            if (saveResult == null)
+        //            {
+        //                return InternalServerError();
+        //            }
+        //            else
+        //            {
+        //                return Ok();
+        //            }
+        //        }
+        //        else
+        //        {
+        //            return InternalServerError();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LogHelper.Log.Error(ex);
+        //        return InternalServerError();
+        //    }
+        //}
     }
 }

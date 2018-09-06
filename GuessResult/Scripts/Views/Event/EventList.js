@@ -89,78 +89,14 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
                 });
         }
     }
-}])
-    .directive('date', function (dateFilter) {
-        return {
-            require: 'ngModel',
-            link: function (scope, elm, attrs, ctrl) {
-                var dateFormat = attrs['format'];// 'yyyy-MM-dd';
-
-                ctrl.$formatters.unshift(function (modelValue) {
-                    return dateFilter(modelValue, dateFormat);
-                });
-            }
-        };
-    })
-    ;
 
 
-
-
-
-
-
-
-
-
-
-
-app.controller('UserEventListCtrl', ["$scope", "$http", function ($scope, $http) {
-
-    $scope.loadUserEventList = function () {
-        $http.get("/api/ApiUserEvent/GetAll")
+    $scope.editUserEvent = function (eventId) {
+        $http.get("/api/ApiUserEvent/GetByEventId?eventId=" + eventId)
             .then(function (resultGetData) {
-                $scope.userEvents = resultGetData.data;
+                $scope.editedUserEvent = resultGetData.data;
+                $('#modalUserEventDetails').modal();
             });
-    }
-    $scope.loadUserEventList();
-
-    $scope.delete = function (userEventId) {
-        swal({
-            title: 'Na pewno chcesz to usunąć?',
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Tak,chcę to usunąć!',
-            cancelButtonText: 'Anuluj'
-        }).then(function () {
-            $http.delete("/api/ApiEvent/Delete/?id=" + userEventId)
-                .then(function (response) {
-                    $scope.loadUserEventList();
-                })
-                .catch(function (data, status) {
-                    swal({
-                        title: data.data,
-                        type: 'error',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'Ok!',
-                    });
-                });
-        })
-    }
-
-    //debugger;
-    $scope.editt = function (userEventId) {
-        $scope.editedUserEvent = {};
-        if (userEventId != null) {
-            for (let i = 0; i < $scope.userEvents.length; i++) {
-                if ($scope.userEvents[i].Id == userEventId) {
-                    $scope.editedUserEvent = angular.copy($scope.userEvents[i]);
-                }
-            }
-        }
-        $('#modalUserEventDetails').modal();
     }
 
     $scope.cancelUserEventEdit = function () {
@@ -169,27 +105,28 @@ app.controller('UserEventListCtrl', ["$scope", "$http", function ($scope, $http)
     }
 
     $scope.saveUserEventDetails = function () {
-        angular.forEach($scope.formSaveUserEventDetails.$error, function (field) {
-            angular.forEach(field, function (errorField) {
-                errorField.$setTouched();
-            })
-        });
+        //angular.forEach($scope.formSaveUserEventDetails.$error, function (field) {
+        //    angular.forEach(field, function (errorField) {
+        //        errorField.$setTouched();
+        //    })
+        //}
+        //);
 
-        if ($scope.formSaveUserEventDetails.$valid) {
-            $http.post("/api/ApiUserEvent/SaveEventDetails",
+        if ($scope.formSaveEventDetails.$valid) {
+            $http.post("/api/ApiUserEvent/SaveUserEventDetails",
                 {
                     Id: $scope.editedUserEvent.Id,
-                    Name: $scope.editedUserEvent.Name,
-                    StartDate: $scope.editedUserEvent.StartDate,
-                    HomeTeamName: $scope.editedUserEvent.HomeTeamName,
-                    AwayTeamName: $scope.editedUserEvent.AwayTeamName,
-                    HomeTeamScore: $scope.editedUserEvent.HomeTeamScore,
-                    AwayTeamScore: $scope.editedUserEvent.AwayTeamScore
+                    Name: $scope.editedEvent.Name,
+                    StartDate: $scope.editedEvent.StartDate,
+                    HomeTeamName: $scope.editedEvent.HomeTeamName,
+                    AwayTeamName: $scope.editedEvent.AwayTeamName,
+                    HomeTeamScore: $scope.editedEvent.HomeTeamScore,
+                    AwayTeamScore: $scope.editedEvent.AwayTeamScore
                 })
                 .then(function (response) {
-                    $scope.editedEvent = null;
+                    $scope.editedUserEvent = null;
                     $('#modalUserEventDetails').modal('hide');
-                    $scope.loadUserEventList();
+                    //$scope.loadEventList();
                 })
                 .catch(function (data, status) {
                     swal({
@@ -215,7 +152,6 @@ app.controller('UserEventListCtrl', ["$scope", "$http", function ($scope, $http)
         };
     })
     ;
-
 
 
 

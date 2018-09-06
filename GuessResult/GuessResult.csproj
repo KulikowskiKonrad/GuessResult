@@ -177,7 +177,6 @@
     <Compile Include="Api\ApiUserEventController.cs" />
     <Compile Include="Api\ValuesController.cs" />
     <Compile Include="Controllers\EventController.cs" />
-    <Compile Include="Controllers\UserEventController.cs" />
     <Compile Include="DB\GuessResultContext.cs" />
     <Compile Include="DB\Models\GREvent.cs" />
     <Compile Include="DB\Models\GRUserEvent.cs" />

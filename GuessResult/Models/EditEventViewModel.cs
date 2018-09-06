@@ -10,7 +10,6 @@ namespace GuessResult.Models
     {
         public long? Id { get; set; }
 
-        [Required]
         public DateTime StartDate { get; set; }
 
         [StringLength(100)]

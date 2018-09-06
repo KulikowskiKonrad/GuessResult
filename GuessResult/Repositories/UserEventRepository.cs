@@ -17,7 +17,7 @@ namespace GuessResult.Repositories
             {
                 using (DB.GuessResultContext db = new DB.GuessResultContext())
                 {
-                    List<GRUserEvent> listUserEvents = db.UserEvents.Include(x=>x.Event).Include(x=>x.User).Where(x => x.IsDeleted == false).ToList();
+                    List<GRUserEvent> listUserEvents = db.UserEvents.Include(x => x.Event).Include(x => x.User).Where(x => x.IsDeleted == false).ToList();
                     return listUserEvents;
                 }
             }
@@ -28,13 +28,13 @@ namespace GuessResult.Repositories
             }
         }
 
-        public GRUserEvent GetById(long id)
+        public GRUserEvent GetByEventIdAndUserId(long eventId, long userId)
         {
             try
             {
                 using (DB.GuessResultContext db = new DB.GuessResultContext())
                 {
-                    GRUserEvent result = db.UserEvents.Where(x => x.Id == id).SingleOrDefault();
+                    GRUserEvent result = db.UserEvents.Where(x => x.EventId == eventId && x.UserId == userId && !x.IsDeleted).SingleOrDefault();
                     return result;
                 }
             }
