@@ -45,7 +45,6 @@
                 {
                     <ul class="nav navbar-nav">
                         <li>@Html.ActionLink("Wydarzenia", "EventList", "Event")</li>
-                        <li>@Html.ActionLink("Przewidywanie wyników", "PredictionResult", "Event")</li>
                     </ul>
                 }
                 @Html.Partial("_LoginPartial")
@@ -56,7 +55,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Rezerwacja pomieszczeń</p>
+            <p>&copy; @DateTime.Now.Year - Przewidywanie wyników</p>
         </footer>
     </div>
 
