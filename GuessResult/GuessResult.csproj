@@ -180,6 +180,7 @@
     <Compile Include="DB\GuessResultContext.cs" />
     <Compile Include="DB\Models\GREvent.cs" />
     <Compile Include="DB\Models\GRUserEvent.cs" />
+    <Compile Include="Enum\MatchStatus.cs" />
     <Compile Include="Migrations\201809031957055_Initial.cs" />
     <Compile Include="Migrations\201809031957055_Initial.Designer.cs">
       <DependentUpon>201809031957055_Initial.cs</DependentUpon>
@@ -196,9 +197,14 @@
     <Compile Include="Migrations\201809051903093_addTablesUserEvents.Designer.cs">
       <DependentUpon>201809051903093_addTablesUserEvents.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809100930116_addNewColumn%28externalMatchId%29InGrEvent.cs" />
+    <Compile Include="Migrations\201809100930116_addNewColumn%28externalMatchId%29InGrEvent.Designer.cs">
+      <DependentUpon>201809100930116_addNewColumn%28externalMatchId%29InGrEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\EditEventViewModel.cs" />
     <Compile Include="Models\EditUserEventViewModel.cs" />
     <Compile Include="Models\EventListItem.cs" />
+    <Compile Include="Models\EventListViewModel.cs" />
     <Compile Include="Models\Old\ApiUserController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -307,6 +313,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809051903093_addTablesUserEvents.resx">
       <DependentUpon>201809051903093_addTablesUserEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809100930116_addNewColumn%28externalMatchId%29InGrEvent.resx">
+      <DependentUpon>201809100930116_addNewColumn%28externalMatchId%29InGrEvent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

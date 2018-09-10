@@ -1,11 +1,25 @@
-﻿@*@model ReservationListViewModel*@
+﻿@model GuessResult.Models.EditEventViewModel
 @Scripts.Render("~/bundles/js/EventList")
-@*@Scripts.Render("~/bundles/js/UserEvent")*@
-@*@Scripts.Render("~/bundles/js/ReservationList")*@
 
-<h2>Lista wydarzeń </h2>
+
+<h2>Lista rozgrywek </h2>
 <div ng-app="GR">
     <div ng-controller="EventListCtrl">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></div>
+                        <select class="form-control" data-ng-options="o.Name for e in events track by e.Id" ng-model="filteredEvent">
+                            <option value="">Wybierz status meczu</option>
+                        </select>
+                    </div>
+                    <label><input type="checkbox" name="mojChekbox"> Moje mecze</label>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-md-12">
                 <button ng-click="edit()" class="btn btn-default">Dodaj wydarzenie</button>
@@ -152,7 +166,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Wynik drużyny przeciwnej</label>
+                                        <label>Wynik drużyny gospodarzy</label>
                                         <div class="input-group">
                                             @Html.TextBox("EventHomeTeamScore", null, new
                                        {
@@ -166,7 +180,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Punkty drużyny przeciwnej</label>
+                                    <label>Wynik drużyny przeciwnej</label>
                                     <div class="input-group">
                                         @Html.TextBox("EventAwayTeamScore", null, new
                                    {
@@ -268,7 +282,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Punkty drużyny przeciwnej</label>
+                                    <label>Wynik drużyny gospodarzy</label>
                                     <div class="input-group">
                                         @Html.TextBox("UserEventAwayTeamScore", null, new
                                    {

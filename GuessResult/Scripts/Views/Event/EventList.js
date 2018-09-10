@@ -2,12 +2,16 @@
 app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
 
     $scope.loadEventList = function () {
+        let eventId = ($scope.filteredEvent != null ? $scope.filteredEvent.Id : '')
         $http.get("/api/ApiEvent/GetAll")
             .then(function (resultGetData) {
                 $scope.events = resultGetData.data;
             });
     }
     $scope.loadEventList();
+    $scope.$watchCollection('filteredEvent', function () {
+        $scope.loadList();
+    });
 
     $scope.delete = function (eventId) {
         swal({
@@ -46,7 +50,6 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
             }
         }
         $('#modalEventDetails').modal();
-
     }
 
 

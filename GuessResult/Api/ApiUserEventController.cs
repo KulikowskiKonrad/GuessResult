@@ -79,7 +79,6 @@ namespace GuessResult.Api
         //}
 
         //http://api.football-data.org/v2/competitions
-        // dodać kolumne ExternalMatchId w Events bigint nullable
         //https://www.football-data.org/documentation/quickstart
         ///v2/matches 
         /*

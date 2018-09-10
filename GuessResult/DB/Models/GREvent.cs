@@ -24,6 +24,7 @@ namespace GuessResult.DB.Models
 
         public byte? HomeTeamScore { get; set; }
 
+        public long ExternalMatchId { get; set; }
 
         public bool IsDeleted { get; set; }
 
