@@ -5,6 +5,7 @@ using GuessResult.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Http;
 
@@ -12,7 +13,13 @@ namespace GuessResult.Api
 {
     public class ApiEventController : ApiController
     {
-
+        protected long UserId
+        {
+            get
+            {
+                return long.Parse(((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+            }
+        }
         private EventRepository _eventRepository = new EventRepository();
 
         [Authorize]
@@ -27,9 +34,11 @@ namespace GuessResult.Api
                         AwayTeamName = x.AwayTeamName,
                         HomeTeamName = x.HomeTeamName,
                         Id = x.Id,
-                        AwayTeamScore= x.AwayTeamScore,
-                        HomeTeamScore=x.HomeTeamScore,
-                        StartDate = x.StartDate
+                        AwayTeamScore = x.AwayTeamScore,
+                        HomeTeamScore = x.HomeTeamScore,
+                        StartDate = x.StartDate,
+                        UserAwayTeamScore = x.UserEvents.Where(y => y.UserId == UserId && y.IsDeleted == false).SingleOrDefault()?.AwayTeamScore,
+                        UserHomeTeamScore = x.UserEvents.Where(y => y.UserId == UserId && y.IsDeleted == false).SingleOrDefault()?.HomeTeamScore
                     })
                 .OrderByDescending(x => x.StartDate)
                 .ToList();

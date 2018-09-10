@@ -22,7 +22,9 @@ namespace GuessResult.Models
 
         //dodac nazwy zespolow 
         public string AwayTeamName { get; set; }
+
         public string HomeTeamName { get; set; }
+
         public DateTime StartDate { get; set; }
     }
 }

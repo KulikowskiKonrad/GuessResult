@@ -45,6 +45,23 @@ namespace GuessResult.Repositories
             }
         }
 
+        public GRUserEvent GetById(long id)
+        {
+            try
+            {
+                using (DB.GuessResultContext db = new DB.GuessResultContext())
+                {
+                    GRUserEvent result = db.UserEvents.Where(x => x.Id == id).SingleOrDefault();
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return null;
+            }
+        }
+
         public GRUserEvent GetByUserId(long userId)
         {
             try
@@ -70,6 +87,13 @@ namespace GuessResult.Repositories
                 using (DB.GuessResultContext db = new DB.GuessResultContext())
                 {
                     db.Entry(userEvent).State = userEvent.Id > 0 ? EntityState.Modified : EntityState.Added;
+                    //db.UserEvents.Add(new GRUserEvent
+                    //{
+                    //    AwayTeamScore = userEvent.AwayTeamScore,
+                    //    EventId = userEvent.EventId,
+                    //    HomeTeamScore = userEvent.AwayTeamScore,
+                    //    UserId = userEvent.UserId
+                    //});
                     db.SaveChanges();
                     result = userEvent.Id;
                 }

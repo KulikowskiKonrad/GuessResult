@@ -39,6 +39,7 @@ namespace GuessResult.Api
                 var userEventFromDb = _userEventRepository.GetByEventIdAndUserId(eventId, UserId);
                 if (userEventFromDb != null)
                 {
+                    result.Id = userEventFromDb.Id;
                     result.AwayTeamScore = userEventFromDb.AwayTeamScore;
                     result.HomeTeamScore = userEventFromDb.HomeTeamScore;
                 }
@@ -77,52 +78,64 @@ namespace GuessResult.Api
         //    }
         //}
 
+        //http://api.football-data.org/v2/competitions
+        // dodać kolumne ExternalMatchId w Events bigint nullable
+        //https://www.football-data.org/documentation/quickstart
+        ///v2/matches 
+        /*
+         * competitions={competitionIds}
+        dateFrom={DATE}
+        dateTo={DATE}
+        status={STATUS} 
+         */
 
-        //[Authorize]
-        //[HttpPost]
-        //public IHttpActionResult SaveUserEventDetails(EditUserEventViewModel model)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            UserEventRepository userEventRepository = new UserEventRepository();
-        //            GRUserEvent userEvent = null;
-        //            if (model.Id.HasValue)
-        //            {
-        //                userEvent = userEventRepository.GetById(model.Id.Value);
-        //            }
-        //            else
-        //            {
-        //                userEvent = new GRUserEvent();
-        //            }
+        [Authorize]
+        [HttpPost]
+        public IHttpActionResult SaveUserEventDetails(UserEventListItem model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    UserEventRepository userEventRepository = new UserEventRepository();
+                    GRUserEvent userEvent = null;
+                    if (model.Id.HasValue)
+                    {
+                        userEvent = userEventRepository.GetById(model.Id.Value);
+                    }
+                    else
+                    {
+                        userEvent = new GRUserEvent();
+                    }
 
-        //            userEvent.HomeTeamScore = model.HomeTeamScore.Value;
-        //            userEvent.AwayTeamScore = model.AwayTeamScore.Value;
-        //            userEvent.EventId = model.EventId;
-        //            userEvent.UserId = model.UserId;
+                    EventRepository eventRepository = new EventRepository();
+                    userEvent.HomeTeamScore = model.HomeTeamScore.Value;
+                    userEvent.AwayTeamScore = model.AwayTeamScore.Value;
+                    model.UserId = UserId;
+                    userEvent.UserId = model.UserId;
+                    userEvent.EventId = model.EventId;
 
-        //            long? saveResult = userEventRepository.Save(userEvent);
+                    long? saveResult = userEventRepository.Save(userEvent);
 
-        //            if (saveResult == null)
-        //            {
-        //                return InternalServerError();
-        //            }
-        //            else
-        //            {
-        //                return Ok();
-        //            }
-        //        }
-        //        else
-        //        {
-        //            return InternalServerError();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        LogHelper.Log.Error(ex);
-        //        return InternalServerError();
-        //    }
-        //}
+                    if (saveResult == null)
+                    {
+                        return InternalServerError();
+                    }
+                    else
+                    {
+                        return Ok();
+                    }
+                }
+                else
+                {
+                    return InternalServerError();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return InternalServerError();
+            }
+        }
     }
 }

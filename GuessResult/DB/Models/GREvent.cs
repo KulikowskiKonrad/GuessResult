@@ -26,5 +26,8 @@ namespace GuessResult.DB.Models
 
 
         public bool IsDeleted { get; set; }
+
+
+        public virtual List<GRUserEvent> UserEvents { get; set; }
     }
 }

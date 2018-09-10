@@ -25,5 +25,9 @@ namespace GuessResult.Models
 
         public byte? HomeTeamScore { get; set; }
 
+        public byte? UserAwayTeamScore { get; set; }
+
+        public byte? UserHomeTeamScore { get; set; }
+
     }
 }

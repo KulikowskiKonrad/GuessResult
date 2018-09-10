@@ -112,21 +112,23 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
         //}
         //);
 
-        if ($scope.formSaveEventDetails.$valid) {
+        if ($scope.formSaveUserEventDetails.$valid) {
             $http.post("/api/ApiUserEvent/SaveUserEventDetails",
                 {
                     Id: $scope.editedUserEvent.Id,
-                    Name: $scope.editedEvent.Name,
-                    StartDate: $scope.editedEvent.StartDate,
-                    HomeTeamName: $scope.editedEvent.HomeTeamName,
-                    AwayTeamName: $scope.editedEvent.AwayTeamName,
-                    HomeTeamScore: $scope.editedEvent.HomeTeamScore,
-                    AwayTeamScore: $scope.editedEvent.AwayTeamScore
+                    //Name: $scope.editedUserEvent.Name,
+                    StartDate: $scope.editedUserEvent.StartDate,
+                    HomeTeamName: $scope.editedUserEvent.HomeTeamName,
+                    AwayTeamName: $scope.editedUserEvent.AwayTeamName,
+                    HomeTeamScore: $scope.editedUserEvent.HomeTeamScore,
+                    AwayTeamScore: $scope.editedUserEvent.AwayTeamScore,
+                    EventId: $scope.editedUserEvent.EventId
+                    //UserId: $scope.editedUserEvent.UserId
                 })
                 .then(function (response) {
                     $scope.editedUserEvent = null;
                     $('#modalUserEventDetails').modal('hide');
-                    //$scope.loadEventList();
+                    $scope.loadEventList();
                 })
                 .catch(function (data, status) {
                     swal({

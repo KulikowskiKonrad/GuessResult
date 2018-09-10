@@ -16,7 +16,7 @@ namespace GuessResult.Repositories
             {
                 using (DB.GuessResultContext db = new DB.GuessResultContext())
                 {
-                    List<GREvent> listEvents = db.Events.Where(x => x.IsDeleted == false).ToList();
+                    List<GREvent> listEvents = db.Events.Include(x => x.UserEvents).Where(x => x.IsDeleted == false).ToList();
                     return listEvents;
                 }
             }
