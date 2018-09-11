@@ -1,4 +1,5 @@
 ﻿using GuessResult.DB.Models;
+using GuessResult.Enum;
 using GuessResult.Helpers;
 using GuessResult.Models;
 using GuessResult.Repositories;
@@ -24,11 +25,11 @@ namespace GuessResult.Api
 
         [Authorize]
         [HttpGet]
-        public IHttpActionResult GetAll()
+        public IHttpActionResult GetAll([FromUri]EventStatus? filterEventStatus)
         {
             try
             {
-                List<EventListItem> result = _eventRepository.GetAll()
+                List<EventListItem> result = _eventRepository.GetAll(filterEventStatus)
                     .Select(x => new EventListItem()
                     {
                         AwayTeamName = x.AwayTeamName,

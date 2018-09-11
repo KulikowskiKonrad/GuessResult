@@ -1,4 +1,4 @@
-﻿@model GuessResult.Models.EditEventViewModel
+﻿@model GuessResult.Models.EventListViewModel
 @Scripts.Render("~/bundles/js/EventList")
 
 
@@ -11,11 +11,16 @@
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></div>
-                        <select class="form-control" data-ng-options="o.Name for e in events track by e.Id" ng-model="filteredEvent">
+                        @*@Html.DropDownList("filterEventStatus", Model.StatusList, "Dowolny status", new
+                            {
+                                @class = "form-control",
+                                ng_model = "filterEventStatus"
+                            })*@
+                        <select class="form-control" data-ng-options="e.Name for e in eventStatusList track by e.Id" ng-model="filterEventStatus">
                             <option value="">Wybierz status meczu</option>
                         </select>
                     </div>
-                    <label><input type="checkbox" name="mojChekbox"> Moje mecze</label>
+                    <label><input type="checkbox" ng-model="filterOnlyMyEvents"> Moje mecze</label>
                 </div>
             </div>
         </div>

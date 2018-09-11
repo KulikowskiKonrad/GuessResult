@@ -1,4 +1,5 @@
 ﻿using GuessResult.DB.Models;
+using GuessResult.Enum;
 using GuessResult.Helpers;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,16 @@ namespace GuessResult.Repositories
 {
     public class EventRepository
     {
-        public List<GREvent> GetAll()
+        public List<GREvent> GetAll(EventStatus? filterEventStatus)
         {
             try
             {
                 using (DB.GuessResultContext db = new DB.GuessResultContext())
                 {
-                    List<GREvent> listEvents = db.Events.Include(x => x.UserEvents).Where(x => x.IsDeleted == false).ToList();
+                    List<GREvent> listEvents = db.Events.Include(x => x.UserEvents).Where(x => x.IsDeleted == false
+                        && (!filterEventStatus.HasValue
+                            || (filterEventStatus.Value == EventStatus.Przyszly && x.StartDate > DateTime.Now)
+                            || (filterEventStatus.Value == EventStatus.Zakonczony && x.StartDate <= DateTime.Now))).ToList();
                     return listEvents;
                 }
             }

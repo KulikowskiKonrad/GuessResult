@@ -1,16 +1,28 @@
 ﻿var app = angular.module('GR', []);
 app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
 
+    $scope.eventStatusList = [
+        {
+            Id: 1,
+            Name: 'Zakończony'
+        },
+        {
+            Id: 2,
+            Name: 'Przyszły'
+        },
+    ];
+
     $scope.loadEventList = function () {
-        let eventId = ($scope.filteredEvent != null ? $scope.filteredEvent.Id : '')
-        $http.get("/api/ApiEvent/GetAll")
+        debugger;
+        let filterEventStatus = ($scope.filterEventStatus != null ? $scope.filterEventStatus.Id : '')
+        $http.get("/api/ApiEvent/GetAll?filterEventStatus=" + filterEventStatus)
             .then(function (resultGetData) {
                 $scope.events = resultGetData.data;
             });
     }
     $scope.loadEventList();
-    $scope.$watchCollection('filteredEvent', function () {
-        $scope.loadList();
+    $scope.$watchCollection('filterEventStatus', function () {
+        $scope.loadEventList();
     });
 
     $scope.delete = function (eventId) {
@@ -59,12 +71,12 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
     }
 
     $scope.SaveEventDetails = function () {
-        angular.forEach($scope.formSaveEventDetails.$error, function (field) {
-            angular.forEach(field, function (errorField) {
-                errorField.$setTouched();
-            })
-        }
-        );
+        //angular.forEach($scope.formSaveEventDetails.$error, function (field) {
+        //    angular.forEach(field, function (errorField) {
+        //        errorField.$setTouched();
+        //    })
+        //}
+        //);
 
         if ($scope.formSaveEventDetails.$valid) {
             $http.post("/api/ApiEvent/SaveEventDetails",

@@ -1,5 +1,6 @@
 ﻿using GuessResult.DB.Models;
 using GuessResult.Helpers;
+using GuessResult.Models;
 using GuessResult.Repositories;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,7 @@ namespace GuessResult.Controllers
         {
             try
             {
-                return View();
-
+                return View(new EventListViewModel());
             }
             catch (Exception ex)
             {

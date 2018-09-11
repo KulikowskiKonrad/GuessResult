@@ -6,7 +6,7 @@ using System.Web;
 
 namespace GuessResult.Enum
 {
-    public enum MatchStatus:byte
+    public enum EventStatus : byte
     {
         [Description("Zakończony")]
         Zakonczony = 1,

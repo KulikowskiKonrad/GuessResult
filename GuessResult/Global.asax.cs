@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GuessResult.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,6 +19,9 @@ namespace GuessResult
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+
+            new FootballDataApiService().ImportEvents();
         }
     }
 }
