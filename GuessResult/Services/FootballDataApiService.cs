@@ -33,6 +33,7 @@ namespace GuessResult.Services
 
                 foreach (var item in response2.Data.matches)
                 {
+                    GREvent gREvent = _eventRepository.GetByExternalMatchId(item.id);
                     GREvent eventToSave = new GREvent()
                     {
                         AwayTeamName = item.awayTeam.name,
@@ -42,8 +43,16 @@ namespace GuessResult.Services
                         HomeTeamScore = (byte?)item.score.fullTime.homeTeam,
                         StartDate = item.utcDate,
                     };
-
-
+                    if (gREvent.Id != 0 && gREvent.HomeTeamScore != item.score.fullTime.homeTeam && gREvent.AwayTeamScore != item.score.fullTime.awayTeam)
+                    {
+                        gREvent.AwayTeamScore = (byte?)item.score.fullTime.awayTeam;
+                        gREvent.HomeTeamScore = (byte?)item.score.fullTime.homeTeam;
+                        _eventRepository.Save(gREvent);
+                    }
+                    else
+                    {
+                        _eventRepository.Save(eventToSave);
+                    }
                 }
             }
             catch (Exception ex)

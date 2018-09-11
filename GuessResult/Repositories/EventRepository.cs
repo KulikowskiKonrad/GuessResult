@@ -5,13 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 
 namespace GuessResult.Repositories
 {
     public class EventRepository
     {
-        public List<GREvent> GetAll(EventStatus? filterEventStatus)
+        public List<GREvent> GetAll(EventStatus? filterEventStatus, bool filterOnlyMyEvents)
         {
             try
             {
@@ -20,7 +21,9 @@ namespace GuessResult.Repositories
                     List<GREvent> listEvents = db.Events.Include(x => x.UserEvents).Where(x => x.IsDeleted == false
                         && (!filterEventStatus.HasValue
                             || (filterEventStatus.Value == EventStatus.Przyszly && x.StartDate > DateTime.Now)
-                            || (filterEventStatus.Value == EventStatus.Zakonczony && x.StartDate <= DateTime.Now))).ToList();
+                            || (filterEventStatus.Value == EventStatus.Zakonczony && x.StartDate <= DateTime.Now)
+                            && (filterOnlyMyEvents == true || filterOnlyMyEvents == false)
+                           )).ToList();
                     return listEvents;
                 }
             }
@@ -31,7 +34,24 @@ namespace GuessResult.Repositories
             }
         }
 
-
+        //public List<GREvent> GetAll(EventStatus? filterEventStatus, bool filterOnlyMyEvents, long userId)
+        //{
+        //    try
+        //    {
+        //        using (DB.GuessResultContext db = new DB.GuessResultContext())
+        //        {
+        //            List<GREvent> listEvents = db.Events.Include(x => x.UserEvents).Where(x => x.IsDeleted == false
+        //              && x.
+        //                   )).ToList();
+        //            return listEvents;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LogHelper.Log.Error(ex);
+        //        return null;
+        //    }
+        //}
         public GREvent GetById(long eventId)
         {
             try
@@ -40,6 +60,24 @@ namespace GuessResult.Repositories
                 using (DB.GuessResultContext db = new DB.GuessResultContext())
                 {
                     result = db.Events.Where(x => x.Id == eventId).SingleOrDefault();
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return null;
+            }
+        }
+
+        public GREvent GetByExternalMatchId(long externalMatchId)
+        {
+            try
+            {
+                GREvent result = null;
+                using (DB.GuessResultContext db = new DB.GuessResultContext())
+                {
+                    result = db.Events.Where(x => x.ExternalMatchId == externalMatchId).SingleOrDefault();
                 }
                 return result;
             }

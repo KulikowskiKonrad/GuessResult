@@ -53,41 +53,6 @@ namespace GuessResult.Api
             }
         }
 
-        //[Authorize]
-        //[HttpDelete]
-        //public IHttpActionResult Delete([FromUri]long id)
-        //{
-        //    try
-        //    {
-        //        GRUserEvent userEventToDelete = _userEventRepository.GetById(id);
-        //        userEventToDelete.IsDeleted = true;
-        //        long? saveResult = _userEventRepository.Save(userEventToDelete);
-        //        if (saveResult.HasValue)
-        //        {
-        //            return Ok();
-        //        }
-        //        else
-        //        {
-        //            return InternalServerError();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        LogHelper.Log.Error(ex);
-        //        return InternalServerError();
-        //    }
-        //}
-
-        //http://api.football-data.org/v2/competitions
-        //https://www.football-data.org/documentation/quickstart
-        ///v2/matches 
-        /*
-         * competitions={competitionIds}
-        dateFrom={DATE}
-        dateTo={DATE}
-        status={STATUS} 
-         */
-
         [Authorize]
         [HttpPost]
         public IHttpActionResult SaveUserEventDetails(UserEventListItem model)

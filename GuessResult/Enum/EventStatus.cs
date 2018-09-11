@@ -12,6 +12,12 @@ namespace GuessResult.Enum
         Zakonczony = 1,
 
         [Description("Przyszły")]
-        Przyszly = 2
+        Przyszly = 2,
+
+        [Description("Skończony")]
+        Finished = 3,
+
+        [Description("Planowany")]
+        Scheduled = 4
     }
 }

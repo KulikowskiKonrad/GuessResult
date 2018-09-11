@@ -25,11 +25,11 @@ namespace GuessResult.Api
 
         [Authorize]
         [HttpGet]
-        public IHttpActionResult GetAll([FromUri]EventStatus? filterEventStatus)
+        public IHttpActionResult GetAll([FromUri]EventStatus? filterEventStatus,[FromUri]bool filterOnlyMyEvents)
         {
             try
             {
-                List<EventListItem> result = _eventRepository.GetAll(filterEventStatus)
+                List<EventListItem> result = _eventRepository.GetAll(filterEventStatus, filterOnlyMyEvents)
                     .Select(x => new EventListItem()
                     {
                         AwayTeamName = x.AwayTeamName,
@@ -39,6 +39,7 @@ namespace GuessResult.Api
                         HomeTeamScore = x.HomeTeamScore,
                         StartDate = x.StartDate,
                         UserAwayTeamScore = x.UserEvents.Where(y => y.UserId == UserId && y.IsDeleted == false).SingleOrDefault()?.AwayTeamScore,
+                        UserId=UserId,
                         UserHomeTeamScore = x.UserEvents.Where(y => y.UserId == UserId && y.IsDeleted == false).SingleOrDefault()?.HomeTeamScore
                     })
                 .OrderByDescending(x => x.StartDate)

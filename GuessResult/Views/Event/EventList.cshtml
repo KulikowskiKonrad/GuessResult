@@ -45,7 +45,7 @@
                         <th>
                             Wynik
                         </th>
-                        <th>Wynik użytkownika</th>
+                        <th style="text-align:center">Wynik użytkownika</th>
                         <th style="width: 20px;"></th>
                         <th style="width: 20px;"></th>
                         <th style="width: 100px;"></th>
@@ -67,13 +67,12 @@
                         <td ng-show="{{singleEvent.HomeTeamScore == null}} || {{singleEvent.AwayTeamScore == null}}">
                             Brak danych
                         </td>
-                        <td ng-hide="{{singleEvent.UserHomeTeamScore == null}} || {{singleEvent.UserAwayTeamScore == null}}">
+                        <td style="text-align:center" ng-hide="{{singleEvent.UserHomeTeamScore == null}} || {{singleEvent.UserAwayTeamScore == null}}">
                             {{singleEvent.UserHomeTeamScore +  ':'  +singleEvent.UserAwayTeamScore}}
                         </td>
                         <td ng-show="{{singleEvent.UserHomeTeamScore == null}} || {{singleEvent.UserAwayTeamScore == null}}">
                             Brak danych
                         </td>
-
                         <td>
                             <button type="button" ng-click="edit(singleEvent.Id)" title="edytuj" class="btn btn-default btn-sm btn-usun  pull-right" style="margin-right:5px">
                                 <span class="glyphicon glyphicon-cog "></span>
@@ -84,7 +83,6 @@
                                 <span class="glyphicon glyphicon-asterisk"></span>
                             </button>
                         </td>
-
                         <td>
                             @if (User.IsInRole("Admin"))
                             {
@@ -97,14 +95,12 @@
                     <tr ng-show="events.length == 0 ">
                         <td></td>
                         <td></td>
-
                         <td>
                             Brak danych
                         </td>
                         <td></td>
                         <td></td>
                         <td></td>
-
                     </tr>
                 </table>
             </div>
