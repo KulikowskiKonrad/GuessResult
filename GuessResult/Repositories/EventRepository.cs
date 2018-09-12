@@ -12,7 +12,7 @@ namespace GuessResult.Repositories
 {
     public class EventRepository
     {
-        public List<GREvent> GetAll(EventStatus? filterEventStatus, bool filterOnlyMyEvents)
+        public List<GREvent> GetAll(EventStatus? filterEventStatus, bool filterOnlyMyEvents, long userId)
         {
             try
             {
@@ -20,10 +20,10 @@ namespace GuessResult.Repositories
                 {
                     List<GREvent> listEvents = db.Events.Include(x => x.UserEvents).Where(x => x.IsDeleted == false
                         && (!filterEventStatus.HasValue
-                            || (filterEventStatus.Value == EventStatus.Przyszly && x.StartDate > DateTime.Now)
-                            || (filterEventStatus.Value == EventStatus.Zakonczony && x.StartDate <= DateTime.Now)
-                            && (filterOnlyMyEvents == true || filterOnlyMyEvents == false)
-                           )).ToList();
+                            || (filterEventStatus.Value == EventStatus.Scheduled && x.StartDate > DateTime.Now)
+                            || (filterEventStatus.Value == EventStatus.Finished && x.StartDate <= DateTime.Now))
+                        && (filterOnlyMyEvents == false || x.UserEvents.Where(y => y.UserId == userId && !y.IsDeleted).Any())
+                           ).ToList();
                     return listEvents;
                 }
             }

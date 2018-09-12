@@ -7,7 +7,7 @@
     <div ng-controller="EventListCtrl">
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-3">
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></div>
@@ -20,16 +20,25 @@
                             <option value="">Wybierz status meczu</option>
                         </select>
                     </div>
-                    <label><input type="checkbox" ng-model="filterOnlyMyEvents"> Moje mecze</label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <div class="checkbox">
+                        <input type="checkbox" id="filterOnlyMyEvents" ng-model="filterOnlyMyEvents">
+                        <label for="filterOnlyMyEvents">
+                            Moje mecze
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <button ng-click="edit()" class="btn btn-default">Dodaj wydarzenie</button>
-            </div>
-        </div>
+        @*<div class="row">
+                <div class="col-md-12">
+                    <button ng-click="edit()" class="btn btn-default">Dodaj wydarzenie</button>
+                </div>
+            </div>*@
 
         <div class="row">
             <div class="col-sm-12">
@@ -46,8 +55,8 @@
                             Wynik
                         </th>
                         <th style="text-align:center">Wynik użytkownika</th>
-                        <th style="width: 20px;"></th>
-                        <th style="width: 20px;"></th>
+                        @*<th style="width: 20px;"></th>
+                            <th style="width: 20px;"></th>*@
                         <th style="width: 100px;"></th>
                     </tr>
 
@@ -65,32 +74,32 @@
                             {{singleEvent.HomeTeamScore +  ':'  +singleEvent.AwayTeamScore}}
                         </td>
                         <td ng-show="{{singleEvent.HomeTeamScore == null}} || {{singleEvent.AwayTeamScore == null}}">
-                            Brak danych
+                            -
                         </td>
                         <td style="text-align:center" ng-hide="{{singleEvent.UserHomeTeamScore == null}} || {{singleEvent.UserAwayTeamScore == null}}">
                             {{singleEvent.UserHomeTeamScore +  ':'  +singleEvent.UserAwayTeamScore}}
                         </td>
                         <td ng-show="{{singleEvent.UserHomeTeamScore == null}} || {{singleEvent.UserAwayTeamScore == null}}">
-                            Brak danych
+                            -
                         </td>
-                        <td>
-                            <button type="button" ng-click="edit(singleEvent.Id)" title="edytuj" class="btn btn-default btn-sm btn-usun  pull-right" style="margin-right:5px">
-                                <span class="glyphicon glyphicon-cog "></span>
-                            </button>
-                        </td>
+                        @*<td>
+                                <button type="button" ng-click="edit(singleEvent.Id)" title="edytuj" class="btn btn-default btn-sm btn-usun  pull-right" style="margin-right:5px">
+                                    <span class="glyphicon glyphicon-cog "></span>
+                                </button>
+                            </td>*@
                         <td>
                             <button type="button" ng-click="editUserEvent(singleEvent.Id)" title="edytuj" class="btn btn-default btn-sm btn-usun  pull-right" style="margin-right:5px">
                                 <span class="glyphicon glyphicon-asterisk"></span>
                             </button>
                         </td>
-                        <td>
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <button type="button" ng-click="delete(singleEvent.Id)" title="Usuń" class="btn btn-default btn-sm btn-usun  pull-right" style="margin-right:5px">
-                                    <span class="glyphicon glyphicon-trash "></span>
-                                </button>
-                            }
-                        </td>
+                        @*<td>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <button type="button" ng-click="delete(singleEvent.Id)" title="Usuń" class="btn btn-default btn-sm btn-usun  pull-right" style="margin-right:5px">
+                                        <span class="glyphicon glyphicon-trash "></span>
+                                    </button>
+                                }
+                            </td>*@
                     </tr>
                     <tr ng-show="events.length == 0 ">
                         <td></td>

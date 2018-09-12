@@ -11,12 +11,12 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
             Name: 'Przyszły'
         },
     ];
-   // dodajesz + "&nowyParametr=" + $scope.coscos
+    // dodajesz + "&nowyParametr=" + $scope.coscos
 
     $scope.loadEventList = function () {
         let filterEventStatus = ($scope.filterEventStatus != null ? $scope.filterEventStatus.Id : '')
-        let filterOnlyMyEvents = ($scope.filterOnlyMyEvents == true || $scope.filterOnlyMyEvents == false)
-        $http.get("/api/ApiEvent/GetAll?filterEventStatus=" + filterEventStatus +"&filterOnlyMyEvents="+ filterOnlyMyEvents)
+        let filterOnlyMyEvents = ($scope.filterOnlyMyEvents != null ? $scope.filterOnlyMyEvents : false);
+        $http.get("/api/ApiEvent/GetAll?filterEventStatus=" + filterEventStatus + "&filterOnlyMyEvents=" + filterOnlyMyEvents)
             .then(function (resultGetData) {
                 $scope.events = resultGetData.data;
             });

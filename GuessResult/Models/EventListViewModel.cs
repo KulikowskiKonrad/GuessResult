@@ -21,13 +21,13 @@ namespace GuessResult.Models
             StatusList = new List<SelectListItem>();
             StatusList.Add(new SelectListItem()
             {
-                Text = EventStatus.Przyszly.GetEnumDescription(),
-                Value = EventStatus.Przyszly.ToString()
+                Text = EventStatus.Scheduled.GetEnumDescription(),
+                Value = EventStatus.Scheduled.ToString()
             });
             StatusList.Add(new SelectListItem()
             {
-                Text = EventStatus.Zakonczony.GetEnumDescription(),
-                Value = EventStatus.Zakonczony.ToString()
+                Text = EventStatus.Finished.GetEnumDescription(),
+                Value = EventStatus.Finished.ToString()
             });
         }
 

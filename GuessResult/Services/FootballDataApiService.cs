@@ -34,24 +34,24 @@ namespace GuessResult.Services
                 foreach (var item in response2.Data.matches)
                 {
                     GREvent gREvent = _eventRepository.GetByExternalMatchId(item.id);
-                    GREvent eventToSave = new GREvent()
+                    if (gREvent == null)
                     {
-                        AwayTeamName = item.awayTeam.name,
-                        AwayTeamScore = (byte?)item.score.fullTime.awayTeam,
-                        ExternalMatchId = item.id,
-                        HomeTeamName = item.homeTeam.name,
-                        HomeTeamScore = (byte?)item.score.fullTime.homeTeam,
-                        StartDate = item.utcDate,
-                    };
-                    if (gREvent.Id != 0 && gREvent.HomeTeamScore != item.score.fullTime.homeTeam && gREvent.AwayTeamScore != item.score.fullTime.awayTeam)
+                        gREvent = new GREvent()
+                        {
+                            AwayTeamName = item.awayTeam.name,
+                            AwayTeamScore = (byte?)item.score.fullTime.awayTeam,
+                            ExternalMatchId = item.id,
+                            HomeTeamName = item.homeTeam.name,
+                            HomeTeamScore = (byte?)item.score.fullTime.homeTeam,
+                            StartDate = item.utcDate,
+                        };
+                        _eventRepository.Save(gREvent);
+                    }
+                    else if (gREvent.HomeTeamScore != item.score.fullTime.homeTeam && gREvent.AwayTeamScore != item.score.fullTime.awayTeam)
                     {
                         gREvent.AwayTeamScore = (byte?)item.score.fullTime.awayTeam;
                         gREvent.HomeTeamScore = (byte?)item.score.fullTime.homeTeam;
                         _eventRepository.Save(gREvent);
-                    }
-                    else
-                    {
-                        _eventRepository.Save(eventToSave);
                     }
                 }
             }

@@ -6,18 +6,12 @@ using System.Web;
 
 namespace GuessResult.Enum
 {
-    public enum EventStatus : byte
+    public enum EventStatus
     {
-        [Description("Zakończony")]
-        Zakonczony = 1,
-
-        [Description("Przyszły")]
-        Przyszly = 2,
+        [Description("Planowany")]
+        Scheduled = 1,
 
         [Description("Skończony")]
-        Finished = 3,
-
-        [Description("Planowany")]
-        Scheduled = 4
+        Finished = 2
     }
 }

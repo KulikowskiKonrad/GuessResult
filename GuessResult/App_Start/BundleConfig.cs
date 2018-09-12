@@ -30,6 +30,8 @@ namespace GuessResult
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/sweetalert2.css",
+                      "~/Content/awesome-bootstrap-checkbox.css",
+                      "~/Content/font-awesome.css",
                       "~/Content/site.css"));
         }
     }
