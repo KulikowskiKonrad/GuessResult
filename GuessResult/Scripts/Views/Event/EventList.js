@@ -3,13 +3,14 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
 
     $scope.eventStatusList = [
         {
-            Id: 1,
-            Name: 'Zakończony'
-        },
-        {
             Id: 2,
             Name: 'Przyszły'
         },
+        {
+            Id: 1,
+            Name: 'Zakończony'
+        },
+       
     ];
     // dodajesz + "&nowyParametr=" + $scope.coscos
 
@@ -21,7 +22,7 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
                 $scope.events = resultGetData.data;
             });
     }
-    //$scope.loadEventList();
+    $scope.loadEventList();
     $scope.$watchCollection('filterEventStatus', function () {
         $scope.loadEventList();
     });

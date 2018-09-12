@@ -1,0 +1,22 @@
+﻿@Scripts.Render("~/bundles/js/Statystyki")
+
+<h2>Statystyki</h2>
+<div class="row">
+
+    <div ng-app="myApp" ng-controller="MyController">
+        <div fusioncharts
+             width="580"
+             height="400"
+             type="pie3d"
+             dataSource="{{myDataSource}}"
+             class="col-sm-6">
+        </div>
+        <div fusioncharts
+             width="580"
+             height="400"
+             type="pie3d"
+             dataSource="{{myDataSourceAwayTeam}}"
+             class="col-sm-6">
+        </div>
+    </div>
+</div>

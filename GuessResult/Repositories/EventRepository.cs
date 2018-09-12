@@ -20,8 +20,8 @@ namespace GuessResult.Repositories
                 {
                     List<GREvent> listEvents = db.Events.Include(x => x.UserEvents).Where(x => x.IsDeleted == false
                         && (!filterEventStatus.HasValue
-                            || (filterEventStatus.Value == EventStatus.Scheduled && x.StartDate > DateTime.Now)
-                            || (filterEventStatus.Value == EventStatus.Finished && x.StartDate <= DateTime.Now))
+                            || (filterEventStatus.Value == EventStatus.Scheduled && x.StartDate <= DateTime.Now)
+                            || (filterEventStatus.Value == EventStatus.Finished && x.StartDate > DateTime.Now))
                         && (filterOnlyMyEvents == false || x.UserEvents.Where(y => y.UserId == userId && !y.IsDeleted).Any())
                            ).ToList();
                     return listEvents;

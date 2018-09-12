@@ -31,10 +31,24 @@ namespace GuessResult.Controllers
         {
             try
             {
-                UserRepository uzytkownikRepozytorium = new UserRepository();
+                UserRepository userRepository = new UserRepository();
                 return View("Login");
             }
             catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return View("Error");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult GetAllStatiscics()
+        {
+            try
+            {
+                // UserRepository userRepository = new UserRepository();
+                return View("Statystyki");
+            }catch(Exception ex)
             {
                 LogHelper.Log.Error(ex);
                 return View("Error");

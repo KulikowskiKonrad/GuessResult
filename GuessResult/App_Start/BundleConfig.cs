@@ -16,12 +16,25 @@ namespace GuessResult
                         "~/Scripts/sweetalert2.js",
                         "~/Scripts/angular.min.js",
                         "~/Scripts/bootstrap-datetimepicker.js",
-                        "~/Scripts/ui-bootstrap-tpls-2.5.0.min.js"
+                        "~/Scripts/ui-bootstrap-tpls-2.5.0.min.js",
+                        "~/Scripts/angular-fusioncharts.js",
+                        "~/Scripts/fusioncharts.js",
+                        "~/Scripts/fusiondesign.js",
+                        "~/Scripts/fusioncharts.charts.js",
+                        "~/Scripts/fusioncharts.theme.fusion.js"
                         ));
-
 
             bundles.Add(new ScriptBundle("~/bundles/js/UserIndex").Include(
           "~/Scripts/Views/User/Index.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js/UsersStatistics").Include(
+              "~/Scripts/Views/Home/UsersStatistics.js"
+              ));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/js/Statystyki").Include(
+               "~/Scripts/Views/User/Statystyki.js"
+               ));
 
             bundles.Add(new ScriptBundle("~/bundles/js/EventList").Include(
              "~/Scripts/Views/Event/EventList.js"));
