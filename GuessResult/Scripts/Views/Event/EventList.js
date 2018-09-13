@@ -1,5 +1,5 @@
 ﻿var app = angular.module('GR', []);
-app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
+app.controller('EventListCtrl', ["$scope", "$http", '$filter', function ($scope, $http, $filter) {
 
     $scope.eventStatusList = [
         {
@@ -10,16 +10,40 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
             Id: 1,
             Name: 'Zakończony'
         },
-       
     ];
-    // dodajesz + "&nowyParametr=" + $scope.coscos
+
+    $scope.currentPage = 0;
+    $scope.pageSize = 25;
+    $scope.data = [];
+
+
+    $scope.getData = function () {
+        return $filter('filter')($scope.data)
+    }
+    $scope.numberOfPages = function () {
+        return Math.ceil($scope.getData().length / $scope.pageSize);
+    }
+
+    for (var i = 0; i < 500; i++) {
+        $scope.data.push("singleEvent.id " + i);
+    }
+
+
+    app.filter('startFrom', function () {
+        return function (input, start) {
+            start = +start; //parse to int
+            return input.slice(start);
+        }
+    })
 
     $scope.loadEventList = function () {
         let filterEventStatus = ($scope.filterEventStatus != null ? $scope.filterEventStatus.Id : '')
         let filterOnlyMyEvents = ($scope.filterOnlyMyEvents != null ? $scope.filterOnlyMyEvents : false);
         $http.get("/api/ApiEvent/GetAll?filterEventStatus=" + filterEventStatus + "&filterOnlyMyEvents=" + filterOnlyMyEvents)
             .then(function (resultGetData) {
-                $scope.events = resultGetData.data;
+                //$scope.events = resultGetData.data;
+                $scope.data = resultGetData.data;
+
             });
     }
     $scope.loadEventList();

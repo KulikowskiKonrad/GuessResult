@@ -52,6 +52,27 @@ namespace GuessResult.Api
             }
         }
 
+        [HttpGet]
+        [Authorize]
+        public IHttpActionResult GetUserStatistics(EventListItem model)
+        {
+            try
+            {
+                UserRepository userRepository = new UserRepository();
+                GRUser user = userRepository.GetById(UserId);
+                GREvent eventFromDB = _eventRepository.GetById(model.Id);
+                GRUserEvent gRUserEvent = _eventRepository.GetByExternalMatchId()
+               if(model.AwayTeamScore == )
+            }catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return InternalServerError();
+            }
+        }
+
+
+
+
         [Authorize]
         [HttpDelete]
         public IHttpActionResult Delete([FromUri]long id)

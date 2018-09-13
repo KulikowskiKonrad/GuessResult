@@ -251,6 +251,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\awesome-bootstrap-checkbox.css" />
+    <Content Include="Content\bootstrap-combined.min.css" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -265,6 +266,8 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\dirPagination.js" />
+    <Content Include="Scripts\filter.js" />
     <Content Include="Scripts\fusioncharts.charts.js" />
     <Content Include="Scripts\fusioncharts.js" />
     <Content Include="Scripts\fusioncharts.theme.fusion.js" />
@@ -275,6 +278,7 @@
     <Content Include="Scripts\locale-all.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\sweetalert2.js" />
+    <Content Include="Scripts\ui-bootstrap-tpls-0.3.0.min.js" />
     <Content Include="Scripts\ui-bootstrap-tpls-2.5.0.min.js" />
     <Content Include="Scripts\Views\Event\EventList.js" />
     <Content Include="Scripts\Views\Home\UsersStatistics.js" />

@@ -51,10 +51,6 @@ namespace GuessResult.Repositories
                 //        result = null;
                 //    }
                 //}
-
-
-
-
                 return result;
             }
             catch (Exception ex)
@@ -99,6 +95,9 @@ namespace GuessResult.Repositories
                 return null;
             }
         }
+
+
+
 
         public long? Save(GRUser rUser)
         {

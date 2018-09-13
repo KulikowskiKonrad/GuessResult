@@ -32,3 +32,6 @@ textarea {
 /*.klasa1 .klasa2 :first-child*/
 
 
+a {
+    cursor: pointer;
+}

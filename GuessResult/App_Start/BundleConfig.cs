@@ -21,6 +21,9 @@ namespace GuessResult
                         "~/Scripts/fusioncharts.js",
                         "~/Scripts/fusiondesign.js",
                         "~/Scripts/fusioncharts.charts.js",
+                        "~/Scripts/ui-bootstrap-tpls-0.3.0.min.js",
+                        "~/Scripts/dirPagination.js",
+                        "~/Scripts/filter.js",
                         "~/Scripts/fusioncharts.theme.fusion.js"
                         ));
 
@@ -41,6 +44,7 @@ namespace GuessResult
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/bootstrap-combined.min.css",
                       "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/sweetalert2.css",
                       "~/Content/awesome-bootstrap-checkbox.css",
