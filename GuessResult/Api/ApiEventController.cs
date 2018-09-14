@@ -52,23 +52,23 @@ namespace GuessResult.Api
             }
         }
 
-        [HttpGet]
-        [Authorize]
-        public IHttpActionResult GetUserStatistics(EventListItem model)
-        {
-            try
-            {
-                UserRepository userRepository = new UserRepository();
-                GRUser user = userRepository.GetById(UserId);
-                GREvent eventFromDB = _eventRepository.GetById(model.Id);
-                GRUserEvent gRUserEvent = _eventRepository.GetByExternalMatchId()
-               if(model.AwayTeamScore == )
-            }catch (Exception ex)
-            {
-                LogHelper.Log.Error(ex);
-                return InternalServerError();
-            }
-        }
+        //[HttpGet]
+        //[Authorize]
+        //public IHttpActionResult GetUserStatistics(EventListItem model)
+        //{
+        //    try
+        //    {
+        //        UserRepository userRepository = new UserRepository();
+        //        GRUser user = userRepository.GetById(UserId);
+        //        GREvent eventFromDB = _eventRepository.GetById(model.Id);
+        //        GRUserEvent gRUserEvent = _eventRepository.GetByExternalMatchId()
+        //       if(model.AwayTeamScore == )
+        //    }catch (Exception ex)
+        //    {
+        //        LogHelper.Log.Error(ex);
+        //        return InternalServerError();
+        //    }
+        //}
 
 
 
@@ -139,6 +139,37 @@ namespace GuessResult.Api
                 {
                     return InternalServerError();
                 }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return InternalServerError();
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IHttpActionResult GetUserEffectivityData(EffectivityFilterType? effectivityFilterType)
+        {
+            try
+            {
+                List<ChartDataItem> result = new List<ChartDataItem>()
+                {
+                    new ChartDataItem()
+                    {
+                        Label = "Typ trafiony",
+                        Value = 10
+                    },
+                    new ChartDataItem()
+                    {
+                        Label = "Pudło",
+                        Value = 3
+                    },
+                };
+
+                result = _eventRepository.GetEffectivityData(UserId, effectivityFilterType);
+
+                return Ok(result);
             }
             catch (Exception ex)
             {

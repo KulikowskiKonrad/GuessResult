@@ -184,6 +184,7 @@
     <Compile Include="DB\GuessResultContext.cs" />
     <Compile Include="DB\Models\GREvent.cs" />
     <Compile Include="DB\Models\GRUserEvent.cs" />
+    <Compile Include="Enum\EffectivityFilterType.cs" />
     <Compile Include="Enum\EventStatus.cs" />
     <Compile Include="Enum\MatchResult.cs" />
     <Compile Include="Migrations\201809031957055_Initial.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Migrations\201809100930116_addNewColumn%28externalMatchId%29InGrEvent.Designer.cs">
       <DependentUpon>201809100930116_addNewColumn%28externalMatchId%29InGrEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChartDataItem.cs" />
     <Compile Include="Models\EditEventViewModel.cs" />
     <Compile Include="Models\EditUserEventViewModel.cs" />
     <Compile Include="Models\EventListItem.cs" />
@@ -250,11 +252,13 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\angular-datatables.css" />
     <Content Include="Content\awesome-bootstrap-checkbox.css" />
     <Content Include="Content\bootstrap-combined.min.css" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dataTables.bootstrap.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\sweetalert2.css" />
     <Content Include="favicon.ico" />
@@ -262,24 +266,23 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\angular-datatables.js" />
     <Content Include="Scripts\angular-fusioncharts.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\dirPagination.js" />
-    <Content Include="Scripts\filter.js" />
+    <Content Include="Scripts\dataTables.bootstrap.js" />
     <Content Include="Scripts\fusioncharts.charts.js" />
     <Content Include="Scripts\fusioncharts.js" />
     <Content Include="Scripts\fusioncharts.theme.fusion.js" />
     <Content Include="Scripts\fusiondesign.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\locale-all.js" />
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\sweetalert2.js" />
-    <Content Include="Scripts\ui-bootstrap-tpls-0.3.0.min.js" />
-    <Content Include="Scripts\ui-bootstrap-tpls-2.5.0.min.js" />
     <Content Include="Scripts\Views\Event\EventList.js" />
     <Content Include="Scripts\Views\Home\UsersStatistics.js" />
     <Content Include="Scripts\Views\Reservation\ReservationList.js" />

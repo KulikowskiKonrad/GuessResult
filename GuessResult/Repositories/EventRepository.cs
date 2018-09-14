@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
 using System.Web;
+using GuessResult.Models;
 
 namespace GuessResult.Repositories
 {
@@ -108,5 +109,9 @@ namespace GuessResult.Repositories
             }
         }
 
+        public List<ChartDataItem> GetEffectivityData(long userId, EffectivityFilterType? effectivityFilterType)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
