@@ -1,6 +1,5 @@
 ﻿angular.module('RR', [])
     .controller('RegisterCtrl', ["$scope", "$http", function ($scope, $http) {
-        //$scope.Email = 'KonradToPalka@gmail.com';
         $scope.Email2 = 'asdasd';
 
         $scope.registerUser = function () {

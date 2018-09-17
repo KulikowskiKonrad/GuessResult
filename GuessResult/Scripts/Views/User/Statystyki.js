@@ -8,8 +8,8 @@ app.controller('MyController', ["$scope", "$http", function ($scope, $http) {
             //"subcaption": "Drurzyna gospodarzy",
             "showvalues": "1",
             "showpercentintooltip": "0",
-            "numberprefix": "$",
-            "enablemultislicing": "1",
+            //"numberprefix": "$",
+            //"enablemultislicing": "1",
             "theme": "fusion",
         },
         "data": []
@@ -32,12 +32,12 @@ app.controller('MyController', ["$scope", "$http", function ($scope, $http) {
 
     $scope.effectivityTotalDataSource = {
         "chart": {
-            "caption": "Całkowita skuteczność typów",
+            "caption": "Całkowita skuteczność",
             //"subcaption": "Drurzyna gospodarzy",
             "showvalues": "1",
             "showpercentintooltip": "0",
-            "numberprefix": "$",
-            "enablemultislicing": "1",
+            //"numberprefix": "$",
+            //"enablemultislicing": "1",
             "theme": "fusion",
         },
         "data": []

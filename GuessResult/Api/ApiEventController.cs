@@ -184,20 +184,6 @@ namespace GuessResult.Api
         {
             try
             {
-                //List<ChartDataItem> result = new List<ChartDataItem>()
-                //{
-                //    new ChartDataItem()
-                //    {
-                //        Label = "poprawne",
-                //        Value = 10
-                //    },
-                //    new ChartDataItem()
-                //    {
-                //        Label = " błędne",
-                //        Value = 3
-                //    },
-                //};
-
                 List<ChartDataItem> result = _eventRepository.GetTopUsersData();
 
                 return Ok(result);

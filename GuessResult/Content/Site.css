@@ -153,6 +153,7 @@ a {
     .sidebar-nav li:first-child a {
         color: #fff;
         background-color: #1a1a1a;
+        /*font-size:20px;*/
     }
 
     .sidebar-nav li:nth-child(2):before {

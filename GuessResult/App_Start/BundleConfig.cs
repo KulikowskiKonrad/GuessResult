@@ -33,7 +33,7 @@ namespace GuessResult
           "~/Scripts/Views/User/Index.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js/UsersStatistics").Include(
-              "~/Scripts/Views/Home/UsersStatistics.js"
+              "~/Scripts/Views/User/UsersStatistics.js"
               ));
 
 

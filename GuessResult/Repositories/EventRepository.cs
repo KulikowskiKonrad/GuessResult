@@ -121,10 +121,12 @@ namespace GuessResult.Repositories
                             && x.Event.AwayTeamScore != null
                             && (!effectivityFilterType.HasValue || (effectivityFilterType == EffectivityFilterType.AwayTeamWin && x.AwayTeamScore > x.HomeTeamScore)
                                 || (effectivityFilterType == EffectivityFilterType.HomeTeamWin && x.HomeTeamScore > x.AwayTeamScore)
-                                || (effectivityFilterType == EffectivityFilterType.AwayTeamWin && x.AwayTeamScore == x.HomeTeamScore))).ToList();
+                                || (effectivityFilterType == EffectivityFilterType.Tie && x.AwayTeamScore == x.HomeTeamScore))).ToList();
+
                     int correctResultsCount = listUserScore.Where(x => (x.HomeTeamScore > x.AwayTeamScore && x.Event.HomeTeamScore > x.Event.AwayTeamScore)
                         || (x.HomeTeamScore == x.AwayTeamScore && x.Event.HomeTeamScore == x.Event.AwayTeamScore)
                         || (x.HomeTeamScore < x.AwayTeamScore && x.Event.HomeTeamScore < x.AwayTeamScore)).Count();
+
                     int wrongResultsCount = listUserScore.Count - correctResultsCount;
                     result.Add(new ChartDataItem()
                     {

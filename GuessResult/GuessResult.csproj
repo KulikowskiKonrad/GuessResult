@@ -286,7 +286,7 @@
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\sweetalert2.js" />
     <Content Include="Scripts\Views\Event\EventList.js" />
-    <Content Include="Scripts\Views\Home\UsersStatistics.js" />
+    <Content Include="Scripts\Views\User\UsersStatistics.js" />
     <Content Include="Scripts\Views\Reservation\ReservationList.js" />
     <Content Include="Scripts\Views\Room\RoomList.js" />
     <Content Include="Scripts\Views\User\Index.js" />
