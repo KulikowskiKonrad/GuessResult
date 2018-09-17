@@ -3,13 +3,15 @@
 <h2>Statystyki</h2>
 <div ng-app="myApp" ng-controller="MyController">
     <div class="row">
-        <div class="col-sm-2 col-sm-offset-2">
-            <select ng-model="effectivityFilter" class="form-control">
-                <option value=""></option>
-                <option value="1">Wygrana gospodarzy</option>
-                <option value="2">Wygrana gości</option>
-                <option value="3">Remis</option>
-            </select>
+        <div class="col-sm-4 col-sm-offset-1">
+            <div class="form-group">
+                <select ng-model="effectivityFilter" class="form-control">
+                    @*<option value="">Wybierz opcje</option>*@
+                    <option value="1">Typowana wygrana gospodarzy</option>
+                    <option value="2">Typowana wygrana gości</option>
+                    <option value="3">Typowany remis</option>
+                </select>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -17,14 +19,14 @@
              width="580"
              height="400"
              type="pie3d"
-             dataSource="{{myDataSource}}"
+             dataSource="{{effectivityDataSource}}"
              class="col-sm-6">
         </div>
         <div fusioncharts
              width="580"
              height="400"
              type="pie3d"
-             dataSource="{{myDataSourceAwayTeam}}"
+             dataSource="{{effectivityTotalDataSource}}"
              class="col-sm-6">
         </div>
     </div>

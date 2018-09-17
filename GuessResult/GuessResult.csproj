@@ -177,7 +177,6 @@
     <Compile Include="Api\ApiEventController.cs" />
     <Compile Include="Api\ApiReservationController.cs" />
     <Compile Include="Api\ApiRoomController.cs" />
-    <Compile Include="Api\ApiUserController.cs" />
     <Compile Include="Api\ApiUserEventController.cs" />
     <Compile Include="Api\ValuesController.cs" />
     <Compile Include="Controllers\EventController.cs" />
@@ -254,7 +253,6 @@
   <ItemGroup>
     <Content Include="Content\angular-datatables.css" />
     <Content Include="Content\awesome-bootstrap-checkbox.css" />
-    <Content Include="Content\bootstrap-combined.min.css" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -266,14 +264,18 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\bg_home.jpg" />
+    <Content Include="Images\bg_inner.jpg" />
     <Content Include="Scripts\angular-datatables.js" />
     <Content Include="Scripts\angular-fusioncharts.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\Common.js" />
     <Content Include="Scripts\dataTables.bootstrap.js" />
     <Content Include="Scripts\fusioncharts.charts.js" />
     <Content Include="Scripts\fusioncharts.js" />
+    <Content Include="Scripts\fusioncharts.theme.candy.js" />
     <Content Include="Scripts\fusioncharts.theme.fusion.js" />
     <Content Include="Scripts\fusiondesign.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -329,6 +331,7 @@
     <None Include="Properties\PublishProfiles\RoomReservation20180830020900 - Web Deploy.pubxml" />
     <Content Include="Views\Event\EventList.cshtml" />
     <Content Include="Views\User\Statystyki.cshtml" />
+    <Content Include="Views\User\StatystykiOgolne.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201809031957055_Initial.resx">

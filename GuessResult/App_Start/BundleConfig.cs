@@ -23,7 +23,10 @@ namespace GuessResult
                         "~/Scripts/fusioncharts.charts.js",
                         "~/Scripts/angular-datatables.js",
                         "~/Scripts/dataTables.bootstrap.js",
-                        "~/Scripts/fusioncharts.theme.fusion.js"
+                        "~/Scripts/fusioncharts.theme.fusion.js",
+                        "~/Scripts/fusioncharts.theme.candy.js",
+                        "~/Scripts/Common.js"
+
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/js/UserIndex").Include(
@@ -45,7 +48,6 @@ namespace GuessResult
                       "~/Content/bootstrap.css",
                       //"~/Content/angular-datatables.css",
                       //"~/Content/dataTables.bootstrap.css",
-                      "~/Content/bootstrap-combined.min.css",
                       "~/Content/bootstrap-datetimepicker.css",
                       "~/Content/sweetalert2.css",
                       "~/Content/awesome-bootstrap-checkbox.css",

@@ -175,6 +175,16 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
     ;
 
 
+function calculateDivEventListHeight() {
+    $('#divEventList').css('max-height', $(window).height() - $('#divEventList').offset().top - ($('footer').height() + 30));
+}
+
+$(document).ready(function () {
+    calculateDivEventListHeight();
+    $(window).resize(function () {
+        calculateDivEventListHeight();
+    });
+});
 
 
 

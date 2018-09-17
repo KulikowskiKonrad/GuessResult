@@ -48,7 +48,22 @@ namespace GuessResult.Controllers
             {
                 // UserRepository userRepository = new UserRepository();
                 return View("Statystyki");
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return View("Error");
+            }
+        }
+        [HttpGet]
+        public ActionResult GetAllStatiscicsUsers()
+        {
+            try
+            {
+                // UserRepository userRepository = new UserRepository();
+                return View("StatystykiOgolne");
+            }
+            catch (Exception ex)
             {
                 LogHelper.Log.Error(ex);
                 return View("Error");
@@ -109,7 +124,7 @@ namespace GuessResult.Controllers
                         Session.Abandon();
                         HttpContext.GetOwinContext().Authentication.SignOut();
                     }
-                    return RedirectToAction("Index","Home");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -136,7 +151,7 @@ namespace GuessResult.Controllers
             var loginInfo = await HttpContext.GetOwinContext().Authentication.GetExternalLoginInfoAsync();
             if (loginInfo == null)
             {
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
 
 

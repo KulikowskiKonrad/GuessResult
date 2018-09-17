@@ -149,25 +149,56 @@ namespace GuessResult.Api
 
         [Authorize]
         [HttpGet]
-        public IHttpActionResult GetUserEffectivityData(EffectivityFilterType? effectivityFilterType)
+        public IHttpActionResult GetUserEffectivityData(EffectivityFilterType? effectivityFilter = null)
         {
             try
             {
-                List<ChartDataItem> result = new List<ChartDataItem>()
-                {
-                    new ChartDataItem()
-                    {
-                        Label = "Typ trafiony",
-                        Value = 10
-                    },
-                    new ChartDataItem()
-                    {
-                        Label = "Pudło",
-                        Value = 3
-                    },
-                };
+                //List<ChartDataItem> result = new List<ChartDataItem>()
+                //{
+                //    new ChartDataItem()
+                //    {
+                //        Label = "poprawne",
+                //        Value = 10
+                //    },
+                //    new ChartDataItem()
+                //    {
+                //        Label = " błędne",
+                //        Value = 3
+                //    },
+                //};
 
-                result = _eventRepository.GetEffectivityData(UserId, effectivityFilterType);
+                List<ChartDataItem> result = _eventRepository.GetEffectivityData(UserId, effectivityFilter);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return InternalServerError();
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IHttpActionResult GetTopUsersData()
+        {
+            try
+            {
+                //List<ChartDataItem> result = new List<ChartDataItem>()
+                //{
+                //    new ChartDataItem()
+                //    {
+                //        Label = "poprawne",
+                //        Value = 10
+                //    },
+                //    new ChartDataItem()
+                //    {
+                //        Label = " błędne",
+                //        Value = 3
+                //    },
+                //};
+
+                List<ChartDataItem> result = _eventRepository.GetTopUsersData();
 
                 return Ok(result);
             }
