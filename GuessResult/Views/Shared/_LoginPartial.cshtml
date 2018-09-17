@@ -9,7 +9,11 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="#">@User.Identity.GetUserName()</a>
+                <a href="#" style="padding-left: 28px;">
+                    <div style="overflow : hidden; text-overflow: ellipsis; width: 180px;" title="@User.Identity.GetUserName()">
+                        @User.Identity.GetUserName()
+                    </div>
+                </a>
                 @*@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Wyloguj</a></li>
@@ -23,7 +27,7 @@ else
         <li>
             @{
                 var loginProvider = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes().Single();
-                <a href="javascript:document.getElementById('ExternalLoginForm').submit();">Zaloguj</a>
+                <a style="padding-left: 28px;" href="javascript:document.getElementById('ExternalLoginForm').submit();">Zaloguj</a>
                 using (Html.BeginForm("ExternalLogin", "User", FormMethod.Post, new { id = "ExternalLoginForm" }))
                 {
                     @Html.Hidden("provider", @loginProvider.AuthenticationType)

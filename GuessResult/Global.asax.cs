@@ -1,4 +1,5 @@
-﻿using GuessResult.Services;
+﻿using GuessResult.Jobs;
+using GuessResult.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,9 @@ namespace GuessResult
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            JobsConfiguration.Configure();
 
-
-            new FootballDataApiService().ImportEvents();
+            //new FootballDataApiService().ImportEvents();
         }
     }
 }

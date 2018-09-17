@@ -1,7 +1,6 @@
 ﻿var app = angular.module("myApp", ["ng-fusioncharts"]);
 
 app.controller('MyController', ["$scope", "$http", function ($scope, $http) {
-    debugger;
     $scope.topUsersDataSource = {
         "chart": {
             "caption": "Najlepsi użytkownicy",

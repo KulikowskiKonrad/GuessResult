@@ -49,6 +49,12 @@
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -101,6 +107,9 @@
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.5.7\lib\net45\NLog.dll</HintPath>
     </Reference>
+    <Reference Include="Quartz, Version=2.6.2.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.6.2\lib\net40\Quartz.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp, Version=106.3.1.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.106.3.1\lib\net452\RestSharp.dll</HintPath>
     </Reference>
@@ -111,6 +120,7 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
@@ -178,7 +188,6 @@
     <Compile Include="Api\ApiReservationController.cs" />
     <Compile Include="Api\ApiRoomController.cs" />
     <Compile Include="Api\ApiUserEventController.cs" />
-    <Compile Include="Api\ValuesController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="DB\GuessResultContext.cs" />
     <Compile Include="DB\Models\GREvent.cs" />
@@ -186,6 +195,8 @@
     <Compile Include="Enum\EffectivityFilterType.cs" />
     <Compile Include="Enum\EventStatus.cs" />
     <Compile Include="Enum\MatchResult.cs" />
+    <Compile Include="Jobs\FootballDataJob.cs" />
+    <Compile Include="Jobs\JobsConfiguration.cs" />
     <Compile Include="Migrations\201809031957055_Initial.cs" />
     <Compile Include="Migrations\201809031957055_Initial.Designer.cs">
       <DependentUpon>201809031957055_Initial.cs</DependentUpon>
@@ -323,10 +334,11 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\Room\RoomList.cshtml" />
-    <Content Include="Views\Reservation\ReservationList.cshtml" />
     <Content Include="Views\User\_ExternalLogin.cshtml" />
     <None Include="Properties\PublishProfiles\RoomReservation20180830020900 - Web Deploy.pubxml" />
     <Content Include="Views\Event\EventList.cshtml" />
@@ -350,9 +362,7 @@
       <DependentUpon>201809100930116_addNewColumn%28externalMatchId%29InGrEvent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\UserEvent\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

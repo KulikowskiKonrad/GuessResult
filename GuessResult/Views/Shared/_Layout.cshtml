@@ -33,31 +33,16 @@
 @if (User.Identity.IsAuthenticated)
 {
     <body class="inner">
-
         <div id="wrapper">
             <div class="overlay"></div>
-
             <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper">
-
-                @if (User.Identity.IsAuthenticated)
-                {
                 <ul class="nav sidebar-nav">
-                    @*<li class="sidebar-brand">
-            @Html.ActionLink("Strona główna", "Index", "Home", new { area = "" }, new { @class = "navbar-brand1" })
-        </li>*@
                     <li>@Html.ActionLink("Strona główna", "Index", "Home")</li>
                     <li>@Html.ActionLink("Wydarzenia", "EventList", "Event")</li>
                     <li>@Html.ActionLink("Statystyki", "GetAllStatiscics", "User")</li>
                     <li>@Html.ActionLink("Statystyki ogólne", "GetAllStatiscicsUsers", "User")</li>
                     <li class="liForm">@Html.Partial("_LoginPartial")</li>
                 </ul>
-                }
-                else
-                {
-                    <ul class="nav sidebar-nav">
-                        <li>@Html.Partial("_LoginPartial")</li>
-                    </ul>
-                }
             </nav>
 
             <div id="page-content-wrapper">
