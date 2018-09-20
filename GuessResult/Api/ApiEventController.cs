@@ -149,7 +149,7 @@ namespace GuessResult.Api
 
         [Authorize]
         [HttpGet]
-        public IHttpActionResult GetUserEffectivityData(EffectivityFilterType? effectivityFilter = null)
+        public IHttpActionResult GetUserEffectivityData(GeneralScoreType? effectivityFilter = null)
         {
             try
             {

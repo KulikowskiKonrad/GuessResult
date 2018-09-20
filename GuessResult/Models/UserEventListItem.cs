@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GuessResult.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,17 +15,18 @@ namespace GuessResult.Models
 
         public long EventId { get; set; }
 
-        [Required]
         public byte? HomeTeamScore { get; set; }
 
-        [Required]
         public byte? AwayTeamScore { get; set; }
 
-        //dodac nazwy zespolow 
         public string AwayTeamName { get; set; }
 
         public string HomeTeamName { get; set; }
 
         public DateTime StartDate { get; set; }
+
+        public EventPredictionType? EventPredictionType { get; set; }
+
+        public GeneralScoreType? GeneralScoreType { get; set; }
     }
 }

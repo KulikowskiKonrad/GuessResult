@@ -36,12 +36,14 @@ namespace GuessResult.Api
                 result.AwayTeamName = eventFromDb.AwayTeamName;
                 result.HomeTeamName = eventFromDb.HomeTeamName;
                 result.StartDate = eventFromDb.StartDate;
+                result.EventPredictionType = eventFromDb.PredictionType;
                 var userEventFromDb = _userEventRepository.GetByEventIdAndUserId(eventId, UserId);
                 if (userEventFromDb != null)
                 {
                     result.Id = userEventFromDb.Id;
                     result.AwayTeamScore = userEventFromDb.AwayTeamScore;
                     result.HomeTeamScore = userEventFromDb.HomeTeamScore;
+                    result.GeneralScoreType = userEventFromDb.GeneralScoreType;
                 }
 
                 return Ok(result);
@@ -73,8 +75,27 @@ namespace GuessResult.Api
                     }
 
                     EventRepository eventRepository = new EventRepository();
-                    userEvent.HomeTeamScore = model.HomeTeamScore.Value;
-                    userEvent.AwayTeamScore = model.AwayTeamScore.Value;
+                    var eventFromDb = eventRepository.GetById(model.EventId);
+
+                    if (User.IsInRole("Admin") && model.EventPredictionType.HasValue)
+                    {
+                        eventFromDb.PredictionType = model.EventPredictionType.Value;
+                        eventRepository.Save(eventFromDb);
+                    }
+
+                    if (eventFromDb.PredictionType == Enum.EventPredictionType.ExactScore)
+                    {
+                        userEvent.HomeTeamScore = model.HomeTeamScore.Value;
+                        userEvent.AwayTeamScore = model.AwayTeamScore.Value;
+                        userEvent.GeneralScoreType = null;
+                    }
+                    else
+                    {
+                        userEvent.HomeTeamScore = null;
+                        userEvent.AwayTeamScore = null;
+                        userEvent.GeneralScoreType = model.GeneralScoreType;
+                    }
+
                     model.UserId = UserId;
                     userEvent.UserId = model.UserId;
                     userEvent.EventId = model.EventId;

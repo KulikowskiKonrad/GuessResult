@@ -109,7 +109,7 @@ namespace GuessResult.Repositories
             }
         }
 
-        public List<ChartDataItem> GetEffectivityData(long userId, EffectivityFilterType? effectivityFilterType)
+        public List<ChartDataItem> GetEffectivityData(long userId, GeneralScoreType? effectivityFilterType)
         {
             try
             {
@@ -119,9 +119,9 @@ namespace GuessResult.Repositories
                     List<GRUserEvent> listUserScore = db.UserEvents.Include(x => x.Event)
                         .Where(x => x.UserId == userId && !x.IsDeleted
                             && x.Event.AwayTeamScore != null
-                            && (!effectivityFilterType.HasValue || (effectivityFilterType == EffectivityFilterType.AwayTeamWin && x.AwayTeamScore > x.HomeTeamScore)
-                                || (effectivityFilterType == EffectivityFilterType.HomeTeamWin && x.HomeTeamScore > x.AwayTeamScore)
-                                || (effectivityFilterType == EffectivityFilterType.Tie && x.AwayTeamScore == x.HomeTeamScore))).ToList();
+                            && (!effectivityFilterType.HasValue || (effectivityFilterType == GeneralScoreType.AwayTeamWin && x.AwayTeamScore > x.HomeTeamScore)
+                                || (effectivityFilterType == GeneralScoreType.HomeTeamWin && x.HomeTeamScore > x.AwayTeamScore)
+                                || (effectivityFilterType == GeneralScoreType.Tie && x.AwayTeamScore == x.HomeTeamScore))).ToList();
 
                     int correctResultsCount = listUserScore.Where(x => (x.HomeTeamScore > x.AwayTeamScore && x.Event.HomeTeamScore > x.Event.AwayTeamScore)
                         || (x.HomeTeamScore == x.AwayTeamScore && x.Event.HomeTeamScore == x.Event.AwayTeamScore)

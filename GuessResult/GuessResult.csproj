@@ -192,9 +192,10 @@
     <Compile Include="DB\GuessResultContext.cs" />
     <Compile Include="DB\Models\GREvent.cs" />
     <Compile Include="DB\Models\GRUserEvent.cs" />
-    <Compile Include="Enum\EffectivityFilterType.cs" />
+    <Compile Include="Enum\GeneralScoreType.cs" />
     <Compile Include="Enum\EventStatus.cs" />
     <Compile Include="Enum\MatchResult.cs" />
+    <Compile Include="Enum\EventPredictionType.cs" />
     <Compile Include="Jobs\FootballDataJob.cs" />
     <Compile Include="Jobs\JobsConfiguration.cs" />
     <Compile Include="Migrations\201809031957055_Initial.cs" />
@@ -216,6 +217,10 @@
     <Compile Include="Migrations\201809100930116_addNewColumn%28externalMatchId%29InGrEvent.cs" />
     <Compile Include="Migrations\201809100930116_addNewColumn%28externalMatchId%29InGrEvent.Designer.cs">
       <DependentUpon>201809100930116_addNewColumn%28externalMatchId%29InGrEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809191416027_AddEventPredictionType.cs" />
+    <Compile Include="Migrations\201809191416027_AddEventPredictionType.Designer.cs">
+      <DependentUpon>201809191416027_AddEventPredictionType.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\ChartDataItem.cs" />
     <Compile Include="Models\EditEventViewModel.cs" />
@@ -360,6 +365,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809100930116_addNewColumn%28externalMatchId%29InGrEvent.resx">
       <DependentUpon>201809100930116_addNewColumn%28externalMatchId%29InGrEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809191416027_AddEventPredictionType.resx">
+      <DependentUpon>201809191416027_AddEventPredictionType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

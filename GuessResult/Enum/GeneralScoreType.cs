@@ -5,7 +5,7 @@ using System.Web;
 
 namespace GuessResult.Enum
 {
-    public enum EffectivityFilterType
+    public enum GeneralScoreType
     {
         HomeTeamWin = 1,
         AwayTeamWin = 2,

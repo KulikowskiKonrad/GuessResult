@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GuessResult.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace GuessResult.DB.Models
         public long ExternalMatchId { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public EventPredictionType PredictionType { get; set; }
 
 
         public virtual List<GRUserEvent> UserEvents { get; set; }

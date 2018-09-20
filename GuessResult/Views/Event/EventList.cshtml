@@ -11,11 +11,6 @@
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></div>
-                        @*@Html.DropDownList("filterEventStatus", Model.StatusList, "Dowolny status", new
-                            {
-                                @class = "form-control",
-                                ng_model = "filterEventStatus"
-                            })*@
                         <select class="form-control" data-ng-options="e.Name for e in eventStatusList track by e.Id" ng-model="filterEventStatus">
                             <option value="">Wybierz status meczu</option>
                         </select>
@@ -286,7 +281,34 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Rodzaj przewidywania</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></div>
+                                                <select class="form-control" data-ng-options="e.Name for e in eventPredictionTypeList track by e.Id" ng-model="editedUserEvent.EventPredictionType"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="row" ng-show="editedUserEvent.EventPredictionType.Id == 2">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Wynik</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><span class="glyphicon glyphicon-info-sign"></span></div>
+                                            <select class="form-control" data-ng-options="e.Name for e in generalScoreTypeList track by e.Id" ng-model="editedUserEvent.GeneralScoreType"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" ng-show="editedUserEvent.EventPredictionType.Id == 1">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Wynik drużyny przeciwnej</label>
@@ -296,8 +318,7 @@
                                        {
                                            @class = "form-control",
                                            placeholder = "Podaj ilosc",
-                                           ng_model = "editedUserEvent.HomeTeamScore",
-                                           required = "required"
+                                           ng_model = "editedUserEvent.HomeTeamScore"
                                        })
                                         </div>
                                     </div>
@@ -311,8 +332,7 @@
                                    {
                                        @class = "form-control",
                                        placeholder = "Podaj ilosc",
-                                       ng_model = "editedUserEvent.AwayTeamScore",
-                                       required = "required",
+                                       ng_model = "editedUserEvent.AwayTeamScore"
                                    })
                                     </div>
                                 </div>

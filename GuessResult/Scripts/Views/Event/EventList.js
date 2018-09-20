@@ -12,6 +12,34 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
         },
     ];
 
+    $scope.eventPredictionTypeList = [
+        {
+            Id: 1,
+            Name: 'Dokładny wynik'
+        },
+        {
+            Id: 2,
+            Name: 'Ogólny wynik'
+        },
+    ];
+
+    $scope.generalScoreTypeList = [
+        {
+            Id: 1,
+            Name: 'Zwycięstwo gospodarzy'
+        },
+        {
+            Id: 2,
+            Name: 'Zwycięstwo gości'
+        },
+        {
+            Id: 3,
+            Name: 'Remis'
+        },
+    ];
+
+
+
     $scope.loadEventList = function () {
         let filterEventStatus = ($scope.filterEventStatus != null ? $scope.filterEventStatus.Id : '')
         let filterOnlyMyEvents = ($scope.filterOnlyMyEvents != null ? $scope.filterOnlyMyEvents : false);
@@ -55,18 +83,18 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
     }
 
     //debugger;
-    $scope.edit = function (eventId) {
-        $scope.editedEvent = {};
-        //$scope.selectedEvent = {};
-        if (eventId != null) {
-            for (let i = 0; i < $scope.events.length; i++) {
-                if ($scope.events[i].Id == eventId) {
-                    $scope.editedEvent = angular.copy($scope.events[i]);
-                }
-            }
-        }
-        $('#modalEventDetails').modal();
-    }
+    //$scope.edit = function (eventId) {
+    //    $scope.editedEvent = {};
+    //    //$scope.selectedEvent = {};
+    //    if (eventId != null) {
+    //        for (let i = 0; i < $scope.events.length; i++) {
+    //            if ($scope.events[i].Id == eventId) {
+    //                $scope.editedEvent = angular.copy($scope.events[i]);
+    //            }
+    //        }
+    //    }
+    //    $('#modalEventDetails').modal();
+    //}
 
 
     $scope.cancelEdit = function () {
@@ -74,46 +102,61 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
         $('#modalEventDetails').modal('hide');
     }
 
-    $scope.SaveEventDetails = function () {
-        //angular.forEach($scope.formSaveEventDetails.$error, function (field) {
-        //    angular.forEach(field, function (errorField) {
-        //        errorField.$setTouched();
-        //    })
-        //}
-        //);
+    //$scope.SaveEventDetails = function () {
+    //    //angular.forEach($scope.formSaveEventDetails.$error, function (field) {
+    //    //    angular.forEach(field, function (errorField) {
+    //    //        errorField.$setTouched();
+    //    //    })
+    //    //}
+    //    //);
 
-        if ($scope.formSaveEventDetails.$valid) {
-            $http.post("/api/ApiEvent/SaveEventDetails",
-                {
-                    Id: $scope.editedEvent.Id,
-                    Name: $scope.editedEvent.Name,
-                    StartDate: $scope.editedEvent.StartDate,
-                    HomeTeamName: $scope.editedEvent.HomeTeamName,
-                    AwayTeamName: $scope.editedEvent.AwayTeamName,
-                    HomeTeamScore: $scope.editedEvent.HomeTeamScore,
-                    AwayTeamScore: $scope.editedEvent.AwayTeamScore
-                })
-                .then(function (response) {
-                    $scope.editedEvent = null;
-                    $('#modalEventDetails').modal('hide');
-                    $scope.loadEventList();
-                })
-                .catch(function (data, status) {
-                    swal({
-                        title: data.data.Message,
-                        type: 'error',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'Ok!',
-                    });
-                });
-        }
-    }
+    //    if ($scope.formSaveEventDetails.$valid) {
+    //        $http.post("/api/ApiEvent/SaveEventDetails",
+    //            {
+    //                Id: $scope.editedEvent.Id,
+    //                Name: $scope.editedEvent.Name,
+    //                StartDate: $scope.editedEvent.StartDate,
+    //                HomeTeamName: $scope.editedEvent.HomeTeamName,
+    //                AwayTeamName: $scope.editedEvent.AwayTeamName,
+    //                HomeTeamScore: $scope.editedEvent.HomeTeamScore,
+    //                AwayTeamScore: $scope.editedEvent.AwayTeamScore,
+    //            })
+    //            .then(function (response) {
+    //                $scope.editedEvent = null;
+    //                $('#modalEventDetails').modal('hide');
+    //                $scope.loadEventList();
+    //            })
+    //            .catch(function (data, status) {
+    //                swal({
+    //                    title: data.data.Message,
+    //                    type: 'error',
+    //                    confirmButtonColor: '#3085d6',
+    //                    confirmButtonText: 'Ok!',
+    //                });
+    //            });
+    //    }
+    //}
 
 
     $scope.editUserEvent = function (eventId) {
         $http.get("/api/ApiUserEvent/GetByEventId?eventId=" + eventId)
             .then(function (resultGetData) {
                 $scope.editedUserEvent = resultGetData.data;
+                for (let i = 0; i < $scope.eventPredictionTypeList.length; i++) {
+                    if ($scope.eventPredictionTypeList[i].Id == $scope.editedUserEvent.EventPredictionType) {
+                        $scope.editedUserEvent.EventPredictionType = $scope.eventPredictionTypeList[i];
+                    }
+                }
+
+                if ($scope.editedUserEvent.GeneralScoreType != null) {
+                    for (let i = 0; i < $scope.generalScoreTypeList.length; i++) {
+                        if ($scope.generalScoreTypeList[i].Id == $scope.editedUserEvent.GeneralScoreType) {
+                            $scope.editedUserEvent.GeneralScoreType = $scope.generalScoreTypeList[i];
+                        }
+                    }
+                } else {
+                    $scope.editedUserEvent.GeneralScoreType = $scope.generalScoreTypeList[0];
+                }
                 $('#modalUserEventDetails').modal();
             });
     }
@@ -141,7 +184,9 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
                     AwayTeamName: $scope.editedUserEvent.AwayTeamName,
                     HomeTeamScore: $scope.editedUserEvent.HomeTeamScore,
                     AwayTeamScore: $scope.editedUserEvent.AwayTeamScore,
-                    EventId: $scope.editedUserEvent.EventId
+                    EventId: $scope.editedUserEvent.EventId,
+                    EventPredictionType: $scope.editedUserEvent.EventPredictionType.Id,
+                    GeneralScoreType: $scope.editedUserEvent.GeneralScoreType.Id,
                     //UserId: $scope.editedUserEvent.UserId
                 })
                 .then(function (response) {
