@@ -44,6 +44,7 @@ namespace GuessResult.Services
                             HomeTeamName = item.homeTeam.name,
                             HomeTeamScore = (byte?)item.score.fullTime.homeTeam,
                             StartDate = item.utcDate,
+                            PredictionType = Enum.EventPredictionType.ExactScore
                         };
                         _eventRepository.Save(gREvent);
                     }
@@ -52,6 +53,8 @@ namespace GuessResult.Services
                         gREvent.AwayTeamScore = (byte?)item.score.fullTime.awayTeam;
                         gREvent.HomeTeamScore = (byte?)item.score.fullTime.homeTeam;
                         _eventRepository.Save(gREvent);
+                        UserEventRepository userEventRepository = new UserEventRepository();
+                        userEventRepository.UpdateIsPredictionCorrect(gREvent.Id);
                     }
                 }
             }

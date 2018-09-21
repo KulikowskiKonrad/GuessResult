@@ -1,4 +1,5 @@
 ﻿using GuessResult.Jobs;
+using GuessResult.Repositories;
 using GuessResult.Services;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,14 @@ namespace GuessResult
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             JobsConfiguration.Configure();
+
+            //EventRepository eventRepository = new EventRepository();
+            //var allEvents = eventRepository.GetAll(null, false, 0);
+            //UserEventRepository userEventRepository = new UserEventRepository();
+            //foreach (var item in allEvents)
+            //{
+            //    userEventRepository.UpdateIsPredictionCorrect(item.Id);
+            //}
 
             //new FootballDataApiService().ImportEvents();
         }

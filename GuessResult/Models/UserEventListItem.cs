@@ -1,4 +1,5 @@
 ﻿using GuessResult.Enum;
+using GuessResult.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

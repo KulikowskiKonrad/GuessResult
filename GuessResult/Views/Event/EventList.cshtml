@@ -29,12 +29,6 @@
             </div>
         </div>
 
-        @*<div class="row">
-                <div class="col-md-12">
-                    <button ng-click="edit()" class="btn btn-default">Dodaj wydarzenie</button>
-                </div>
-            </div>*@
-
         <div class="row">
             <div class="col-sm-12" style="overflow:auto;" id="divEventList">
 
@@ -52,8 +46,6 @@
                                 Wynik
                             </th>
                             <th style="text-align:center">Wynik użytkownika</th>
-                            @*<th style="width: 20px;"></th>
-                                <th style="width: 20px;"></th>*@
                             <th>
                             </th>
                         </tr>
@@ -70,154 +62,29 @@
                             <td style="text-align:center">
                                 {{singleEvent.AwayTeamName}}
                             </td>
-                            <td ng-hide="{{singleEvent.HomeTeamScore == null}} || {{singleEvent.AwayTeamScore == null}}" style="text-align:center">
-                                {{singleEvent.HomeTeamScore +  ':'  +singleEvent.AwayTeamScore}}
+                            <td class="text-center">
+                                {{singleEvent.HomeTeamScore != null ? (singleEvent.HomeTeamScore +  ':'  +singleEvent.AwayTeamScore) : '-'}}
                             </td>
-                            <td ng-show="{{singleEvent.HomeTeamScore == null}} || {{singleEvent.AwayTeamScore == null}}" style="text-align:center">
-                                -
+                            <td class="text-center">
+                                <div ng-show="singleEvent.EventPredictionType == 1">
+                                    {{singleEvent.UserHomeTeamScore != null ? (singleEvent.UserHomeTeamScore +  ':'  +singleEvent.UserAwayTeamScore) : '-'}}
+                                </div>
+                                <div ng-show="singleEvent.EventPredictionType == 2">
+                                    {{singleEvent.GeneralScoreTypeText}}
+                                </div>
+
                             </td>
-                            <td style="text-align:center" ng-hide="{{singleEvent.UserHomeTeamScore == null}} || {{singleEvent.UserAwayTeamScore == null}}">
-                                {{singleEvent.UserHomeTeamScore +  ':'  +singleEvent.UserAwayTeamScore}}
-                            </td>
-                            <td ng-show="{{singleEvent.UserHomeTeamScore == null}} || {{singleEvent.UserAwayTeamScore == null}}" style="text-align:center">
-                                -
-                            </td>
-                            @*<td>
-                                    <button type="button" ng-click="edit(singleEvent.Id)" title="edytuj" class="btn btn-default btn-sm btn-usun  pull-right" style="margin-right:5px">
-                                        <span class="glyphicon glyphicon-cog "></span>
-                                    </button>
-                                </td>*@
                             <td>
                                 <button type="button" ng-click="editUserEvent(singleEvent.Id)" title="edytuj" class="btn btn-default btn-sm btn-usun"
                                         ng-show="{{singleEvent.HomeTeamScore == null}}" @*s @*style="text-align:center"*@>
                                     <i class="fa fa-edit"></i>
                                 </button>
                             </td>
-                            @*<td>
-                                    @if (User.IsInRole("Admin"))
-                                    {
-                                        <button type="button" ng-click="delete(singleEvent.Id)" title="Usuń" class="btn btn-default btn-sm btn-usun  pull-right" style="margin-right:5px">
-                                            <span class="glyphicon glyphicon-trash "></span>
-                                        </button>
-                                    }
-                                </td>*@
                         </tr>
-
-                        @*<tr ng-show="events.length == 0 ">
-                                <td></td>
-                                <td></td>
-                                <td style="text-align:center">
-                                    Brak danych
-                                </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>*@
                     </tbody>
                 </table>
             </div>
         </div>
-
-        @*<div id="modalEventDetails" class="modal fade" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Detale usera zdarzenia</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form method="post" name="formSaveEventDetails">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Data</label>
-                                            <div class="input-group  input-group date-time">
-                                                <div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div>
-                                                @Html.TextBox("EventDate", "", new
-                                           {
-                                               @class = "form-control",
-                                               placeholder = "Data",
-                                               ng_model = "editedEvent.StartDate",
-                                               date = "date",
-                                               data_format = "yyyy-MM-dd HH:mm",
-                                           })
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Nazwa drużyny gospodarzy</label>
-                                            <div class="input-group  input-group">
-                                                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                                @Html.TextBox("EventHomeTeamName", null, new
-                                           {
-                                               @class = "form-control",
-                                               placeholder = "Podaj nazwe",
-                                               ng_model = "editedEvent.HomeTeamName",
-                                           })
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Nazwa drużyny przeciwnej</label>
-                                        <div class="input-group  input-group">
-                                            <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                            @Html.TextBox("EventAwayTeamName", null, new
-                                       {
-                                           @class = "form-control",
-                                           placeholder = "Podaj nazwe",
-                                           ng_model = "editedEvent.AwayTeamName",
-                                       })
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Wynik drużyny gospodarzy</label>
-                                            <div class="input-group">
-                                                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                                @Html.TextBox("EventHomeTeamScore", null, new
-                                           {
-                                               @class = "form-control",
-                                               placeholder = "Podaj ilosc",
-                                               ng_model = "editedEvent.HomeTeamScore",
-                                               required = "required"
-                                           })
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label>Wynik drużyny przeciwnej</label>
-                                        <div class="input-group">
-                                            <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-
-                                            @Html.TextBox("EventAwayTeamScore", null, new
-                                       {
-                                           @class = "form-control",
-                                           placeholder = "Podaj ilosc",
-                                           ng_model = "editedEvent.AwayTeamScore",
-                                           required = "required"
-                                       })
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default btn-usun" ng-click="SaveEventDetails()">Zapisz</button>
-                            <button type="button" class="btn btn-default btn-usun" ng-click="cancelEdit()">Anuluj</button>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
-
 
         <div id="modalUserEventDetails" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">

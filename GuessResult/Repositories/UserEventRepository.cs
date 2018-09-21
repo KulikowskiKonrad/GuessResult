@@ -1,4 +1,5 @@
 ﻿using GuessResult.DB.Models;
+using GuessResult.Enum;
 using GuessResult.Helpers;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace GuessResult.Repositories
 {
     public class UserEventRepository
     {
+        private DB.GuessResultContext _db = new DB.GuessResultContext();
 
         public List<GRUserEvent> GetAll()
         {
@@ -84,25 +86,74 @@ namespace GuessResult.Repositories
             try
             {
                 long? result = null;
-                using (DB.GuessResultContext db = new DB.GuessResultContext())
-                {
-                    db.Entry(userEvent).State = userEvent.Id > 0 ? EntityState.Modified : EntityState.Added;
-                    //db.UserEvents.Add(new GRUserEvent
-                    //{
-                    //    AwayTeamScore = userEvent.AwayTeamScore,
-                    //    EventId = userEvent.EventId,
-                    //    HomeTeamScore = userEvent.AwayTeamScore,
-                    //    UserId = userEvent.UserId
-                    //});
-                    db.SaveChanges();
-                    result = userEvent.Id;
-                }
+                _db.Entry(userEvent).State = userEvent.Id > 0 ? EntityState.Modified : EntityState.Added;
+                //db.UserEvents.Add(new GRUserEvent
+                //{
+                //    AwayTeamScore = userEvent.AwayTeamScore,
+                //    EventId = userEvent.EventId,
+                //    HomeTeamScore = userEvent.AwayTeamScore,
+                //    UserId = userEvent.UserId
+                //});
+                _db.SaveChanges();
+                result = userEvent.Id;
                 return result;
             }
             catch (Exception ex)
             {
                 LogHelper.Log.Error(ex);
                 return null;
+            }
+        }
+
+        public bool UpdateIsPredictionCorrect(long eventId)
+        {
+            try
+            {
+                GREvent singleEvent = _db.Events.Where(x => x.Id == eventId).Single();
+                if (singleEvent.HomeTeamScore.HasValue)
+                {
+                    List<GRUserEvent> listgRUserEvent = _db.UserEvents.Where(x => x.EventId == singleEvent.Id).ToList();
+                    foreach (var singleUserEvent in listgRUserEvent)
+                    {
+                        if (singleEvent.PredictionType == EventPredictionType.ExactScore)
+                        {
+                            if (singleEvent.HomeTeamScore == singleUserEvent.HomeTeamScore && singleEvent.AwayTeamScore == singleUserEvent.AwayTeamScore)
+                            {
+                                singleUserEvent.IsCorrectPrediction = true;
+                            }
+                            if (singleEvent.HomeTeamScore != singleUserEvent.HomeTeamScore)
+                            {
+                                singleUserEvent.IsCorrectPrediction = false;
+                            }
+                        }
+                        else if (singleEvent.PredictionType == EventPredictionType.GeneralScore)
+                        {
+                            if (singleEvent.HomeTeamScore > singleEvent.AwayTeamScore && GeneralScoreType.HomeTeamWin == singleUserEvent.GeneralScoreType)
+                            {
+                                singleUserEvent.IsCorrectPrediction = true;
+                            }
+                            else if (singleEvent.HomeTeamScore < singleEvent.AwayTeamScore && GeneralScoreType.AwayTeamWin == singleUserEvent.GeneralScoreType)
+                            {
+                                singleUserEvent.IsCorrectPrediction = true;
+                            }
+                            else if (singleEvent.HomeTeamScore == singleEvent.AwayTeamScore && GeneralScoreType.Tie == singleUserEvent.GeneralScoreType)
+                            {
+                                singleUserEvent.IsCorrectPrediction = true;
+                            }
+                            else
+                            {
+                                singleUserEvent.IsCorrectPrediction = false;
+                            }
+                        }
+                        Save(singleUserEvent);
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return false;
             }
         }
     }

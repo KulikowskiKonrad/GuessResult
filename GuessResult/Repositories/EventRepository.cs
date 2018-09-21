@@ -116,16 +116,14 @@ namespace GuessResult.Repositories
                 List<ChartDataItem> result = new List<ChartDataItem>();
                 using (DB.GuessResultContext db = new DB.GuessResultContext())
                 {
-                    List<GRUserEvent> listUserScore = db.UserEvents.Include(x => x.Event)
+                    List<GRUserEvent> listUserScore = db.UserEvents
                         .Where(x => x.UserId == userId && !x.IsDeleted
-                            && x.Event.AwayTeamScore != null
+                            && x.IsCorrectPrediction.HasValue
                             && (!effectivityFilterType.HasValue || (effectivityFilterType == GeneralScoreType.AwayTeamWin && x.AwayTeamScore > x.HomeTeamScore)
                                 || (effectivityFilterType == GeneralScoreType.HomeTeamWin && x.HomeTeamScore > x.AwayTeamScore)
                                 || (effectivityFilterType == GeneralScoreType.Tie && x.AwayTeamScore == x.HomeTeamScore))).ToList();
 
-                    int correctResultsCount = listUserScore.Where(x => (x.HomeTeamScore > x.AwayTeamScore && x.Event.HomeTeamScore > x.Event.AwayTeamScore)
-                        || (x.HomeTeamScore == x.AwayTeamScore && x.Event.HomeTeamScore == x.Event.AwayTeamScore)
-                        || (x.HomeTeamScore < x.AwayTeamScore && x.Event.HomeTeamScore < x.AwayTeamScore)).Count();
+                    int correctResultsCount = listUserScore.Where(x => x.IsCorrectPrediction.Value).Count();
 
                     int wrongResultsCount = listUserScore.Count - correctResultsCount;
                     result.Add(new ChartDataItem()
@@ -155,15 +153,12 @@ namespace GuessResult.Repositories
                 List<ChartDataItem> result = new List<ChartDataItem>();
                 using (DB.GuessResultContext db = new DB.GuessResultContext())
                 {
-                    List<GRUserEvent> listUserScore = db.UserEvents.Include(x => x.Event).Include(x => x.User)
-                        .Where(x => !x.IsDeleted
-                            && x.Event.AwayTeamScore != null).ToList();
+                    List<GRUserEvent> listUserScore = db.UserEvents.Include(x => x.User)
+                        .Where(x => !x.IsDeleted && x.IsCorrectPrediction.HasValue).ToList();
                     foreach (var user in listUserScore.Select(x => new { x.UserId, x.User.Email }).Distinct())
                     {
                         var userResults = listUserScore.Where(x => x.UserId == user.UserId).ToList();
-                        int correctResultsCount = userResults.Where(x => (x.HomeTeamScore > x.AwayTeamScore && x.Event.HomeTeamScore > x.Event.AwayTeamScore)
-                        || (x.HomeTeamScore == x.AwayTeamScore && x.Event.HomeTeamScore == x.Event.AwayTeamScore)
-                        || (x.HomeTeamScore < x.AwayTeamScore && x.Event.HomeTeamScore < x.AwayTeamScore)).Count();
+                        int correctResultsCount = userResults.Where(x => x.IsCorrectPrediction.Value).Count();
                         result.Add(new ChartDataItem()
                         {
                             Label = user.Email,

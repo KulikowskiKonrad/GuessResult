@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GuessResult.Enum;
+using GuessResult.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -10,8 +12,6 @@ namespace GuessResult.Models
     {
 
         public long Id { get; set; }
-
-        public long UserId { get; set; }
 
         public DateTime StartDate { get; set; }
 
@@ -31,5 +31,16 @@ namespace GuessResult.Models
 
         public byte? UserHomeTeamScore { get; set; }
 
+        public EventPredictionType? EventPredictionType { get; set; }
+
+        public GeneralScoreType? GeneralScoreType { get; set; }
+
+        public string GeneralScoreTypeText
+        {
+            get
+            {
+                return GeneralScoreType.HasValue ? ((Enum.GeneralScoreType)GeneralScoreType).GetEnumDescription() : "-";
+            }
+        }
     }
 }

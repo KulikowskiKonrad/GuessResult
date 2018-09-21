@@ -22,6 +22,8 @@ namespace GuessResult.DB.Models
 
         public GeneralScoreType? GeneralScoreType { get; set; }
 
+        public bool? IsCorrectPrediction { get; set; }
+
 
         public virtual GRUser User { get; set; }
 

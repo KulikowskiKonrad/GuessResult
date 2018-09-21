@@ -39,7 +39,9 @@ namespace GuessResult.Api
                         HomeTeamScore = x.HomeTeamScore,
                         StartDate = x.StartDate,
                         UserAwayTeamScore = x.UserEvents.Where(y => y.UserId == UserId && y.IsDeleted == false).SingleOrDefault()?.AwayTeamScore,
-                        UserHomeTeamScore = x.UserEvents.Where(y => y.UserId == UserId && y.IsDeleted == false).SingleOrDefault()?.HomeTeamScore
+                        UserHomeTeamScore = x.UserEvents.Where(y => y.UserId == UserId && y.IsDeleted == false).SingleOrDefault()?.HomeTeamScore,
+                        EventPredictionType = x.PredictionType,
+                        GeneralScoreType = x.UserEvents.Where(y => y.UserId == UserId && y.IsDeleted == false).SingleOrDefault()?.GeneralScoreType
                     })
                 .OrderByDescending(x => x.StartDate)
                 .ToList();
@@ -79,6 +81,17 @@ namespace GuessResult.Api
         {
             try
             {
+                //poprawnie
+                //bool result = _eventRepository.Delete(id); //dopisac ta metode
+                //if (result)
+                //{
+                //    return Ok();
+                //}
+                //else
+                //{
+                //    return InternalServerError();
+                //}
+
                 GREvent eventToDelete = _eventRepository.GetById(id);
                 eventToDelete.IsDeleted = true;
                 long? saveResult = _eventRepository.Save(eventToDelete);
@@ -107,6 +120,19 @@ namespace GuessResult.Api
             {
                 if (ModelState.IsValid)
                 {
+                    //poprawnie
+                    //EventRepository eventRepository = new EventRepository();
+                    //long? result = eventRepository.Save(model); //dopisac ta metode
+                    //if (!result.HasValue)
+                    //{
+                    //    return InternalServerError();
+                    //}
+                    //else
+                    //{
+                    //    return Ok();
+                    //}
+
+
                     EventRepository eventRepository = new EventRepository();
                     GREvent singleEvent = null;
                     if (model.Id.HasValue)

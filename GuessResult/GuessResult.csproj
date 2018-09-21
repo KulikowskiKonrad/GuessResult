@@ -222,6 +222,14 @@
     <Compile Include="Migrations\201809191416027_AddEventPredictionType.Designer.cs">
       <DependentUpon>201809191416027_AddEventPredictionType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809201535367_AddNewColumnInUserEventTable.cs" />
+    <Compile Include="Migrations\201809201535367_AddNewColumnInUserEventTable.Designer.cs">
+      <DependentUpon>201809201535367_AddNewColumnInUserEventTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809201710182_updateTable.cs" />
+    <Compile Include="Migrations\201809201710182_updateTable.Designer.cs">
+      <DependentUpon>201809201710182_updateTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ChartDataItem.cs" />
     <Compile Include="Models\EditEventViewModel.cs" />
     <Compile Include="Models\EditUserEventViewModel.cs" />
@@ -368,6 +376,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809191416027_AddEventPredictionType.resx">
       <DependentUpon>201809191416027_AddEventPredictionType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809201535367_AddNewColumnInUserEventTable.resx">
+      <DependentUpon>201809201535367_AddNewColumnInUserEventTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809201710182_updateTable.resx">
+      <DependentUpon>201809201710182_updateTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
