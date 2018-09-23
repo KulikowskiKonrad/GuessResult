@@ -185,8 +185,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ApiEventController.cs" />
-    <Compile Include="Api\ApiReservationController.cs" />
-    <Compile Include="Api\ApiRoomController.cs" />
     <Compile Include="Api\ApiUserEventController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="DB\GuessResultContext.cs" />
@@ -243,8 +241,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ReservationController.cs" />
-    <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DB\Models\RRReservation.cs" />
     <Compile Include="DB\Models\RRRoom.cs" />

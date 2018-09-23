@@ -29,22 +29,7 @@ namespace GuessResult.Api
         {
             try
             {
-                List<EventListItem> result = _eventRepository.GetAll(filterEventStatus, filterOnlyMyEvents, UserId)
-                    .Select(x => new EventListItem()
-                    {
-                        AwayTeamName = x.AwayTeamName,
-                        HomeTeamName = x.HomeTeamName,
-                        Id = x.Id,
-                        AwayTeamScore = x.AwayTeamScore,
-                        HomeTeamScore = x.HomeTeamScore,
-                        StartDate = x.StartDate,
-                        UserAwayTeamScore = x.UserEvents.Where(y => y.UserId == UserId && y.IsDeleted == false).SingleOrDefault()?.AwayTeamScore,
-                        UserHomeTeamScore = x.UserEvents.Where(y => y.UserId == UserId && y.IsDeleted == false).SingleOrDefault()?.HomeTeamScore,
-                        EventPredictionType = x.PredictionType,
-                        GeneralScoreType = x.UserEvents.Where(y => y.UserId == UserId && y.IsDeleted == false).SingleOrDefault()?.GeneralScoreType
-                    })
-                .OrderByDescending(x => x.StartDate)
-                .ToList();
+                List<EventListItem> result = _eventRepository.GetAllEventListItems(filterEventStatus, filterOnlyMyEvents, UserId);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -54,124 +39,7 @@ namespace GuessResult.Api
             }
         }
 
-        //[HttpGet]
-        //[Authorize]
-        //public IHttpActionResult GetUserStatistics(EventListItem model)
-        //{
-        //    try
-        //    {
-        //        UserRepository userRepository = new UserRepository();
-        //        GRUser user = userRepository.GetById(UserId);
-        //        GREvent eventFromDB = _eventRepository.GetById(model.Id);
-        //        GRUserEvent gRUserEvent = _eventRepository.GetByExternalMatchId()
-        //       if(model.AwayTeamScore == )
-        //    }catch (Exception ex)
-        //    {
-        //        LogHelper.Log.Error(ex);
-        //        return InternalServerError();
-        //    }
-        //}
 
-
-
-
-        [Authorize]
-        [HttpDelete]
-        public IHttpActionResult Delete([FromUri]long id)
-        {
-            try
-            {
-                //poprawnie
-                //bool result = _eventRepository.Delete(id); //dopisac ta metode
-                //if (result)
-                //{
-                //    return Ok();
-                //}
-                //else
-                //{
-                //    return InternalServerError();
-                //}
-
-                GREvent eventToDelete = _eventRepository.GetById(id);
-                eventToDelete.IsDeleted = true;
-                long? saveResult = _eventRepository.Save(eventToDelete);
-                if (saveResult.HasValue)
-                {
-                    return Ok();
-                }
-                else
-                {
-                    return InternalServerError();
-                }
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Log.Error(ex);
-                return InternalServerError();
-            }
-        }
-
-
-        [Authorize]
-        [HttpPost]
-        public IHttpActionResult SaveEventDetails(EditEventViewModel model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    //poprawnie
-                    //EventRepository eventRepository = new EventRepository();
-                    //long? result = eventRepository.Save(model); //dopisac ta metode
-                    //if (!result.HasValue)
-                    //{
-                    //    return InternalServerError();
-                    //}
-                    //else
-                    //{
-                    //    return Ok();
-                    //}
-
-
-                    EventRepository eventRepository = new EventRepository();
-                    GREvent singleEvent = null;
-                    if (model.Id.HasValue)
-                    {
-                        singleEvent = eventRepository.GetById(model.Id.Value);
-                    }
-                    else
-                    {
-                        singleEvent = new GREvent();
-                    }
-
-                    singleEvent.StartDate = model.StartDate;
-                    singleEvent.HomeTeamName = model.HomeTeamName;
-                    singleEvent.AwayTeamName = model.AwayTeamName;
-                    singleEvent.HomeTeamScore = model.HomeTeamScore;
-                    singleEvent.AwayTeamScore = model.AwayTeamScore;
-
-                    long? saveResult = eventRepository.Save(singleEvent);
-
-                    if (saveResult == null)
-                    {
-                        return InternalServerError();
-                    }
-                    else
-                    {
-                        return Ok();
-                    }
-                }
-                else
-                {
-                    return InternalServerError();
-                }
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Log.Error(ex);
-                return InternalServerError();
-            }
-        }
 
         [Authorize]
         [HttpGet]
@@ -179,20 +47,6 @@ namespace GuessResult.Api
         {
             try
             {
-                //List<ChartDataItem> result = new List<ChartDataItem>()
-                //{
-                //    new ChartDataItem()
-                //    {
-                //        Label = "poprawne",
-                //        Value = 10
-                //    },
-                //    new ChartDataItem()
-                //    {
-                //        Label = " błędne",
-                //        Value = 3
-                //    },
-                //};
-
                 List<ChartDataItem> result = _eventRepository.GetEffectivityData(UserId, effectivityFilter);
 
                 return Ok(result);

@@ -14,7 +14,7 @@ namespace GuessResult.Enum
         [Description("Wygrana gości")]
         AwayTeamWin = 2,
 
-        [Description("Remmis")]
+        [Description("Remis")]
         Tie = 3
     }
 }

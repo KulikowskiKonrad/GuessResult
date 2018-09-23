@@ -1,6 +1,7 @@
 ﻿using GuessResult.DB.Models;
 using GuessResult.Enum;
 using GuessResult.Helpers;
+using GuessResult.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -73,6 +74,56 @@ namespace GuessResult.Repositories
                     GRUserEvent result = db.UserEvents.Where(x => x.UserId == userId).SingleOrDefault();
                     return result;
                 }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return null;
+            }
+        }
+
+        public long? Save(UserEventListItem model, long userId, bool isAdmin)
+        {
+            try
+            {
+                GRUserEvent userEvent = null;
+                if (model.Id.HasValue)
+                {
+                    userEvent = GetById(model.Id.Value);
+                }
+                else
+                {
+                    userEvent = new GRUserEvent();
+                }
+
+                EventRepository eventRepository = new EventRepository();
+                var eventFromDb = eventRepository.GetById(model.EventId);
+
+                if (isAdmin && model.EventPredictionType.HasValue)
+                {
+                    eventFromDb.PredictionType = model.EventPredictionType.Value;
+                    eventRepository.Save(eventFromDb);
+                }
+
+                if (eventFromDb.PredictionType == Enum.EventPredictionType.ExactScore)
+                {
+                    userEvent.HomeTeamScore = model.HomeTeamScore.Value;
+                    userEvent.AwayTeamScore = model.AwayTeamScore.Value;
+                    userEvent.GeneralScoreType = null;
+                }
+                else
+                {
+                    userEvent.HomeTeamScore = null;
+                    userEvent.AwayTeamScore = null;
+                    userEvent.GeneralScoreType = model.GeneralScoreType;
+                }
+
+                model.UserId = userId;
+                userEvent.UserId = model.UserId;
+                userEvent.EventId = model.EventId;
+
+                long? saveResult = Save(userEvent);
+                return saveResult;
             }
             catch (Exception ex)
             {

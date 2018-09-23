@@ -13,6 +13,36 @@ namespace GuessResult.Repositories
 {
     public class EventRepository
     {
+
+        public List<EventListItem> GetAllEventListItems(EventStatus? filterEventStatus, bool filterOnlyMyEvents, long userId)
+        {
+            try
+            {
+                List<EventListItem> result = GetAll(filterEventStatus, filterOnlyMyEvents, userId)
+                    .Select(x => new EventListItem()
+                    {
+                        AwayTeamName = x.AwayTeamName,
+                        HomeTeamName = x.HomeTeamName,
+                        Id = x.Id,
+                        AwayTeamScore = x.AwayTeamScore,
+                        HomeTeamScore = x.HomeTeamScore,
+                        StartDate = x.StartDate,
+                        UserAwayTeamScore = x.UserEvents.Where(y => y.UserId == userId && y.IsDeleted == false).SingleOrDefault()?.AwayTeamScore,
+                        UserHomeTeamScore = x.UserEvents.Where(y => y.UserId == userId && y.IsDeleted == false).SingleOrDefault()?.HomeTeamScore,
+                        EventPredictionType = x.PredictionType,
+                        GeneralScoreType = x.UserEvents.Where(y => y.UserId == userId && y.IsDeleted == false).SingleOrDefault()?.GeneralScoreType
+                    })
+                .OrderByDescending(x => x.StartDate)
+                .ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return null;
+            }
+        }
+
         public List<GREvent> GetAll(EventStatus? filterEventStatus, bool filterOnlyMyEvents, long userId)
         {
             try
@@ -61,6 +91,35 @@ namespace GuessResult.Repositories
                 using (DB.GuessResultContext db = new DB.GuessResultContext())
                 {
                     result = db.Events.Where(x => x.Id == eventId).SingleOrDefault();
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return null;
+            }
+        }
+
+        public UserEventListItem GetUserEventListItemById(long eventId, long userId)
+        {
+            try
+            {
+                UserEventRepository userEventRepository = new UserEventRepository();
+                UserEventListItem result = new UserEventListItem();
+                var eventFromDb = GetById(eventId);
+                result.EventId = eventId;
+                result.AwayTeamName = eventFromDb.AwayTeamName;
+                result.HomeTeamName = eventFromDb.HomeTeamName;
+                result.StartDate = eventFromDb.StartDate;
+                result.EventPredictionType = eventFromDb.PredictionType;
+                var userEventFromDb = userEventRepository.GetByEventIdAndUserId(eventId, userId);
+                if (userEventFromDb != null)
+                {
+                    result.Id = userEventFromDb.Id;
+                    result.AwayTeamScore = userEventFromDb.AwayTeamScore;
+                    result.HomeTeamScore = userEventFromDb.HomeTeamScore;
+                    result.GeneralScoreType = userEventFromDb.GeneralScoreType;
                 }
                 return result;
             }
