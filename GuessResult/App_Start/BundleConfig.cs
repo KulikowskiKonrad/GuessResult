@@ -45,14 +45,12 @@ namespace GuessResult
              "~/Scripts/Views/Event/EventList.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      //"~/Content/angular-datatables.css",
-                      //"~/Content/dataTables.bootstrap.css",
-                      "~/Content/bootstrap-datetimepicker.css",
-                      "~/Content/sweetalert2.css",
-                      "~/Content/awesome-bootstrap-checkbox.css",
-                      "~/Content/font-awesome.css",
-                      "~/Content/site.css"));
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/bootstrap-datetimepicker.min.css",
+                      "~/Content/sweetalert2.min.css",
+                      "~/Content/awesome-bootstrap-checkbox.min.css",
+                      "~/Content/font-awesome.min.css",
+                      "~/Content/site.min.css"));
         }
     }
 }

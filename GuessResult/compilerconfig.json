@@ -1,0 +1,30 @@
+﻿[
+  {
+    "outputFile": "Content/awesome-bootstrap-checkbox.css",
+    "inputFile": "Content/awesome-bootstrap-checkbox.scss"
+  },
+  {
+    "outputFile": "Content/bootstrap-datetimepicker.css",
+    "inputFile": "Content/bootstrap-datetimepicker.scss"
+  },
+  {
+    "outputFile": "Content/bootstrap.css",
+    "inputFile": "Content/bootstrap.scss"
+  },
+  {
+    "outputFile": "Content/bootstrap.min.css",
+    "inputFile": "Content/bootstrap.min.scss"
+  },
+  {
+    "outputFile": "Content/font-awesome.css",
+    "inputFile": "Content/font-awesome.scss"
+  },
+  {
+    "outputFile": "Content/sweetalert2.css",
+    "inputFile": "Content/sweetalert2.scss"
+  },
+  {
+    "outputFile": "Content/Site.css",
+    "inputFile": "Content/Site.scss"
+  }
+]
