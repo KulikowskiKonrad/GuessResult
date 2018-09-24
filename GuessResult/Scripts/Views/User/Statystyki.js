@@ -25,6 +25,13 @@ app.controller('MyController', ["$scope", "$http", function ($scope, $http) {
         $http.get("/api/ApiEvent/GetUserEffectivityData?effectivityFilter=" + $scope.effectivityFilter)
             .then(function (resultGetData) {
                 $scope.effectivityDataSource.data = resultGetData.data;
+            }, function () {
+                swal({
+                    title: 'Wystapił błąd!',
+                    type: 'error',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Ok!',
+                });
             });
     }
     $scope.loadEffectivityData();
@@ -46,33 +53,14 @@ app.controller('MyController', ["$scope", "$http", function ($scope, $http) {
         $http.get("/api/ApiEvent/GetUserEffectivityData")
             .then(function (resultGetData) {
                 $scope.effectivityTotalDataSource.data = resultGetData.data;
+            }, function () {
+                swal({
+                    title: 'Wystapił błąd!',
+                    type: 'error',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Ok!',
+                });
             });
     }
     $scope.loadEffectivityTotalData();
-
-    //$scope.myDataSourceAwayTeam = {
-    //    "chart": {
-    //        "caption": "Twoje najczęstsze przewidywania",
-    //        "subcaption": "Drużyna przeciwna",
-    //        "showvalues": "1",
-    //        "showpercentintooltip": "0",
-    //        "numberprefix": "$",
-    //        "enablemultislicing": "1",
-    //        "theme": "fusion"
-    //    },
-    //    "data": [
-    //        {
-    //            "label": "Wygrana",
-    //            "value": "300000"
-    //        },
-    //        {
-    //            "label": "Przegrana",
-    //            "value": "230000"
-    //        },
-    //        {
-    //            "label": "Remis",
-    //            "value": "20000"
-    //        }
-    //    ]
-    //};
 }]);

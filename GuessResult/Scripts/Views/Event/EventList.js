@@ -47,7 +47,12 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
             .then(function (resultGetData) {
                 $scope.events = resultGetData.data;
             }, function () {
-                alert('Wystąpił błąd');
+                swal({
+                    title: 'Wystapił błąd!',
+                    type: 'error',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Ok!',
+                });
             });
     }
     $scope.loadEventList();
@@ -79,6 +84,13 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
                     $scope.editedUserEvent.GeneralScoreType = $scope.generalScoreTypeList[0];
                 }
                 $('#modalUserEventDetails').modal();
+            }, function () {
+                swal({
+                    title: 'Wystapił błąd!',
+                    type: 'error',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Ok!',
+                });
             });
     }
 
