@@ -8,10 +8,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using GuessResult.Models;
+using GuessResult.Repositories.Interfaces;
 
 namespace GuessResult.Repositories
 {
-    public class EventRepository
+    public class EventRepository : IEventRepository
     {
 
         public List<EventListItem> GetAllEventListItems(EventStatus? filterEventStatus, bool filterOnlyMyEvents, long userId)

@@ -2,6 +2,7 @@
 using GuessResult.Enum;
 using GuessResult.Helpers;
 using GuessResult.Models;
+using GuessResult.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,9 +11,21 @@ using System.Web;
 
 namespace GuessResult.Repositories
 {
-    public class UserEventRepository
+    public class UserEventRepository : IUserEventRepository
     {
         private DB.GuessResultContext _db = new DB.GuessResultContext();
+        private IEventRepository _eventRepository;
+
+        public UserEventRepository()
+        {
+
+        }
+
+
+        public UserEventRepository(IEventRepository eventRepository)
+        {
+            _eventRepository = eventRepository;
+        }
 
         public List<GRUserEvent> GetAll()
         {
@@ -96,13 +109,12 @@ namespace GuessResult.Repositories
                     userEvent = new GRUserEvent();
                 }
 
-                EventRepository eventRepository = new EventRepository();
-                var eventFromDb = eventRepository.GetById(model.EventId);
+                var eventFromDb = _eventRepository.GetById(model.EventId);
 
                 if (isAdmin && model.EventPredictionType.HasValue)
                 {
                     eventFromDb.PredictionType = model.EventPredictionType.Value;
-                    eventRepository.Save(eventFromDb);
+                    _eventRepository.Save(eventFromDb);
                 }
 
                 if (eventFromDb.PredictionType == Enum.EventPredictionType.ExactScore)

@@ -3,6 +3,7 @@ using GuessResult.Enum;
 using GuessResult.Helpers;
 using GuessResult.Models;
 using GuessResult.Repositories;
+using GuessResult.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace GuessResult.Api
 {
     public class ApiEventController : ApiController
     {
+
         protected long UserId
         {
             get
@@ -21,7 +23,18 @@ namespace GuessResult.Api
                 return long.Parse(((ClaimsIdentity)User.Identity).Claims.FirstOrDefault(x => x.Type == "UserId").Value);
             }
         }
-        private EventRepository _eventRepository = new EventRepository();
+        private IEventRepository _eventRepository;
+
+        public ApiEventController()
+        {
+
+        }
+
+
+        public ApiEventController(IEventRepository eventRepository)
+        {
+            _eventRepository = eventRepository;
+        }
 
         [Authorize]
         [HttpGet]

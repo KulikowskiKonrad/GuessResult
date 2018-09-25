@@ -1,6 +1,7 @@
 ﻿using GuessResult.DB;
 using GuessResult.DB.Models;
 using GuessResult.Helpers;
+using GuessResult.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,7 +11,7 @@ using System.Web;
 
 namespace GuessResult.Repositories
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
 
         public GRUser GetByEmailPassword(string email, string password)

@@ -21,7 +21,9 @@ namespace GuessResult
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            AutofacConfig.ConfigureContainer(GlobalConfiguration.Configuration);
             JobsConfiguration.Configure();
+
 
             //EventRepository eventRepository = new EventRepository();
             //var allEvents = eventRepository.GetAll(null, false, 0);

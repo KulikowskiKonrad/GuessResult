@@ -16,11 +16,24 @@ using System.Security.Claims;
 using Microsoft.Owin.Security.OAuth;
 using static GuessResult.Startup;
 using System.Threading.Tasks;
+using GuessResult.Repositories.Interfaces;
 
 namespace GuessResult.Controllers
 {
     public class UserController : Controller
     {
+        //private IUserRepository _userRepository;
+
+
+        //public UserController()
+        //{
+        //}
+
+        //public UserController(IUserRepository userRepository)
+        //{
+        //    _userRepository = userRepository;
+        //}
+
         public ActionResult Index()
         {
             return View();
@@ -31,7 +44,6 @@ namespace GuessResult.Controllers
         {
             try
             {
-                UserRepository userRepository = new UserRepository();
                 return View("Login");
             }
             catch (Exception ex)
@@ -46,7 +58,6 @@ namespace GuessResult.Controllers
         {
             try
             {
-                // UserRepository userRepository = new UserRepository();
                 return View("Statystyki");
             }
             catch (Exception ex)
@@ -60,7 +71,6 @@ namespace GuessResult.Controllers
         {
             try
             {
-                // UserRepository userRepository = new UserRepository();
                 return View("StatystykiOgolne");
             }
             catch (Exception ex)

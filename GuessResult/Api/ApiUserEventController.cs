@@ -2,6 +2,7 @@
 using GuessResult.Helpers;
 using GuessResult.Models;
 using GuessResult.Repositories;
+using GuessResult.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,20 @@ namespace GuessResult.Api
             }
         }
 
-        private UserEventRepository _userEventRepository = new UserEventRepository();
+        private IUserEventRepository _userEventRepository;
+        private IEventRepository _eventRepository;
+
+
+        public ApiUserEventController()
+        {
+
+        }
+
+        public ApiUserEventController(IUserEventRepository userEventRepository, IEventRepository eventRepository)
+        {
+            _userEventRepository = userEventRepository;
+            _eventRepository = eventRepository;
+        }
 
         [Authorize]
         [HttpGet]
@@ -30,8 +44,7 @@ namespace GuessResult.Api
         {
             try
             {
-                EventRepository eventRepository = new EventRepository();
-                UserEventListItem result = eventRepository.GetUserEventListItemById(eventId, UserId);
+                UserEventListItem result = _eventRepository.GetUserEventListItemById(eventId, UserId);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -49,9 +62,9 @@ namespace GuessResult.Api
             {
                 if (ModelState.IsValid)
                 {
-                    UserEventRepository userEventRepository = new UserEventRepository();
+                    //UserEventRepository userEventRepository = new UserEventRepository();
 
-                    long? saveResult = userEventRepository.Save(model, UserId, User.IsInRole("Admin"));
+                    long? saveResult = _userEventRepository.Save(model, UserId, User.IsInRole("Admin"));
                     if (saveResult == null)
                     {
                         return InternalServerError();
