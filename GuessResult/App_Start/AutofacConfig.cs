@@ -14,6 +14,8 @@ namespace GuessResult
 {
     public class AutofacConfig
     {
+        public static IContainer Container { get; set; }
+
         public static void ConfigureContainer(HttpConfiguration config)
         {
             var builder = new ContainerBuilder();
@@ -23,13 +25,13 @@ namespace GuessResult
             builder.RegisterWebApiModelBinderProvider();
 
             builder.RegisterAssemblyTypes(typeof(MvcApplication).Assembly)
-               .Where(t => t.Name.EndsWith("Repository"))
+               //.Where(t => t.Name.EndsWith("Repository"))
                .AsImplementedInterfaces()
                .SingleInstance();
 
-            var container = builder.Build();
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+            Container = builder.Build();
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(Container));
+            config.DependencyResolver = new AutofacWebApiDependencyResolver(Container);
         }
     }
 }

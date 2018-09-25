@@ -1,4 +1,6 @@
-﻿using GuessResult.Helpers;
+﻿using Autofac;
+using GuessResult.Helpers;
+using GuessResult.Repositories.Interfaces;
 using GuessResult.Services;
 using Quartz;
 using System;
@@ -11,11 +13,18 @@ namespace GuessResult.Jobs
     [DisallowConcurrentExecution]
     public class FootballDataJob : IJob
     {
+        private IFootballDataApiService _footballDataApiService;
+
+        public FootballDataJob()
+        {
+            _footballDataApiService = AutofacConfig.Container.Resolve<IFootballDataApiService>();
+        }
+
         public void Execute(IJobExecutionContext context)
         {
             try
             {
-                new FootballDataApiService().ImportEvents();
+                _footballDataApiService.ImportEvents();
             }
             catch (Exception ex)
             {

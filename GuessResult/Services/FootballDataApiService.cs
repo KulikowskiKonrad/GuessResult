@@ -1,6 +1,7 @@
 ﻿using GuessResult.DB.Models;
 using GuessResult.Helpers;
 using GuessResult.Repositories;
+using GuessResult.Repositories.Interfaces;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,19 @@ using System.Web;
 
 namespace GuessResult.Services
 {
-    public class FootballDataApiService
+    public class FootballDataApiService : IFootballDataApiService
     {
-        private EventRepository _eventRepository = new EventRepository();
+        private IEventRepository _eventRepository;
+
+        public FootballDataApiService()
+        {
+
+        }
+
+        public FootballDataApiService(IEventRepository eventRepository)
+        {
+            _eventRepository = eventRepository;
+        }
 
         public void ImportEvents()
         {
