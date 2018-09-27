@@ -195,8 +195,11 @@
   <ItemGroup>
     <Compile Include="Api\ApiEventController.cs" />
     <Compile Include="Api\ApiUserEventController.cs" />
+    <Compile Include="Api\TestController.cs" />
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\NewsFeedController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="DB\GuessResultContext.cs" />
     <Compile Include="DB\Models\GREvent.cs" />
     <Compile Include="DB\Models\GRUserEvent.cs" />
@@ -347,9 +350,9 @@
     <Content Include="Scripts\moment-with-locales.js" />
     <Content Include="Scripts\sweetalert2.js" />
     <Content Include="Scripts\Views\Event\EventList.js" />
+    <Content Include="Scripts\Views\NewsFeed\NewsFeedList.js" />
+    <Content Include="Scripts\Views\Test\TestScript.js" />
     <Content Include="Scripts\Views\User\UsersStatistics.js" />
-    <Content Include="Scripts\Views\Reservation\ReservationList.js" />
-    <Content Include="Scripts\Views\Room\RoomList.js" />
     <Content Include="Scripts\Views\User\Index.js" />
     <Content Include="Scripts\Views\User\Register.js" />
     <Content Include="Scripts\Views\User\Statystyki.js" />
@@ -407,6 +410,8 @@
     <Content Include="Views\Event\EventList.cshtml" />
     <Content Include="Views\User\Statystyki.cshtml" />
     <Content Include="Views\User\StatystykiOgolne.cshtml" />
+    <Content Include="Views\Test\TestView.cshtml" />
+    <Content Include="Views\NewsFeed\NewsFeedList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201809031957055_Initial.resx">

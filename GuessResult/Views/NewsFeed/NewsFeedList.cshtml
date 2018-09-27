@@ -1,0 +1,45 @@
+﻿@Scripts.Render("~/bundles/js/NewsFeedList")
+
+<h2>Nowości</h2>
+
+
+<div ng-app="NewsFeed">
+    <div ng-controller="NewsFeedCtrl">
+        <div class="row newsFeedBlock">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label style="margin-top:5px;">Twój news: </label>
+                    <div class="input-group  input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                        @Html.TextArea("UserEventHomeTeamName", null, new
+                   {
+                       @class = "form-control",
+                       placeholder = "Treść",
+                       ng_model = "poleTekstowe"
+                   })
+                    </div>
+                    <button class="btn btn-default" ng-click="addNewsFeedToList()" style="margin-top:5px;">Dodaj nowość</button>
+                    <button class="btn btn-default pull-right" style="margin-top:5px;">Dodaj załącznik</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div ng-repeat="element in listaElementow">
+            <div class="row newsFeedBlock">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Nazwa drużyny gospodarzy</label>
+                        <div class="input-group  input-group">
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                            <label>{{element.tresc}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

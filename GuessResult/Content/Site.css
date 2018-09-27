@@ -1,6 +1,10 @@
 ﻿html, body {
   height: 100%; }
 
+.newsFeedBlock {
+  border-radius: 15px;
+  background-color: aqua; }
+
 #mojeMecze {
   color: white; }
 

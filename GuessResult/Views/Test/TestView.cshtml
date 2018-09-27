@@ -1,0 +1,33 @@
+﻿@Scripts.Render("~/bundles/js/Test")
+
+<div ng-app="Tt">
+    <div ng-controller="TestCtrl">
+        <input type="text" ng-model="poleTekstowe" />
+        <button type="button" ng-click="addElementToList()">Dodaj</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Data dodania
+                    </th>
+                    <th>
+                        Tresc
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="element in listaElementow">
+                    <td>
+                        {{element.dataDodania | date : "yyyy-MM-dd h:mm:ss"}}
+                    </td>
+                    <td>
+                        {{element.tresc}}
+                    </td>
+                    <td>
+                        <button type="button" ng-click="usun(element)">Usun</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
