@@ -3,7 +3,8 @@
 
 .newsFeedBlock {
   border-radius: 15px;
-  background-color: aqua; }
+  background-color: aqua;
+  margin-top: 10px; }
 
 #mojeMecze {
   color: white; }

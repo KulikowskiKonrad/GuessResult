@@ -194,14 +194,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ApiEventController.cs" />
+    <Compile Include="Api\ApiNewsFeedController.cs" />
     <Compile Include="Api\ApiUserEventController.cs" />
-    <Compile Include="Api\TestController.cs" />
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\NewsFeedController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="DB\GuessResultContext.cs" />
     <Compile Include="DB\Models\GREvent.cs" />
+    <Compile Include="DB\Models\GRNewsFeed.cs" />
+    <Compile Include="DB\Models\GRNewsFeedComment.cs" />
     <Compile Include="DB\Models\GRUserEvent.cs" />
     <Compile Include="Enum\GeneralScoreType.cs" />
     <Compile Include="Enum\EventStatus.cs" />
@@ -241,11 +243,17 @@
     <Compile Include="Migrations\201809201710182_updateTable.Designer.cs">
       <DependentUpon>201809201710182_updateTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809301507127_addTwoNewsTable.cs" />
+    <Compile Include="Migrations\201809301507127_addTwoNewsTable.Designer.cs">
+      <DependentUpon>201809301507127_addTwoNewsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ChartDataItem.cs" />
     <Compile Include="Models\EditEventViewModel.cs" />
     <Compile Include="Models\EditUserEventViewModel.cs" />
     <Compile Include="Models\EventListItem.cs" />
     <Compile Include="Models\EventListViewModel.cs" />
+    <Compile Include="Models\NewsFeedCommentListItem.cs" />
+    <Compile Include="Models\NewsFeedListItem.cs" />
     <Compile Include="Models\Old\ApiUserController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -255,8 +263,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="DB\Models\RRReservation.cs" />
-    <Compile Include="DB\Models\RRRoom.cs" />
     <Compile Include="DB\Models\GRUser.cs" />
     <Compile Include="Enum\UserRole.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
@@ -280,8 +286,12 @@
     <Compile Include="Repositories\EventRepository.cs" />
     <Compile Include="Repositories\Interfaces\IEventRepository.cs" />
     <Compile Include="Repositories\Interfaces\IFootballDataApiService.cs" />
+    <Compile Include="Repositories\Interfaces\INewsFeedRepository.cs" />
+    <Compile Include="Repositories\Interfaces\INewsFeedCommentRepository.cs" />
     <Compile Include="Repositories\Interfaces\IUserEventRepository.cs" />
     <Compile Include="Repositories\Interfaces\IUserRepository.cs" />
+    <Compile Include="Repositories\NewsFeedCommentRepositories.cs" />
+    <Compile Include="Repositories\NewsFeedRepositories.cs" />
     <Compile Include="Repositories\UserEventRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\FootballDataApiService.cs" />
@@ -406,12 +416,12 @@
     </None>
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\_ExternalLogin.cshtml" />
-    <None Include="Properties\PublishProfiles\RoomReservation20180830020900 - Web Deploy.pubxml" />
     <Content Include="Views\Event\EventList.cshtml" />
-    <Content Include="Views\User\Statystyki.cshtml" />
-    <Content Include="Views\User\StatystykiOgolne.cshtml" />
+    <Content Include="Views\User\Statistics.cshtml" />
+    <Content Include="Views\User\MainStatistics.cshtml" />
     <Content Include="Views\Test\TestView.cshtml" />
     <Content Include="Views\NewsFeed\NewsFeedList.cshtml" />
+    <None Include="Properties\PublishProfiles\GuessResult20180927060324 - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201809031957055_Initial.resx">
@@ -437,6 +447,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809201710182_updateTable.resx">
       <DependentUpon>201809201710182_updateTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809301507127_addTwoNewsTable.resx">
+      <DependentUpon>201809301507127_addTwoNewsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

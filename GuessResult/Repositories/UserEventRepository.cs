@@ -110,7 +110,10 @@ namespace GuessResult.Repositories
                 }
 
                 var eventFromDb = _eventRepository.GetById(model.EventId);
-
+                if (eventFromDb.AwayTeamScore != null)
+                {
+                    return null;
+                }
                 if (isAdmin && model.EventPredictionType.HasValue)
                 {
                     eventFromDb.PredictionType = model.EventPredictionType.Value;

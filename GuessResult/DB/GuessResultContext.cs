@@ -12,10 +12,12 @@ namespace GuessResult.DB
         public DbSet<GRUser> Users { get; set; }
         public DbSet<GREvent> Events { get; set; }
         public DbSet<GRUserEvent> UserEvents { get; set; }
-
+        public DbSet<GRNewsFeed> NewsFeed { get; set; }
+        public DbSet<GRNewsFeedComment> NewsFeedComment { get; set; }
         public GuessResultContext()
             : base("DefaultConnection")
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<GuessResultContext, Migrations.Configuration>());
         }
     }
 }

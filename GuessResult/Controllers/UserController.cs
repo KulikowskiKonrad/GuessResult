@@ -58,7 +58,7 @@ namespace GuessResult.Controllers
         {
             try
             {
-                return View("Statystyki");
+                return View("Statistics");
             }
             catch (Exception ex)
             {
@@ -71,7 +71,7 @@ namespace GuessResult.Controllers
         {
             try
             {
-                return View("StatystykiOgolne");
+                return View("MainStatistics");
             }
             catch (Exception ex)
             {

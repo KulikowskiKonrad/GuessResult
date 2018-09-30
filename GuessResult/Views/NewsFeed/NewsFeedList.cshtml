@@ -25,21 +25,17 @@
             </div>
         </div>
 
-        <div ng-repeat="element in listaElementow">
-            <div class="row newsFeedBlock">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Nazwa drużyny gospodarzy</label>
-                        <div class="input-group  input-group">
-                            <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                            <label>{{element.tresc}}</label>
-                        </div>
+        <div class="row newsFeedBlock" ng-repeat="element in listaElementow">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Nazwa drużyny gospodarzy</label>
+                    <div class="input-group  input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                        <label>{{element.Content}}</label>
                     </div>
                 </div>
             </div>
         </div>
-
-
 
     </div>
 </div>

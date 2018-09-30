@@ -129,7 +129,7 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
                 })
                 .catch(function (data, status) {
                     swal({
-                        title: data.data.Message,
+                        title: (data.data != '' ? data.data.Message : 'Wystąpił błąd'),
                         type: 'error',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'Ok!',
