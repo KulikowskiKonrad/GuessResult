@@ -21,13 +21,12 @@ app.controller('NewsFeedCtrl', ["$scope", "$http", function ($scope, $http) {
     $scope.addNewsFeedToList = function () {
         if ($scope.poleTekstowe != "") {
             $scope.editedNewsFeed = {};
-            //$scope.listaElementow.push({
-            //    tresc: $scope.poleTekstowe
-            //});
             $http.post("/api/ApiNewsFeed/SaveNewsFeed",
                 {
                     Id: $scope.editedNewsFeed.Id,
-                    Content: $scope.poleTekstowe
+                    Content: $scope.poleTekstowe,
+                    InsertDate: $scope.editedNewsFeed.InsertDate,
+                    InsertUserEmail: $scope.editedNewsFeed.InsertUserEmail
                 })
                 .then(function (response) {
                     $scope.poleTekstowe = '';
@@ -42,12 +41,16 @@ app.controller('NewsFeedCtrl', ["$scope", "$http", function ($scope, $http) {
                         confirmButtonText: 'Ok!',
                     });
                 });
-
         }
     }
-    //$scope.usun = function (element) {
-    //    $scope.listaElementow.splice($.inArray(element, $scope.listaElementow), 1);
-    //}
+
+    $scope.remove = function (element) {
+        $http.post("/api/ApiNewsFeed/Remove?id=" + element.Id)
+        //$scope.listaElementow.splice($.inArray(element, $scope.listaElementow), 1);
+
+
+        $scope.loadNewsFeedList();
+    }
 }]);
 
 

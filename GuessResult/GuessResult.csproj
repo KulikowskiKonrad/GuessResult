@@ -361,7 +361,6 @@
     <Content Include="Scripts\sweetalert2.js" />
     <Content Include="Scripts\Views\Event\EventList.js" />
     <Content Include="Scripts\Views\NewsFeed\NewsFeedList.js" />
-    <Content Include="Scripts\Views\Test\TestScript.js" />
     <Content Include="Scripts\Views\User\UsersStatistics.js" />
     <Content Include="Scripts\Views\User\Index.js" />
     <Content Include="Scripts\Views\User\Register.js" />
@@ -419,7 +418,6 @@
     <Content Include="Views\Event\EventList.cshtml" />
     <Content Include="Views\User\Statistics.cshtml" />
     <Content Include="Views\User\MainStatistics.cshtml" />
-    <Content Include="Views\Test\TestView.cshtml" />
     <Content Include="Views\NewsFeed\NewsFeedList.cshtml" />
     <None Include="Properties\PublishProfiles\GuessResult20180927060324 - Web Deploy.pubxml" />
   </ItemGroup>

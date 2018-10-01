@@ -111,7 +111,6 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
             $http.post("/api/ApiUserEvent/SaveUserEventDetails",
                 {
                     Id: $scope.editedUserEvent.Id,
-                    //Name: $scope.editedUserEvent.Name,
                     StartDate: $scope.editedUserEvent.StartDate,
                     HomeTeamName: $scope.editedUserEvent.HomeTeamName,
                     AwayTeamName: $scope.editedUserEvent.AwayTeamName,
@@ -120,7 +119,6 @@ app.controller('EventListCtrl', ["$scope", "$http", function ($scope, $http) {
                     EventId: $scope.editedUserEvent.EventId,
                     EventPredictionType: $scope.editedUserEvent.EventPredictionType.Id,
                     GeneralScoreType: $scope.editedUserEvent.GeneralScoreType.Id,
-                    //UserId: $scope.editedUserEvent.UserId
                 })
                 .then(function (response) {
                     $scope.editedUserEvent = null;

@@ -13,6 +13,7 @@ namespace GuessResult.Repositories.Interfaces
         List<GRNewsFeed> GetAll();
         List<NewsFeedListItem> GetAllNewsFeedListItems();
         GRNewsFeed GetNewsFeedById(long id);
+        bool Delete(long id);
         long? Save(NewsFeedListItem model, long userId);
     }
 }

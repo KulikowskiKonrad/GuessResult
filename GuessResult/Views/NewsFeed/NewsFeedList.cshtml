@@ -5,37 +5,44 @@
 
 <div ng-app="NewsFeed">
     <div ng-controller="NewsFeedCtrl">
-        <div class="row newsFeedBlock">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label style="margin-top:5px;">Twój news: </label>
-                    <div class="input-group  input-group">
-                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                        @Html.TextArea("UserEventHomeTeamName", null, new
-                   {
-                       @class = "form-control",
-                       placeholder = "Treść",
-                       ng_model = "poleTekstowe"
-                   })
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="row newsFeedBlock">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label style="margin-top:5px;">Twój news: </label>
+                        <div class="input-group  input-group">
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                            @Html.TextArea("UserEventHomeTeamName", null, new
+                       {
+                           @class = "form-control",
+                           placeholder = "Treść",
+                           ng_model = "poleTekstowe"
+                       })
+                        </div>
+                        <button class="btn btn-default" ng-click="addNewsFeedToList()" style="margin-top:5px;">Dodaj nowość</button>
+                        <button class="btn btn-default pull-right" style="margin-top:5px;">Dodaj załącznik</button>
                     </div>
-                    <button class="btn btn-default" ng-click="addNewsFeedToList()" style="margin-top:5px;">Dodaj nowość</button>
-                    <button class="btn btn-default pull-right" style="margin-top:5px;">Dodaj załącznik</button>
-                </div>
 
-            </div>
-        </div>
-
-        <div class="row newsFeedBlock" ng-repeat="element in listaElementow">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label>Nazwa drużyny gospodarzy</label>
-                    <div class="input-group  input-group">
-                        <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                        <label>{{element.Content}}</label>
-                    </div>
                 </div>
             </div>
-        </div>
+        }
+            <div class="row newsFeedBlock" ng-repeat="element in listaElementow">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>{{element.InsertUserEmail}}</label>
+                        <label class="pull-right">{{element.InsertDate | date:'yyyy-MM-dd HH:mm'}}</label>
+                        <div class="input-group  input-group">
+                            <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                            <label>{{element.Content}}</label>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <button ng-click="remove(element)" class="btn btn-default pull-right btnDelete">Usuń</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    </div>
+        </div>
 </div>

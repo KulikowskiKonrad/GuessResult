@@ -50,8 +50,37 @@ namespace GuessResult.Api
             }
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IHttpActionResult Remove(long id)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    bool deleteResult = _iNewsFeedRepository.Delete(id);
+                    if (deleteResult == false)
+                    {
+                        return InternalServerError();
+                    }
+                    else
+                    {
+                        return Ok(true);
+                    }
+                }
+                else
+                {
+                    return InternalServerError();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return InternalServerError();
+            }
+        }
 
-        [Authorize]
+        [Authorize(Roles ="Admin")]
         [HttpPost]
         public IHttpActionResult SaveNewsFeed(NewsFeedListItem model)
         {

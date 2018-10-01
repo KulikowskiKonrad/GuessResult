@@ -96,5 +96,27 @@ namespace GuessResult.Repositories
                 return null;
             }
         }
+
+        public bool Delete(long id)
+        {
+            try
+            {
+                bool isDeleted = false;
+                using(GuessResultContext db = new GuessResultContext())
+                {
+                    GRNewsFeed gRNewsFeed = null;
+                    gRNewsFeed = db.NewsFeed.Where(x => x.Id == id).Single();
+                    gRNewsFeed.IsDeleted = true;
+                    db.SaveChanges();
+                    isDeleted = true;
+                }
+                return isDeleted;
+            }
+            catch(Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return false;
+            }
+        }
     }
 }
