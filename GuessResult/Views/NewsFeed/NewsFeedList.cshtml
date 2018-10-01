@@ -1,13 +1,74 @@
 ﻿@Scripts.Render("~/bundles/js/NewsFeedList")
 
+@* https://bootsnipp.com/snippets/featured/user-comment-example *@
+
+<style>
+    #divNewsFeed .thumbnail {
+        padding: 0px;
+    }
+
+    #divNewsFeed .panel {
+        position: relative;
+    }
+
+        #divNewsFeed .panel > .panel-heading:after, .panel > .panel-heading:before {
+            position: absolute;
+            top: 11px;
+            left: -16px;
+            right: 100%;
+            width: 0;
+            height: 0;
+            display: block;
+            content: " ";
+            border-color: transparent;
+            border-style: solid solid outset;
+            pointer-events: none;
+        }
+
+        #divNewsFeed .panel > .panel-heading:after {
+            border-width: 7px;
+            border-right-color: #f7f7f7;
+            margin-top: 1px;
+            margin-left: 2px;
+        }
+
+        #divNewsFeed .panel > .panel-heading:before {
+            border-right-color: #ddd;
+            border-width: 8px;
+        }
+
+    #divNewsFeedList {
+        overflow: auto;
+    }
+</style>
 <h2>Nowości</h2>
 
-
-<div ng-app="NewsFeed">
+<div ng-app="NewsFeed" id="divNewsFeed">
     <div ng-controller="NewsFeedCtrl">
-        @if (User.IsInRole("Admin"))
-        {
-            <div class="row newsFeedBlock">
+        <div class="well">
+            <div class="media">
+                @*<a class="pull-left" href="#">
+                        <img class="media-object" src="http://placekitten.com/100/100">
+                    </a>*@
+                <div class="media-body">
+                    <div class="form-group">
+                        <label>Twój news:</label>
+                        @Html.TextArea("UserEventHomeTeamName", null, new
+                   {
+                       @class = "form-control",
+                       placeholder = "Treść",
+                       ng_model = "poleTekstowe"
+                   })
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-default" ng-click="addNewsFeedToList()" style="margin-top:5px;">Dodaj nowość</button>
+                        <button class="btn btn-default pull-right" style="margin-top:5px;">Dodaj załącznik</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="row newsFeedBlock">
                 <div class="col-md-12">
                     <div class="form-group">
                         <label style="margin-top:5px;">Twój news: </label>
@@ -23,12 +84,43 @@
                         <button class="btn btn-default" ng-click="addNewsFeedToList()" style="margin-top:5px;">Dodaj nowość</button>
                         <button class="btn btn-default pull-right" style="margin-top:5px;">Dodaj załącznik</button>
                     </div>
-
+                </div>
+            </div>*@
+        <div id="divNewsFeedList">
+            <div class="well" ng-repeat="element in listaElementow">
+                <div class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="http://placekitten.com/100/100">
+                    </a>
+                    <div class="media-body">
+                        <p class="text-right"><i class="glyphicon glyphicon-user"></i> {{element.InsertUserEmail}}</p>
+                        <p>
+                            {{element.Content}}
+                        </p>
+                        <ul class="list-inline list-unstyled">
+                            <li><span><i class="glyphicon glyphicon-calendar"></i> {{element.InsertDate | date:'yyyy-MM-dd HH:mm'}}</span></li>
+                            <li>|</li>
+                            <li>
+                                <span><i class="glyphicon glyphicon-comment"></i> 0 ilość komentarzy</span>
+                            </li>
+                            <li>|</li>
+                            <li>
+                                <span><i ng-click="likeNewsFeed(element.Id)" class="cursor-pointer glyphicon glyphicon-thumbs-up"></i> {{element.LikeCount}} ilość polubień</span>
+                            </li>
+                            @*@if (User.IsInRole("Admin"))
+                                {*@
+                            <li class="pull-right">
+                                <button ng-click="remove(element.Id)" class="btn btn-default pull-right btnDelete btn-sm"><span class="glyphicon glyphicon-trash"></span> Usuń</button>
+                            </li>
+                            @* } *@
+                        </ul>
+                    </div>
                 </div>
             </div>
-        }
-            <div class="row newsFeedBlock" ng-repeat="element in listaElementow">
-                <div class="col-md-12">
+        </div>
+
+        @*<div class="row newsFeedBlock" ng-repeat="element in listaElementow">
+                <div class="col-md-12" style="margin-bottom:5px;">
                     <div class="form-group">
                         <label>{{element.InsertUserEmail}}</label>
                         <label class="pull-right">{{element.InsertDate | date:'yyyy-MM-dd HH:mm'}}</label>
@@ -41,8 +133,10 @@
                             }
                         </div>
                     </div>
+                    <button class="glyphicon glyphicon-thumbs-up"></button>
+                    <input type="text" id="countLikeComment" />
                 </div>
-            </div>
+            </div>*@
 
-        </div>
+    </div>
 </div>

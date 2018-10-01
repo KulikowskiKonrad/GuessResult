@@ -60,7 +60,7 @@ namespace GuessResult.Repositories
             throw new NotImplementedException();
         }
 
-        public long? Save(NewsFeedListItem model, long userId)
+        public long? Save(SaveNewsFeedViewModel model, long userId)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace GuessResult.Repositories
             try
             {
                 bool isDeleted = false;
-                using(GuessResultContext db = new GuessResultContext())
+                using (GuessResultContext db = new GuessResultContext())
                 {
                     GRNewsFeed gRNewsFeed = null;
                     gRNewsFeed = db.NewsFeed.Where(x => x.Id == id).Single();
@@ -112,7 +112,28 @@ namespace GuessResult.Repositories
                 }
                 return isDeleted;
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return false;
+            }
+        }
+
+        public bool Like(long id)
+        {
+            try
+            {
+                bool result = true;
+                using (GuessResultContext db = new GuessResultContext())
+                {
+                    GRNewsFeed gRNewsFeed = null;
+                    gRNewsFeed = db.NewsFeed.Where(x => x.Id == id).Single();
+                    gRNewsFeed.LikeCount++;
+                    db.SaveChanges();
+                }
+                return result;
+            }
+            catch (Exception ex)
             {
                 LogHelper.Log.Error(ex);
                 return false;

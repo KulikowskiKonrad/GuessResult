@@ -14,6 +14,7 @@ namespace GuessResult.Repositories.Interfaces
         List<NewsFeedListItem> GetAllNewsFeedListItems();
         GRNewsFeed GetNewsFeedById(long id);
         bool Delete(long id);
-        long? Save(NewsFeedListItem model, long userId);
+        long? Save(SaveNewsFeedViewModel model, long userId);
+        bool Like(long id);
     }
 }

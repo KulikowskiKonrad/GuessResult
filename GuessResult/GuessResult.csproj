@@ -199,7 +199,6 @@
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\NewsFeedController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="DB\GuessResultContext.cs" />
     <Compile Include="DB\Models\GREvent.cs" />
     <Compile Include="DB\Models\GRNewsFeed.cs" />
@@ -253,6 +252,7 @@
     <Compile Include="Models\EventListItem.cs" />
     <Compile Include="Models\EventListViewModel.cs" />
     <Compile Include="Models\NewsFeedCommentListItem.cs" />
+    <Compile Include="Models\NewsFeedLikeViewModel.cs" />
     <Compile Include="Models\NewsFeedListItem.cs" />
     <Compile Include="Models\Old\ApiUserController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -281,6 +281,7 @@
     <Compile Include="Models\Old\ReservationListItem.cs" />
     <Compile Include="Models\Old\ReservationListViewModel.cs" />
     <Compile Include="Models\Old\RoomListItem.cs" />
+    <Compile Include="Models\SaveNewsFeedViewModel.cs" />
     <Compile Include="Models\UserEventListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EventRepository.cs" />

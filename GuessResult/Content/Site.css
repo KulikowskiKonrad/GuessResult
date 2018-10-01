@@ -56,8 +56,6 @@ a {
 #wrapper {
   padding-left: 0;
   -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
   transition: all 0.5s ease; }
 
 #wrapper.toggled {
@@ -73,8 +71,6 @@ a {
   overflow-x: hidden;
   background: #1a1a1a;
   -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
   transition: all 0.5s ease; }
 
 #sidebar-wrapper::-webkit-scrollbar {
@@ -129,7 +125,6 @@ a {
   width: 3px;
   background-color: #1c1c1c;
   -webkit-transition: width .2s ease-in;
-  -o-transition: width .2s ease-in;
   transition: width .2s ease-in; }
 
 .sidebar-nav li:first-child a {
@@ -166,8 +161,6 @@ a {
 .nav.navbar-nav.navbar-right li:hover:before {
   width: 100%;
   -webkit-transition: width .2s ease-in;
-  -moz-transition: width .2s ease-in;
-  -ms-transition: width .2s ease-in;
   transition: width .2s ease-in; }
 
 .nav.navbar-nav.navbar-right {
@@ -211,7 +204,8 @@ a {
   border-radius: 0;
   border: none;
   background-color: #222;
-  box-shadow: none; }
+  -webkit-box-shadow: none;
+          box-shadow: none; }
 
 /*-------------------------------*/
 /*       Hamburger-Cross         */
@@ -368,7 +362,8 @@ h2::before {
 
 .subHome {
   margin-top: 50vh;
-  transform: translateY(-50%); }
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%); }
 
 .subHome h3 {
   color: #fff;
@@ -378,7 +373,8 @@ h2::before {
   background: rgba(0, 0, 0, 0.5);
   border-radius: 50px;
   padding: 30px;
-  box-shadow: 0 0 50px rgba(255, 255, 255, 0.4); }
+  -webkit-box-shadow: 0 0 50px rgba(255, 255, 255, 0.4);
+          box-shadow: 0 0 50px rgba(255, 255, 255, 0.4); }
 
 body.home .hamburger.is-closed .hamb-top, body.home .hamburger.is-closed .hamb-middle, body.home .hamburger.is-closed .hamb-bottom {
   background: #fff; }
@@ -395,3 +391,5 @@ footer {
   h2 {
     padding-left: 50px; } }
 
+.cursor-pointer {
+  cursor: pointer; }

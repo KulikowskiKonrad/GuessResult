@@ -50,8 +50,8 @@ namespace GuessResult.Api
             }
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
+        //[Authorize(Roles = "Admin")]
+        [HttpDelete]
         public IHttpActionResult Remove(long id)
         {
             try
@@ -80,9 +80,9 @@ namespace GuessResult.Api
             }
         }
 
-        [Authorize(Roles ="Admin")]
+        [Authorize]
         [HttpPost]
-        public IHttpActionResult SaveNewsFeed(NewsFeedListItem model)
+        public IHttpActionResult SaveNewsFeed(SaveNewsFeedViewModel model)
         {
             try
             {
@@ -101,6 +101,29 @@ namespace GuessResult.Api
                 else
                 {
                     return InternalServerError();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return InternalServerError();
+            }
+        }
+
+
+        [HttpPost]
+        public IHttpActionResult Like([FromBody]NewsFeedLikeViewModel model)
+        {
+            try
+            {
+                bool likeResult = _iNewsFeedRepository.Like(model.Id);
+                if (likeResult == false)
+                {
+                    return InternalServerError();
+                }
+                else
+                {
+                    return Ok(true);
                 }
             }
             catch (Exception ex)
