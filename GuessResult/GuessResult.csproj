@@ -194,6 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ApiEventController.cs" />
+    <Compile Include="Api\ApiNewsFeedCommentController.cs" />
     <Compile Include="Api\ApiNewsFeedController.cs" />
     <Compile Include="Api\ApiUserEventController.cs" />
     <Compile Include="App_Start\AutofacConfig.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="DB\Models\GREvent.cs" />
     <Compile Include="DB\Models\GRNewsFeed.cs" />
     <Compile Include="DB\Models\GRNewsFeedComment.cs" />
+    <Compile Include="DB\Models\GRNewsFeedLike.cs" />
     <Compile Include="DB\Models\GRUserEvent.cs" />
     <Compile Include="Enum\GeneralScoreType.cs" />
     <Compile Include="Enum\EventStatus.cs" />
@@ -245,6 +247,18 @@
     <Compile Include="Migrations\201809301507127_addTwoNewsTable.cs" />
     <Compile Include="Migrations\201809301507127_addTwoNewsTable.Designer.cs">
       <DependentUpon>201809301507127_addTwoNewsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810030626311_createNewTableNewsFeedLike.cs" />
+    <Compile Include="Migrations\201810030626311_createNewTableNewsFeedLike.Designer.cs">
+      <DependentUpon>201810030626311_createNewTableNewsFeedLike.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810030812018_createNewColumnCountLike.cs" />
+    <Compile Include="Migrations\201810030812018_createNewColumnCountLike.Designer.cs">
+      <DependentUpon>201810030812018_createNewColumnCountLike.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810030857390_addForgeinKeyToNewsFeedLikeTable.cs" />
+    <Compile Include="Migrations\201810030857390_addForgeinKeyToNewsFeedLikeTable.Designer.cs">
+      <DependentUpon>201810030857390_addForgeinKeyToNewsFeedLikeTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\ChartDataItem.cs" />
     <Compile Include="Models\EditEventViewModel.cs" />
@@ -449,6 +463,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809301507127_addTwoNewsTable.resx">
       <DependentUpon>201809301507127_addTwoNewsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810030626311_createNewTableNewsFeedLike.resx">
+      <DependentUpon>201810030626311_createNewTableNewsFeedLike.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810030812018_createNewColumnCountLike.resx">
+      <DependentUpon>201810030812018_createNewColumnCountLike.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810030857390_addForgeinKeyToNewsFeedLikeTable.resx">
+      <DependentUpon>201810030857390_addForgeinKeyToNewsFeedLikeTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

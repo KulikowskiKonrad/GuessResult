@@ -6,12 +6,13 @@ using System.Web;
 using GuessResult.DB.Models;
 using GuessResult.DB;
 using GuessResult.Helpers;
+using GuessResult.Models;
 
 namespace GuessResult.Repositories
 {
     public class NewsFeedCommentRepositories : INewsFeedCommentRepository
     {
-        public List<GRNewsFeedComment> GetAllNewsFeedComment()
+        public List<GRNewsFeedComment> GetAll()
         {
             try
             {
@@ -21,6 +22,31 @@ namespace GuessResult.Repositories
                     allNewsFeed = db.NewsFeedComment.Where(x => x.IsDeleted == false).ToList();
                 }
                 return allNewsFeed;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return null;
+            }
+        }
+
+
+        public List<NewsFeedCommentListItem> GetAllNewsFeedComment()
+        {
+            try
+            {
+                List<NewsFeedCommentListItem> result = GetAll()
+                    .Select(x => new NewsFeedCommentListItem()
+                    {
+                        Id = x.Id,
+                        Content = x.Content,
+                        InsertDate = x.InsertDate,
+                        InsertUserEmail = x.User.Email,
+                        LikeCount=x.CountLike
+                    })
+                .OrderByDescending(x => x.InsertDate)
+                .ToList();
+                return result;
             }
             catch (Exception ex)
             {

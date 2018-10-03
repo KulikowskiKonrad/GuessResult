@@ -14,6 +14,7 @@ namespace GuessResult.DB
         public DbSet<GRUserEvent> UserEvents { get; set; }
         public DbSet<GRNewsFeed> NewsFeed { get; set; }
         public DbSet<GRNewsFeedComment> NewsFeedComment { get; set; }
+        public DbSet<GRNewsFeedLike> NewsFeedLike { get; set; }
         public GuessResultContext()
             : base("DefaultConnection")
         {

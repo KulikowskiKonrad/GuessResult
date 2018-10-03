@@ -14,5 +14,7 @@ namespace GuessResult.Models
         public DateTime InsertDate { get; set; }
 
         public string InsertUserEmail { get; set; }
+
+        public int LikeCount { get; set; }
     }
 }

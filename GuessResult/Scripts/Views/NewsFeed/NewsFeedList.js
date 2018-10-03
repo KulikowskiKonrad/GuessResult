@@ -1,11 +1,32 @@
 ﻿var app = angular.module('NewsFeed', []);
 app.controller('NewsFeedCtrl', ["$scope", "$http", function ($scope, $http) {
 
+    $scope.commentList = [];
+
+    $scope.loadNewsFeedCommentList = function () {
+        $http.get("/api/ApiNewsFeedComment/GetAllNewsFeedComment")
+            .then(function (resultGetData) {
+                $scope.commentList = resultGetData.data;
+                $('#modalNewsFeedComment').modal();
+            }, function () {
+                swal({
+                    title: 'Wystapił błąd!',
+                    type: 'error',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Ok!',
+                });
+            });
+    }
+    $scope.loadNewsFeedCommentList();
+
+
+
     $scope.listaElementow = [];
     $scope.loadNewsFeedList = function () {
         $http.get("/api/ApiNewsFeed/GetAll")
             .then(function (resultGetData) {
                 $scope.listaElementow = resultGetData.data;
+                $('#modalNewsFeed').modal();
             }, function () {
                 swal({
                     title: 'Wystapił błąd!',
@@ -16,6 +37,32 @@ app.controller('NewsFeedCtrl', ["$scope", "$http", function ($scope, $http) {
             });
     }
     $scope.loadNewsFeedList();
+
+
+    $scope.addNewsFeedCommentToList = function () {
+        if ($scope.text != "") {
+            $scope.editedNewsFeed = {};
+            $http.post("/api/ApiNewsFeedComment/SaveNewsFeedComment",
+                {
+                    Id: $scope.editedNewsFeed.Id,
+                    Content: $scope.text,
+                })
+                .then(function (response) {
+                    $scope.text = '';
+                    $scope.editedNewsFeed = {};
+                    $scope.loadNewsFeedList();
+                })
+                .catch(function (data, status) {
+                    swal({
+                        title: (data.data != '' ? data.data.Message : 'Wystąpił błąd'),
+                        type: 'error',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Ok!',
+                    });
+                });
+        }
+    }
+
 
 
     $scope.addNewsFeedToList = function () {

@@ -9,6 +9,8 @@ namespace GuessResult.DB.Models
     {
         public long Id { get; set; }
 
+        public int CountLike { get; set; }
+
         public string Content { get; set; }
 
         public bool IsDeleted { get; set; }

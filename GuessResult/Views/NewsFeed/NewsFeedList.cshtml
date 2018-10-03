@@ -47,9 +47,6 @@
     <div ng-controller="NewsFeedCtrl">
         <div class="well">
             <div class="media">
-                @*<a class="pull-left" href="#">
-                        <img class="media-object" src="http://placekitten.com/100/100">
-                    </a>*@
                 <div class="media-body">
                     <div class="form-group">
                         <label>Twój news:</label>
@@ -68,24 +65,6 @@
             </div>
         </div>
 
-        @*<div class="row newsFeedBlock">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label style="margin-top:5px;">Twój news: </label>
-                        <div class="input-group  input-group">
-                            <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                            @Html.TextArea("UserEventHomeTeamName", null, new
-                       {
-                           @class = "form-control",
-                           placeholder = "Treść",
-                           ng_model = "poleTekstowe"
-                       })
-                        </div>
-                        <button class="btn btn-default" ng-click="addNewsFeedToList()" style="margin-top:5px;">Dodaj nowość</button>
-                        <button class="btn btn-default pull-right" style="margin-top:5px;">Dodaj załącznik</button>
-                    </div>
-                </div>
-            </div>*@
         <div id="divNewsFeedList">
             <div class="well" ng-repeat="element in listaElementow">
                 <div class="media">
@@ -108,7 +87,7 @@
                                 <span><i ng-click="likeNewsFeed(element.Id)" class="cursor-pointer glyphicon glyphicon-thumbs-up"></i> {{element.LikeCount}} ilość polubień</span>
                             </li>
                             @*@if (User.IsInRole("Admin"))
-                                {*@
+                            {*@
                             <li class="pull-right">
                                 <button ng-click="remove(element.Id)" class="btn btn-default pull-right btnDelete btn-sm"><span class="glyphicon glyphicon-trash"></span> Usuń</button>
                             </li>
@@ -119,24 +98,70 @@
             </div>
         </div>
 
-        @*<div class="row newsFeedBlock" ng-repeat="element in listaElementow">
-                <div class="col-md-12" style="margin-bottom:5px;">
-                    <div class="form-group">
-                        <label>{{element.InsertUserEmail}}</label>
-                        <label class="pull-right">{{element.InsertDate | date:'yyyy-MM-dd HH:mm'}}</label>
-                        <div class="input-group  input-group">
-                            <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                            <label>{{element.Content}}</label>
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <button ng-click="remove(element)" class="btn btn-default pull-right btnDelete">Usuń</button>
-                            }
+
+        <div id="modalNewsFeedComment" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Przewidywany wynik użytkownika</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="well">
+                            <div class="media">
+                                <div class="media-body">
+                                    <div class="form-group">
+                                        <label>Twój komentarz:</label>
+                                        @Html.TextArea("UserEventHomeTeamName", null, new
+                                   {
+                                       @class = "form-control",
+                                       placeholder = "Treść",
+                                       ng_model = "text"
+                                   })
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-default pull-right" ng-click="addNewsFeedCommentToList()">Dodaj komentarz</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <button class="glyphicon glyphicon-thumbs-up"></button>
-                    <input type="text" id="countLikeComment" />
-                </div>
-            </div>*@
 
+                    <div id="divNewsFeedList">
+                        <div class="well" ng-repeat="comment in commentList">
+                            <div class="media">
+                                <a class="pull-left" href="#">
+                                    <img class="media-object" src="http://placekitten.com/100/100">
+                                </a>
+                                <div class="media-body">
+                                    <p class="text-right"><i class="glyphicon glyphicon-user"></i> {{comment.InsertUserEmail}}</p>
+                                    <p>
+                                        {{comment.Content}}
+                                    </p>
+                                    <ul class="list-inline list-unstyled">
+                                        @*<li><span><i class="glyphicon glyphicon-calendar"></i> {{element.InsertDate | date:'yyyy-MM-dd HH:mm'}}</span></li>*@
+                                        @*<li>|</li>
+                                        <li>
+                                            <span><i class="glyphicon glyphicon-comment"></i> 0 ilość komentarzy</span>
+                                        </li>*@
+                                        <li>|</li>
+                                        <li>
+                                            <span><i ng-click="likeNewsFeed(comment.Id)" class="cursor-pointer glyphicon glyphicon-thumbs-up"></i> {{element.LikeCount}} ilość polubień</span>
+                                        </li>
+                                        @*@if (User.IsInRole("Admin"))
+                        {*@
+                                        <li class="pull-right">
+                                            <button ng-click="remove(comment.Id)" class="btn btn-default pull-right btnDelete btn-sm"><span class="glyphicon glyphicon-trash"></span> Usuń</button>
+                                        </li>
+                                        @* } *@
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-default btn-usun pull-right" style="margin-bottom:5px; margin-right:5px" ng-click="cancelNewsFeedComment()">Anuluj</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
