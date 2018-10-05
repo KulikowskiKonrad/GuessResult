@@ -3,6 +3,19 @@
 @* https://bootsnipp.com/snippets/featured/user-comment-example *@
 
 <style>
+    #modalNewsFeedComment .well {
+        margin-bottom: 0;
+    }
+
+
+    #modalNewsFeedComment .modal-body {
+        padding-bottom: 0;
+    }
+
+    #modalNewsFeedComment .modal-footer {
+        padding: 5px 20px 5px;
+    }
+
     #divNewsFeed .thumbnail {
         padding: 0px;
     }
@@ -40,6 +53,14 @@
     #divNewsFeedList {
         overflow: auto;
     }
+
+    #divNewsFeedCommentList {
+        overflow: auto;
+    }
+
+    .liked {
+        color: green;
+    }
 </style>
 <h2>Nowości</h2>
 
@@ -58,8 +79,19 @@
                    })
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-default" ng-click="addNewsFeedToList()" style="margin-top:5px;">Dodaj nowość</button>
-                        <button class="btn btn-default pull-right" style="margin-top:5px;">Dodaj załącznik</button>
+                        <table style="width:100%">
+                            <tr>
+                                <td>
+                                    <button class="btn btn-default" ng-click="addNewsFeedToList()" style="margin-top:5px;">Dodaj nowość</button>
+                                </td>
+                                <td>
+                                    <input type="file" class="hidden" id="newsFeedFile" />
+                                    {{newsFeedFileName}}
+                                    <button class="btn btn-default pull-right" style="margin-top:5px;" ng-click="addNewsFeedFile()">Dodaj załącznik</button>
+                                </td>
+                            </tr>
+                        </table>
+
                     </div>
                 </div>
             </div>
@@ -80,14 +112,17 @@
                             <li><span><i class="glyphicon glyphicon-calendar"></i> {{element.InsertDate | date:'yyyy-MM-dd HH:mm'}}</span></li>
                             <li>|</li>
                             <li>
-                                <span><i class="glyphicon glyphicon-comment"></i> 0 ilość komentarzy</span>
+                                <span><i ng-click="loadNewsFeedCommentList(element.Id)" class="cursor-pointer glyphicon glyphicon-comment"></i> {{element.CommentCount}} ilość komentarzy</span>
                             </li>
                             <li>|</li>
                             <li>
-                                <span><i ng-click="likeNewsFeed(element.Id)" class="cursor-pointer glyphicon glyphicon-thumbs-up"></i> {{element.LikeCount}} ilość polubień</span>
+                                <span>
+                                    <i ng-click="likeNewsFeed(element.Id, element.IsLikedByCurrentUser)" ng-class="{ 'liked':  element.IsLikedByCurrentUser }"
+                                       class="cursor-pointer glyphicon glyphicon-thumbs-up"></i> {{element.LikeCount}} ilość polubień
+                                </span>
                             </li>
                             @*@if (User.IsInRole("Admin"))
-                            {*@
+                                {*@
                             <li class="pull-right">
                                 <button ng-click="remove(element.Id)" class="btn btn-default pull-right btnDelete btn-sm"><span class="glyphicon glyphicon-trash"></span> Usuń</button>
                             </li>
@@ -104,64 +139,51 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Przewidywany wynik użytkownika</h4>
+                        <h4 class="modal-title">Komentarz</h4>
                     </div>
                     <div class="modal-body">
-                        <div class="well">
+                        <div class="well" style="margin-bottom:5px;">
                             <div class="media">
                                 <div class="media-body">
                                     <div class="form-group">
                                         <label>Twój komentarz:</label>
-                                        @Html.TextArea("UserEventHomeTeamName", null, new
+                                        @Html.TextArea("commentContent", null, new
                                    {
                                        @class = "form-control",
                                        placeholder = "Treść",
-                                       ng_model = "text"
+                                       ng_model = "commentContent"
                                    })
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn btn-default pull-right" ng-click="addNewsFeedCommentToList()">Dodaj komentarz</button>
+                                        <button class="btn btn-default pull-right btn-sm" ng-click="addNewsFeedCommentToList()">Dodaj komentarz</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divNewsFeedCommentList">
+                            <div class="well" ng-repeat="comment in commentList" style="margin-bottom:5px;">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p class="text-right"><i class="glyphicon glyphicon-user"></i> {{comment.InsertUserEmail}}</p>
+                                        <p>
+                                            {{comment.Content}}
+                                        </p>
+                                        <ul class="list-inline list-unstyled">
+                                            <li><span><i class="glyphicon glyphicon-calendar"></i> {{comment.InsertDate | date:'yyyy-MM-dd HH:mm'}}</span></li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <div id="divNewsFeedList">
-                        <div class="well" ng-repeat="comment in commentList">
-                            <div class="media">
-                                <a class="pull-left" href="#">
-                                    <img class="media-object" src="http://placekitten.com/100/100">
-                                </a>
-                                <div class="media-body">
-                                    <p class="text-right"><i class="glyphicon glyphicon-user"></i> {{comment.InsertUserEmail}}</p>
-                                    <p>
-                                        {{comment.Content}}
-                                    </p>
-                                    <ul class="list-inline list-unstyled">
-                                        @*<li><span><i class="glyphicon glyphicon-calendar"></i> {{element.InsertDate | date:'yyyy-MM-dd HH:mm'}}</span></li>*@
-                                        @*<li>|</li>
-                                        <li>
-                                            <span><i class="glyphicon glyphicon-comment"></i> 0 ilość komentarzy</span>
-                                        </li>*@
-                                        <li>|</li>
-                                        <li>
-                                            <span><i ng-click="likeNewsFeed(comment.Id)" class="cursor-pointer glyphicon glyphicon-thumbs-up"></i> {{element.LikeCount}} ilość polubień</span>
-                                        </li>
-                                        @*@if (User.IsInRole("Admin"))
-                        {*@
-                                        <li class="pull-right">
-                                            <button ng-click="remove(comment.Id)" class="btn btn-default pull-right btnDelete btn-sm"><span class="glyphicon glyphicon-trash"></span> Usuń</button>
-                                        </li>
-                                        @* } *@
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-default btn-usun pull-right" style="margin-bottom:5px; margin-right:5px" ng-click="cancelNewsFeedComment()">Anuluj</button>
-                    </div>
+                    @*<div class="modal-footer">
+                            <button type="button" class="btn btn-default btn-usun pull-right" style="margin-bottom:5px; margin-right:5px" ng-click="cancelNewsFeedComment()">Anuluj</button>
+                        </div>*@
                 </div>
             </div>
         </div>
+
+
+
     </div>
 </div>

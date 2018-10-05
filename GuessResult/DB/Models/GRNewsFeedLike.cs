@@ -10,11 +10,11 @@ namespace GuessResult.DB.Models
 
         public long Id { get; set; }
 
-        public long GRNewsFeedId { get; set; }
+        public long? GRNewsFeedId { get; set; }
 
         public long GRUserId { get; set; }
 
-        public long GRNewsFeedCommentId { get; set; }
+        public long? GRNewsFeedCommentId { get; set; }
 
 
 

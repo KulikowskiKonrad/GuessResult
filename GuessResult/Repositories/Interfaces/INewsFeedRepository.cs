@@ -11,10 +11,11 @@ namespace GuessResult.Repositories.Interfaces
     public interface INewsFeedRepository
     {
         List<GRNewsFeed> GetAll();
-        List<NewsFeedListItem> GetAllNewsFeedListItems();
+        List<NewsFeedListItem> GetAllNewsFeedListItems(long userId);
         GRNewsFeed GetNewsFeedById(long id);
         bool Delete(long id);
         long? Save(SaveNewsFeedViewModel model, long userId);
-        bool Like(long id);
+        bool Like(long id, long userId);
+        //bool Comment(long id, long userId);
     }
 }

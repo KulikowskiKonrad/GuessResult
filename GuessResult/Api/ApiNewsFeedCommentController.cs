@@ -35,15 +35,43 @@ namespace GuessResult.Api
         }
 
 
-
-
         [Authorize]
-        [HttpGet]
-        public IHttpActionResult GetAllNewsFeedComment()
+        [HttpPost]
+        public IHttpActionResult SaveNewsFeedComment([FromBody]SaveNewsFeedCommentViewModel model)
         {
             try
             {
-                List<NewsFeedCommentListItem> result = _newsFeedCommentRepository.GetAllNewsFeedComment();
+                if (ModelState.IsValid)
+                {
+                    long? saveResult = _newsFeedCommentRepository.Save(model, UserId);
+                    if (saveResult == null)
+                    {
+                        return InternalServerError();
+                    }
+                    else
+                    {
+                        return Ok(true);
+                    }
+                }
+                else
+                {
+                    return InternalServerError();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return InternalServerError();
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IHttpActionResult GetNewsFeedComments([FromUri]long newsFeedId)
+        {
+            try
+            {
+                List<NewsFeedCommentListItem> result = _newsFeedCommentRepository.GetAllNewsFeedComment(newsFeedId);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -52,5 +80,28 @@ namespace GuessResult.Api
                 return InternalServerError();
             }
         }
+
+        //[Authorize]
+        //[HttpPost]
+        //public IHttpActionResult Like([FromBody]NewsFeedLikeViewModel model)
+        //{
+        //    try
+        //    {
+        //        bool likeResult = _iNewsFeedRepository.Like(model.Id);
+        //        if (likeResult == false)
+        //        {
+        //            return InternalServerError();
+        //        }
+        //        else
+        //        {
+        //            return Ok(true);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LogHelper.Log.Error(ex);
+        //        return InternalServerError();
+        //    }
+        //}
     }
 }

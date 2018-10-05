@@ -200,6 +200,7 @@
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\NewsFeedController.cs" />
+    <Compile Include="DB\Models\GRFile.cs" />
     <Compile Include="DB\GuessResultContext.cs" />
     <Compile Include="DB\Models\GREvent.cs" />
     <Compile Include="DB\Models\GRNewsFeed.cs" />
@@ -260,6 +261,22 @@
     <Compile Include="Migrations\201810030857390_addForgeinKeyToNewsFeedLikeTable.Designer.cs">
       <DependentUpon>201810030857390_addForgeinKeyToNewsFeedLikeTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810041127005_updateColumnInLikeTable.cs" />
+    <Compile Include="Migrations\201810041127005_updateColumnInLikeTable.Designer.cs">
+      <DependentUpon>201810041127005_updateColumnInLikeTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810041404413_addNewColumn-CommentCount.cs" />
+    <Compile Include="Migrations\201810041404413_addNewColumn-CommentCount.Designer.cs">
+      <DependentUpon>201810041404413_addNewColumn-CommentCount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810041702037_createNewTabl%3beFile.cs" />
+    <Compile Include="Migrations\201810041702037_createNewTabl%3beFile.Designer.cs">
+      <DependentUpon>201810041702037_createNewTabl%3beFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810041738223_AlterFilesTable.cs" />
+    <Compile Include="Migrations\201810041738223_AlterFilesTable.Designer.cs">
+      <DependentUpon>201810041738223_AlterFilesTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\ChartDataItem.cs" />
     <Compile Include="Models\EditEventViewModel.cs" />
     <Compile Include="Models\EditUserEventViewModel.cs" />
@@ -295,6 +312,7 @@
     <Compile Include="Models\Old\ReservationListItem.cs" />
     <Compile Include="Models\Old\ReservationListViewModel.cs" />
     <Compile Include="Models\Old\RoomListItem.cs" />
+    <Compile Include="Models\SaveNewsFeedCommentViewModel.cs" />
     <Compile Include="Models\SaveNewsFeedViewModel.cs" />
     <Compile Include="Models\UserEventListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -472,6 +490,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810030857390_addForgeinKeyToNewsFeedLikeTable.resx">
       <DependentUpon>201810030857390_addForgeinKeyToNewsFeedLikeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810041127005_updateColumnInLikeTable.resx">
+      <DependentUpon>201810041127005_updateColumnInLikeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810041404413_addNewColumn-CommentCount.resx">
+      <DependentUpon>201810041404413_addNewColumn-CommentCount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810041702037_createNewTabl%3beFile.resx">
+      <DependentUpon>201810041702037_createNewTabl%3beFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810041738223_AlterFilesTable.resx">
+      <DependentUpon>201810041738223_AlterFilesTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -40,7 +40,7 @@ namespace GuessResult.Api
         {
             try
             {
-                List<NewsFeedListItem> result = _iNewsFeedRepository.GetAllNewsFeedListItems();
+                List<NewsFeedListItem> result = _iNewsFeedRepository.GetAllNewsFeedListItems(UserId);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -116,7 +116,7 @@ namespace GuessResult.Api
         {
             try
             {
-                bool likeResult = _iNewsFeedRepository.Like(model.Id);
+                bool likeResult = _iNewsFeedRepository.Like(model.Id, UserId);
                 if (likeResult == false)
                 {
                     return InternalServerError();
@@ -132,6 +132,28 @@ namespace GuessResult.Api
                 return InternalServerError();
             }
         }
+
+        //[HttpPost]
+        //public IHttpActionResult Comment([FromBody]NewsFeedLikeViewModel model)
+        //{
+        //    try
+        //    {
+        //        bool commentResult = _iNewsFeedRepository.Comment(model.Id, UserId);
+        //        if (commentResult == false)
+        //        {
+        //            return InternalServerError();
+        //        }
+        //        else
+        //        {
+        //            return Ok(true);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LogHelper.Log.Error(ex);
+        //        return InternalServerError();
+        //    }
+        //}
 
     }
 }
