@@ -13,7 +13,7 @@ namespace GuessResult.Repositories
 {
     public class NewsFeedRepositories : INewsFeedRepository
     {
-        public List<NewsFeedListItem> GetAllNewsFeedListItems()
+        public List<NewsFeedListItem> GetAllNewsFeedListItems(long userId)
         {
             try
             {
@@ -24,7 +24,9 @@ namespace GuessResult.Repositories
                         Content = x.Content,
                         InsertDate = x.InsertDate,
                         InsertUserEmail = x.User.Email,
-                        LikeCount = x.LikeCount
+                        LikeCount = x.LikeCount,
+                        CommentCount = x.CommentCount,
+                        IsLikedByCurrentUser = x.NewsFeedLikes.Where(y => y.GRUserId == userId).Any()
                     })
                 .OrderByDescending(x => x.InsertDate)
                 .ToList();
@@ -44,7 +46,7 @@ namespace GuessResult.Repositories
                 List<GRNewsFeed> allNewsFeed = null;
                 using (GuessResultContext db = new GuessResultContext())
                 {
-                    allNewsFeed = db.NewsFeed.Include(x => x.User).Where(x => x.IsDeleted == false).ToList();
+                    allNewsFeed = db.NewsFeeds.Include(x => x.User).Include(x => x.NewsFeedLikes).Where(x => x.IsDeleted == false).ToList();
                 }
                 return allNewsFeed;
             }
@@ -105,7 +107,7 @@ namespace GuessResult.Repositories
                 using (GuessResultContext db = new GuessResultContext())
                 {
                     GRNewsFeed gRNewsFeed = null;
-                    gRNewsFeed = db.NewsFeed.Where(x => x.Id == id).Single();
+                    gRNewsFeed = db.NewsFeeds.Where(x => x.Id == id).Single();
                     gRNewsFeed.IsDeleted = true;
                     db.SaveChanges();
                     isDeleted = true;
@@ -119,7 +121,7 @@ namespace GuessResult.Repositories
             }
         }
 
-        public bool Like(long id)
+        public bool Like(long id, long userId)
         {
             try
             {
@@ -127,9 +129,20 @@ namespace GuessResult.Repositories
                 using (GuessResultContext db = new GuessResultContext())
                 {
                     GRNewsFeed gRNewsFeed = null;
-                    gRNewsFeed = db.NewsFeed.Where(x => x.Id == id).Single();
-                    gRNewsFeed.LikeCount++;
-                    db.SaveChanges();
+                    gRNewsFeed = db.NewsFeeds.Where(x => x.Id == id).Single();
+
+                    GRNewsFeedLike gRNewsFeedLike = db.NewsFeedLikes.Where(x => x.GRNewsFeedId == id && x.GRUserId == userId).SingleOrDefault();
+                    if (gRNewsFeedLike == null)
+                    {
+                        gRNewsFeed.LikeCount++;
+                        db.NewsFeedLikes.Add(new GRNewsFeedLike()
+                        {
+                            GRNewsFeedId = id,
+                            GRUserId = userId
+                        });
+                        db.SaveChanges();
+                    }
+
                 }
                 return result;
             }
@@ -139,5 +152,26 @@ namespace GuessResult.Repositories
                 return false;
             }
         }
+
+        //public bool Comment(long id, long userId)
+        //{
+        //    try
+        //    {
+        //        bool result = true;
+        //        using (GuessResultContext db = new GuessResultContext())
+        //        {
+        //            GRNewsFeed gRNewsFeed = null;
+        //            gRNewsFeed = db.NewsFeed.Where(x => x.Id == id && x.User.Id == userId).Single();
+        //            gRNewsFeed.CommentCount++;
+        //            db.SaveChanges();
+        //        }
+        //        return result;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LogHelper.Log.Error(ex);
+        //        return false;
+        //    }
+        //}
     }
 }

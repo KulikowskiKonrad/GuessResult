@@ -11,8 +11,9 @@ namespace GuessResult.Repositories.Interfaces
     public interface INewsFeedCommentRepository
     {
         List<GRNewsFeedComment> GetAll();
-        List<NewsFeedCommentListItem> GetAllNewsFeedComment();
-        long? Save(GRNewsFeedComment gRNewsFeedComment);
+        List<NewsFeedCommentListItem> GetAllNewsFeedComment(long newsFeedId);
+        List<GRNewsFeedComment> GetByNewsFeedId(long newsFeedId);
+        long? Save(SaveNewsFeedCommentViewModel gRNewsFeedComment, long userId);
         GRNewsFeedComment GetById(long id);
     }
 }

@@ -7,6 +7,7 @@ using GuessResult.DB.Models;
 using GuessResult.DB;
 using GuessResult.Helpers;
 using GuessResult.Models;
+using System.Data.Entity;
 
 namespace GuessResult.Repositories
 {
@@ -19,7 +20,7 @@ namespace GuessResult.Repositories
                 List<GRNewsFeedComment> allNewsFeed = null;
                 using (GuessResultContext db = new GuessResultContext())
                 {
-                    allNewsFeed = db.NewsFeedComment.Where(x => x.IsDeleted == false).ToList();
+                    allNewsFeed = db.NewsFeedComments.Where(x => x.IsDeleted == false).ToList();
                 }
                 return allNewsFeed;
             }
@@ -30,19 +31,36 @@ namespace GuessResult.Repositories
             }
         }
 
-
-        public List<NewsFeedCommentListItem> GetAllNewsFeedComment()
+        public List<GRNewsFeedComment> GetByNewsFeedId(long newsFeedId)
         {
             try
             {
-                List<NewsFeedCommentListItem> result = GetAll()
+                List<GRNewsFeedComment> listNewsFeedComment = null;
+                using (GuessResultContext db = new GuessResultContext())
+                {
+                    listNewsFeedComment = db.NewsFeedComments.Include(x => x.User).Where(x => x.GRNewsFeedId == newsFeedId).ToList();
+                }
+                return listNewsFeedComment;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return null;
+            }
+        }
+
+        public List<NewsFeedCommentListItem> GetAllNewsFeedComment(long newsFeedId)
+        {
+            try
+            {
+                List<NewsFeedCommentListItem> result = GetByNewsFeedId(newsFeedId)
                     .Select(x => new NewsFeedCommentListItem()
                     {
                         Id = x.Id,
                         Content = x.Content,
                         InsertDate = x.InsertDate,
                         InsertUserEmail = x.User.Email,
-                        LikeCount=x.CountLike
+                        LikeCount = x.CountLike
                     })
                 .OrderByDescending(x => x.InsertDate)
                 .ToList();
@@ -60,9 +78,46 @@ namespace GuessResult.Repositories
             throw new NotImplementedException();
         }
 
-        public long? Save(GRNewsFeedComment gRNewsFeedComment)
+        public long? Save(SaveNewsFeedCommentViewModel model, long userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                long? result = null;
+
+                GRNewsFeedComment newsFeedComment = null;
+                if (model.Id.HasValue)
+                {
+                    //userEvent = GetById(model.Id.Value);
+                }
+                else
+                {
+                    newsFeedComment = new GRNewsFeedComment()
+                    {
+                        InsertDate = DateTime.Now,
+                        GRUserId = userId,
+                        GRNewsFeedId = model.NewsFeedId
+                    };
+                }
+                newsFeedComment.Content = model.Content;
+
+                using (DB.GuessResultContext db = new DB.GuessResultContext())
+                {
+                    db.Entry(newsFeedComment).State = newsFeedComment.Id > 0 ? EntityState.Modified : EntityState.Added;
+                    if (newsFeedComment.Id == 0)
+                    {
+                        GRNewsFeed gRNewsFeed = db.NewsFeeds.Where(x => x.Id == model.NewsFeedId).Single();
+                        gRNewsFeed.CommentCount++;
+                    }
+                    db.SaveChanges();
+                    result = newsFeedComment.Id;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Log.Error(ex);
+                return null;
+            }
         }
     }
 }

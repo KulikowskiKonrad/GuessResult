@@ -17,10 +17,16 @@ namespace GuessResult.DB.Models
 
         public int LikeCount { get; set; }
 
+        public int CommentCount { get; set; }
+
         public DateTime InsertDate { get; set; }
 
         public long GRUserId { get; set; }
 
+        public long? GRFileId { get; set; }
+
         public virtual GRUser User { get; set; }
+        public virtual GRFile File { get; set; }
+        public virtual ICollection<GRNewsFeedLike> NewsFeedLikes { get; set; }
     }
 }

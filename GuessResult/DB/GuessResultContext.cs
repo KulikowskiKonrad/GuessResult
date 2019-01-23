@@ -12,9 +12,10 @@ namespace GuessResult.DB
         public DbSet<GRUser> Users { get; set; }
         public DbSet<GREvent> Events { get; set; }
         public DbSet<GRUserEvent> UserEvents { get; set; }
-        public DbSet<GRNewsFeed> NewsFeed { get; set; }
-        public DbSet<GRNewsFeedComment> NewsFeedComment { get; set; }
-        public DbSet<GRNewsFeedLike> NewsFeedLike { get; set; }
+        public DbSet<GRNewsFeed> NewsFeeds { get; set; }
+        public DbSet<GRNewsFeedComment> NewsFeedComments { get; set; }
+        public DbSet<GRNewsFeedLike> NewsFeedLikes { get; set; }
+        public DbSet<GRFile> Files { get; set; }
         public GuessResultContext()
             : base("DefaultConnection")
         {
